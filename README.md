@@ -34,7 +34,7 @@ TODO:
 
 *Rename or move --- Renombrar o mover
 
-*Open from command line arguments text --- Abrir desde argumentos de linea de comandos
+*Open from command line arguments text --- Abrir desde texto con argumentos de linea de comandos
 
 *Open from python script --- Abrir desde python script
 
@@ -57,35 +57,35 @@ TODO:
 
 **RENDER MULTIBLENDS**
 
-*Generate python script from multiblends
+*Generate python script with multiblends --- Generar python script con multiblends
 
-*.blend Priority
+*.blend Priority --- .blend Prioridad
 
 **RENDER MANAGER**
 
-*preview renders
+*preview renders --- Previsualizar renders
 
 **RENDER TIME CALCULATOR**
 
-*Aproximate render time
+*Aproximate render time --- tiempo de render aproximado
 
-*Animation duration
+*Animation duration --- Duración de la animación
 
 **BATCH PROCESS**
 
-*Rename renders
+*Rename renders --- Renombrar renders
 
-*Delete .blend...
+*Delete .blend... --- Borrar .blend...
 
 **PREFERENCES**
 
-*Select Blender version default
+*Select Blender version default --- Seleccionar Blender por defecto
 
-*Select terminal default
+*Select terminal default --- Seleccionar terminal por defecto
 
-*Selet File Manager Default
+*Selet File Manager Default --- Seleccionar explorador de archivos por defecto
 
-*Select text editor default
+*Select text editor default --- Seleccionar editor de texto por defecto
 
 **BRENDERS BLENDER ADD-ON version**
 
