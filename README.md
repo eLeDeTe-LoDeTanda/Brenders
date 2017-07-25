@@ -87,6 +87,12 @@ TODO:
 
 *Select text editor default --- Seleccionar editor de texto por defecto
 
+**START**
+
+*~Selector --- Selector~
+
+*~Menu bar --- Barra de menú~
+
 **BRENDERS BLENDER ADD-ON version**
 
 *All features in a blender add-on --- Todo en una extensión de Blender
