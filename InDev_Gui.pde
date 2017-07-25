@@ -10,6 +10,6 @@ void inDev_Gui()
   textAlign(CENTER, CENTER);
   textSize(20);
   fill(acolor);
-  text("IN DEVELOPMENT", width / 2, 250);
+  text("IN DEVELOPMENT", width / 2, 165);
   popStyle();
 }
