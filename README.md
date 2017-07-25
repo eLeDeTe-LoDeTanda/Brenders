@@ -76,6 +76,18 @@ TODO:
 
 *Delete .blend...
 
+**PREFERENCES**
+
+*Select Blender version default
+
+*Select terminal default
+
+*Selet File Manager Default
+
+*Select text editor default
+
 **BRENDERS BLENDER ADD-ON version**
 
 *All features in a blender add-on
+
+
