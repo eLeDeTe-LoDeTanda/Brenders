@@ -57,6 +57,7 @@ TODO:
 **RENDER MULTIBLENDS**
 
 *Generate python script from multiblends
+
 *.blend Priority
 
 **RENDER MANAGER**
@@ -66,13 +67,14 @@ TODO:
 **RENDER TIME CALCULATOR**
 
 *Aproximate render time
+
 *Animation duration
 
 **BATCH PROCESS**
 
 *Rename renders
 
-*Delete .*
+*Delete .blend...
 
 **BRENDERS BLENDER ADD-ON version**
 
