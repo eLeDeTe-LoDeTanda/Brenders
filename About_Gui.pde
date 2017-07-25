@@ -33,6 +33,7 @@ void about()
   image(bg, 0, 0);
 
   menuBar();
+  
   textAlign(CENTER, CENTER);
   fill(10, 50);
   ellipse(width / 2, height / 2, 250, 250);
@@ -53,6 +54,5 @@ void about()
   text("http://lodetanda.blogspot.com", width / 2, 230);
   text("eLeDeTe -LoDeTanda-", width / 2, height / 2 + 100);
   text("cc 2017", width / 2, height / 2 + 110);
-
   popStyle();
 }
