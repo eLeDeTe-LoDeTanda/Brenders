@@ -89,6 +89,6 @@ TODO:
 
 **BRENDERS BLENDER ADD-ON version**
 
-*All features in a blender add-on
+*All features in a blender add-on --- Todo en una extensión de Blender
 
 
