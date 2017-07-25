@@ -25,7 +25,6 @@
  * ***** END GPL LICENSE BLOCK *****
  */
 
- 
 void inDev_Gui()
 {
   pushStyle();
