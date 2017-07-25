@@ -14,45 +14,45 @@ TODO:
 
 **COMMAND LINE GENERATOR**
 
-*Select and open Blender to use
+*Select, open Blender to use --- Seleccionar, abrir el Blender a usar
 
-*Select and open .Blend
+*Select, open a .Blend --- Seleccionar, abrir un .Blend 
 
-*Select and open Renders output folder
+*Select, open Renders output folder --- Seleccionar, abrir carpeta de renders
 
-*Select Render name
+*Select Render name --- Seleccionar nombre del render
 
-*Select and open text editor to use
+*Select, open text editor to use --- Seleccionar, abrir editor de texto a usar
 
-*Select and open terminal to use
+*Select, open terminal to use --- Seleccionar, abrir terminal a usar
 
-*Select and open file manager to use
+*Select, open file manager to use --- Seleccionar, abrir explorador de archivos a usar
 
-*Generate Python script or command line arguments
+*Generate Python script or command line arguments --- Generar python script o argumentos de linea de comandos
 
-*Save to file in specify folder
+*Save to file in specify folder --- Grabar en una carpeta especificada
 
-*Rename and move
+*Rename or move --- Renombrar o mover
 
-*Open from command line arguments text
+*Open from command line arguments text --- Abrir desde argumentos de linea de comandos
 
-*Open from python script
+*Open from python script --- Abrir desde python script
 
-*Edit python script in text editor
+*Edit python script in text editor --- Editar python script en editor de texto
 
-*Save renders logs to file
+*Save renders logs to file --- Grabar logs de los renders a un archivo
 
-*Renders in Opengl
+*Renders in Opengl --- Renderizar en Opengl
 
-*SSH user and IP
+*SSH user and IP --- usuario e IP de SSH
 
-*convert from python script to command line arguments
+*convert from python script to command line arguments --- Convertir desde python script a argumentos de linea de comandos
 
-*convert from command line arguments to python script
+*convert from command line arguments to python script --- Convertir desde argumentos de linea de comandos a python script
 
-*change some render options
+*change some render options --- cambiar algunas opciones de render.
 
-*Start render in terminal
+*Start render in terminal --- Renderizar en terminal
 
 
 **RENDER MULTIBLENDS**
