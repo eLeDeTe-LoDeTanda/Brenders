@@ -70,7 +70,7 @@ void setup () {
   else if (os.indexOf("mac") != -1) os = "MACOSX";
   else os = "OTHER";
 
-  //initVarCommandLine(os);
+  initVarCommandLine(os);
 }
 
 void draw() {
@@ -86,18 +86,20 @@ void draw() {
     startGui();
     break;
   case 1:
-   // commandLineGenerator_Gui();
+    //commandLineGenerator_Gui();
+    inDev_Gui();
     break;
   case 2:
     //rendersStatus_Gui();
     inDev_Gui();
     break;
   case 3:
-    //multiBlend_Gui();
+    // multiBlend_Gui();
     inDev_Gui();
     break;
   case 4:
-   // ART_Gui();
+    //ART_Gui();
+    inDev_Gui();
     break;
   case 5:
     //batch_Gui();
