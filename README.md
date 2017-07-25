@@ -10,7 +10,7 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 **Versión de desarrollo, muy pronto**
 
 -----------------------------
-TODO:
+BRENDERSv1.0 TODO:
 
 **COMMAND LINE GENERATOR**
 
