@@ -8,3 +8,15 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 **Development version coming soon**
 
 **Versión de desarrollo, muy pronto**
+
+TODO:
+
+*COMMAND LINE GENERATOR
+
+*RENDER MULTIBLENDS
+
+*RENDER MANAGER
+
+*RENDER TIME CALCULATOR
+
+*BATCH PROCESS
