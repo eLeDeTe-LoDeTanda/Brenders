@@ -11,12 +11,33 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 
 TODO:
 
-*COMMAND LINE GENERATOR
+**COMMAND LINE GENERATOR**
 
-*RENDER MULTIBLENDS
+*Select and open Blender to use
+*Select and open .Blend
+*Select and open Renders output folder
+*Select Render name
+*Select and open text editor to use
+*Select and open terminal to use
+*Select and open file manager to use
+*Generate Python script or command line arguments
+*Save to file in specify folder
+*Rename and move
+*Open from command line arguments text
+*Open from python script
+*Edit python script in text editor
+*Save renders logs to file
+*Renders in Opengl
+*SSH user and IP
+*change some render options
+*Start render in terminal
 
-*RENDER MANAGER
+**RENDER MULTIBLENDS**
 
-*RENDER TIME CALCULATOR
+**RENDER MANAGER**
 
-*BATCH PROCESS
+**RENDER TIME CALCULATOR**
+
+**BATCH PROCESS**
+
+**BRENDERS BLENDER ADD-ON version**
