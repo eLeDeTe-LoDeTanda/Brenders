@@ -9,6 +9,7 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 
 **Versión de desarrollo, muy pronto**
 
+-----------------------------
 TODO:
 
 **COMMAND LINE GENERATOR**
