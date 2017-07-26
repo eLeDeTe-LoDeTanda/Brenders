@@ -84,7 +84,7 @@ BRENDERSv1.0 TODO:
 
 *~Animation duration --- Duración de la animación~ :heavy_check_mark:
 
-**BATCH PROCESS**
+**BATCH PROCESSING**
 
 *Rename renders --- Renombrar renders
 
