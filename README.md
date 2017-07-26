@@ -39,6 +39,8 @@ BRENDERSv1.0 TODO:
 
 *Save to file in specify folder --- Grabar en una carpeta especificada
 
+*Autorun renders file (.sh in Linux .bat in Windows) --- Archivo autoejecutable de renders (.sh en Linux .bat en Windows)
+
 *Rename or move --- Renombrar o mover
 
 *Open from command line arguments text --- Abrir desde texto con argumentos de linea de comandos
