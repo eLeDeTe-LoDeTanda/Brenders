@@ -88,8 +88,8 @@ void draw() {
     startGui();
     break;
   case 1:
-    //commandLineGenerator_Gui();
-    inDev_Gui();
+    commandLineGenerator_Gui();
+    //inDev_Gui();
     break;
   case 2:
     //rendersStatus_Gui();
