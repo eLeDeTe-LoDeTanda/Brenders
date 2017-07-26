@@ -96,9 +96,9 @@ BRENDERSv1.0 TODO:
 
 **START**
 
-*~Selector --- Selector~
+*~Selector --- Selector~ :heavy_check_mark:
 
-*~Menu bar --- Barra de menú~
+*~Menu bar --- Barra de menú~ :heavy_check_mark:
 
 **BRENDERS BLENDER ADD-ON version**
 
