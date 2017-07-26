@@ -31,12 +31,10 @@ void startGui()
 {
   surface.setTitle(version);
   background(backgroundcolor);
- // tint(230, 230, 250);
   image(bg, 0, 0);
   menuBar();
 
   pushStyle();
-  // background(startimg);
 
   textAlign(CENTER, CENTER);
   fill(acolor);
