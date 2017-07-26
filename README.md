@@ -21,47 +21,47 @@ BRENDERSv1.0 TODO:
 
 **COMMAND LINE GENERATOR**
 
-*Select, open Blender to use --- Seleccionar, abrir el Blender a usar
+*~Select, open Blender to use --- Seleccionar, abrir el Blender a usar~ :heavy_check_mark:
 
-*Select, open a .Blend --- Seleccionar, abrir un .Blend 
+*~Select, open a .Blend --- Seleccionar, abrir un .Blend~ :heavy_check_mark:
 
-*Select, open Renders output folder --- Seleccionar, abrir carpeta de renders
+*~Select, open Renders output folder --- Seleccionar, abrir carpeta de renders~ :heavy_check_mark:
 
-*Select Render name --- Seleccionar nombre del render
+*~Select Render name --- Seleccionar nombre del render~ :heavy_check_mark:
 
-*Select, open text editor to use --- Seleccionar, abrir editor de texto a usar
+*~Select, open text editor to use --- Seleccionar, abrir editor de texto a usar~ :heavy_check_mark:
 
-*Select, open terminal to use --- Seleccionar, abrir terminal a usar
+*~Select, open terminal to use --- Seleccionar, abrir terminal a usar~ :heavy_check_mark:
 
-*Select, open file manager to use --- Seleccionar, abrir explorador de archivos a usar
+*~Select, open file manager to use --- Seleccionar, abrir explorador de archivos a usar~ :heavy_check_mark:
 
-*Generate Python script or command line arguments --- Generar python script o argumentos de linea de comandos
+*~Generate Python script or command line arguments --- Generar python script o argumentos de linea de comandos~ :heavy_check_mark:
 
-*Save to file in specify folder --- Grabar en una carpeta especificada
+*~Save to file in specify folder --- Grabar en una carpeta especificada~ :heavy_check_mark:
 
-*Autorun renders file (.sh in Linux .bat in Windows) --- Archivo autoejecutable de renders (.sh en Linux .bat en Windows)
+*~Autorun renders file (.sh in Linux .bat in Windows) --- Archivo autoejecutable de renders (.sh en Linux .bat en Windows)~ :heavy_check_mark:
 
-*Rename or move --- Renombrar o mover
+*~Rename or move --- Renombrar o mover~ :heavy_check_mark:
 
-*Open from command line arguments text --- Abrir desde texto con argumentos de linea de comandos
+*~Open from command line arguments text --- Abrir desde texto con argumentos de linea de comandos~ :heavy_check_mark:
 
-*Open from python script --- Abrir desde python script
+*~Open from python script --- Abrir desde python script~ :heavy_check_mark:
 
-*Edit python script in text editor --- Editar python script en editor de texto
+*~Edit python script in text editor --- Editar python script en editor de texto~ :heavy_check_mark:
 
-*Save renders logs to file --- Grabar logs de los renders a un archivo
+*~Save renders logs to file --- Grabar logs de los renders a un archivo~ :heavy_check_mark:
 
-*Renders in Opengl --- Renderizar en Opengl
+*~Renders in Opengl --- Renderizar en Opengl~ :heavy_check_mark:
 
-*SSH user and IP --- usuario e IP de SSH
+*~SSH user and IP --- usuario e IP de SSH~ :heavy_check_mark:
 
-*convert from python script to command line arguments --- Convertir desde python script a argumentos de linea de comandos
+*~Convert from python script to command line arguments --- Convertir desde python script a argumentos de linea de comandos~ :heavy_check_mark:
 
-*convert from command line arguments to python script --- Convertir desde argumentos de linea de comandos a python script
+*~Convert from command line arguments to python script --- Convertir desde argumentos de linea de comandos a python script~ :heavy_check_mark:
 
-*change some render options --- cambiar algunas opciones de render.
+*~Change some render options --- Cambiar algunas opciones de render~ :heavy_check_mark:
 
-*Start render in terminal --- Renderizar en terminal
+*~Start render in terminal --- Renderizar en terminal~ :heavy_check_mark:
 
 
 **RENDER MULTIBLENDS**
@@ -76,9 +76,9 @@ BRENDERSv1.0 TODO:
 
 **RENDER TIME CALCULATOR**
 
-*Aproximate render time --- tiempo de render aproximado
+*~Aproximate render time --- tiempo de render aproximado~ :heavy_check_mark:
 
-*Animation duration --- Duración de la animación
+*~Animation duration --- Duración de la animación~ :heavy_check_mark:
 
 **BATCH PROCESS**
 
