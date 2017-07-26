@@ -55,9 +55,9 @@ BRENDERSv1.0 TODO:
 
 *~SSH user and IP --- usuario e IP de SSH~ :heavy_check_mark:
 
-*~Convert from python script to command line arguments --- Convertir desde python script a argumentos de linea de comandos~ :heavy_check_mark:
+*~Convert python script to command line arguments --- Convertir python script a argumentos de linea de comandos~ :heavy_check_mark:
 
-*~Convert from command line arguments to python script --- Convertir desde argumentos de linea de comandos a python script~ :heavy_check_mark:
+*~Convert command line arguments to python script --- Convertir argumentos de linea de comandos a python script~ :heavy_check_mark:
 
 *~Change some render options --- Cambiar algunas opciones de render~ :heavy_check_mark:
 
