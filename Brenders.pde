@@ -89,7 +89,6 @@ void draw() {
     break;
   case 1:
     commandLineGenerator_Gui();
-    //inDev_Gui();
     break;
   case 2:
     //rendersStatus_Gui();
@@ -100,8 +99,7 @@ void draw() {
     inDev_Gui();
     break;
   case 4:
-    //ART_Gui();
-    inDev_Gui();
+    ART_Gui();
     break;
   case 5:
     //batch_Gui();
