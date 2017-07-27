@@ -67,7 +67,7 @@ void initVarCommandLine (String os)
       write.println("/usr/bin/vi");
       write.println();
       write.println("[FileManager]");
-      write.println("/usr/bin/caja");
+      write.println("/usr/bin/nautilus");
 
       write.flush();
       write.close();
@@ -664,7 +664,6 @@ void loadPy(String pypath)
       } else if (lines[i].contains("render.threads_mode")) {
         fromblend[threads_mode_id] = true;
       } else if (lines[i].contains("render.threads")) {
-
       } else if (lines[i].contains("render.engine")) {
         fromblend[engine_id] = true;
       } else if (lines[i].contains("cycles.samples")) {
@@ -1235,24 +1234,38 @@ void settingsSave(File selection)
 
       if (generatepy) {
         py_Save(settingspath);
-        if (os == "WINDOWS") bat_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".py.bat");
-        else sh_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".py.sh");
+        if (os == "WINDOWS") {
+          bat_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".py.bat");
+          if (startrenders) {
+            String cmd[]= {terminalpath, "/c", "start", "/w", settingspath.substring(0, settingspath.lastIndexOf("."))+".py.bat"};
+            exec(cmd);
+          }
+        } else {
+          sh_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".py.sh");
+          if (startrenders) {
+            String cmd[] = {terminalpath, "-e", settingspath.substring(0, settingspath.lastIndexOf("."))+".py.sh"};
+            exec(cmd);
+          }
+        }
       } else {
         Command_Line_Save(settingspath);
-        if (os == "WINDOWS") bat_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.bat");
-        else sh_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.sh");
-      }
-
-      if (startrenders) {
-        if (os == "WINDOWS") { 
-          String cmd[]= {terminalpath, "/c", "start", "/w", settingspath.substring(0, settingspath.lastIndexOf("."))+".bat"};
-          exec(cmd);
+        if (os == "WINDOWS") {
+          bat_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.bat");
+          if (startrenders) {
+            String cmd[]= {terminalpath, "/c", "start", "/w", settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.bat"};
+            exec(cmd);
+          }
         } else {
-          String cmd[] = {terminalpath, "-e", Command_Line};
-          exec(cmd);
+          sh_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.sh");
+          if (startrenders) {
+            String cmd[] = {terminalpath, "-e", settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.sh"};
+            exec(cmd);
+          }
         }
-        startrenders = false;
       }
+      
+      startrenders = false;
+      
     } else {
       error = true;
       if (generatepy) info = "*Warning No '.py' selected";
