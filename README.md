@@ -16,7 +16,10 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 
 ![ART](https://github.com/eLeDeTe-LoDeTanda/Brenders/blob/master/data/Screenshots/BRENDERSv1.0_AproximateRenderTimeCalculator.png)
 
-# [Development version](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build)
+
+# [Development version](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build) 
+
+(COMMAND LINE GENERATOR and APROXIMATE RENDER TIME CALCULATOR)
 
 # [versión de desarrollo](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build)
 
