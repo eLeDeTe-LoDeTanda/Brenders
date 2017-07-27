@@ -20,6 +20,8 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 
 # [versión de desarrollo](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build)
 
+[Require jAVA 8](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build)
+
 -----------------------------
 BRENDERSv1.0 TODO:
 
