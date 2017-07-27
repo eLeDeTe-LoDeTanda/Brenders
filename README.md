@@ -16,9 +16,9 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 
 ![ART](https://github.com/eLeDeTe-LoDeTanda/Brenders/blob/master/data/Screenshots/BRENDERSv1.0_AproximateRenderTimeCalculator.png)
 
-**Development version coming soon**
+# [Development version](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build)
 
-**Versión de desarrollo, muy pronto**
+# [versión de desarrollo](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build)
 
 -----------------------------
 BRENDERSv1.0 TODO:
@@ -99,6 +99,8 @@ BRENDERSv1.0 TODO:
 *Selet File Manager Default --- Seleccionar explorador de archivos por defecto
 
 *Select text editor default --- Seleccionar editor de texto por defecto
+
+*Load Factory preferences --- Cargar preferencias a valores de fábrica
 
 **START**
 
