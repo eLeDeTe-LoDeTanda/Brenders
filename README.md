@@ -73,9 +73,9 @@ BRENDERSv1.0 TODO:
 *~Start render in terminal --- Renderizar en terminal~ :heavy_check_mark:
 
 
-**RENDER MULTIBLENDS**
+**RENDER MULTI-BLENDS**
 
-*Generate python script with multiblends --- Generar python script con multiblends
+*Generate python script with multi-blends --- Generar python script con multi-blends
 
 *.blend Priority --- .blend Prioridad
 
