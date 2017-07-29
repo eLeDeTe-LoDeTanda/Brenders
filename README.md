@@ -95,6 +95,8 @@ BRENDERSv1.0 TODO:
 
 *~Delete .blend... --- Borrar .blend...~ :heavy_check_mark:
 
+*~Delete .* --- Borrar .*~ :heavy_check_mark:
+
 **PREFERENCES**
 
 *~Select Blender version default --- Seleccionar Blender por defecto~ :heavy_check_mark:
