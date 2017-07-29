@@ -26,7 +26,7 @@ void batchDelete()
 void  mouseEventsBatch()
 {
   if (path_batch_()) {
-    selectInput("Select path:", "pathbatch");
+    selectInput("Select path:", "pathBatch");
   }
   if (delete_batch_()) { 
     select_del = false;
@@ -38,7 +38,7 @@ void  mouseEventsBatch()
   }
 }
 
-void pathbatch(File selection) 
+void pathBatch(File selection) 
 {
   if (selection != null) {
     path_batch = selection.getAbsolutePath();
