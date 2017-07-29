@@ -93,7 +93,7 @@ BRENDERSv1.0 TODO:
 
 *Rename renders --- Renombrar renders
 
-*Delete .blend... --- Borrar .blend...
+*~Delete .blend... --- Borrar .blend...~ :heavy_check_mark:
 
 **PREFERENCES**
 
