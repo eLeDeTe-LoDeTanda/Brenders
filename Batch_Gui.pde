@@ -24,7 +24,7 @@
  *
  * ***** END GPL LICENSE BLOCK *****
  */
-String path_batch =  "none";
+String path_batch =  "No folder selected...";
 String ext_del = "blend1";
 String new_name = "xxxxxxxxxxxxxxxx";
 boolean select_del = false;
@@ -58,7 +58,9 @@ void batch_Gui()
 
   textSize(14);
   //text(">RENAME<   -Rename all files to: "+" >>"+new_name+"<<", 110, 200);
-  text(">DELETE<   -Delete all files ends with: "+" >>"+"."+ext_del+"<<", 130, 250);
+  text("                   -Delete all files ends with: "+" >>"+"."+ext_del+"<<", 130, 250);
+  fill(ecolor);
+  text(">DELETE<", 130, 250);
  
   popStyle();
 }
