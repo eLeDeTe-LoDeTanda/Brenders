@@ -55,6 +55,8 @@ void  mousePressed()
     } else if (gui == 6) {
       if  (mouseX > 270 && mouseX < 370 && mouseY > 145 && mouseY < 165) link("https://github.com/eLeDeTe-LoDeTanda/Brenders");
       if  (mouseX > 230 && mouseX < 410 && mouseY > 220 && mouseY < 240) link("http://lodetanda.blogspot.com/");
+    } else if (gui == 7) {
+      mouseEventsPreferences();
     }
   }
   if (mouseButton == RIGHT) {
