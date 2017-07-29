@@ -1196,6 +1196,9 @@ void terminalSelect(File selection)
       write.close();
     }
     info = "*Test it with '-Open<' bottom.";
+    
+    if (gui == 7) savePreferences();
+    
     redraw();
   }
 }
@@ -1207,6 +1210,9 @@ void texteditorSelect(File selection)
     texteditorfolder = new File(texteditorpath);
 
     info = "*Test it with '-Open<' bottom.";
+
+    if (gui == 7) savePreferences();
+
     redraw();
   }
 }
@@ -1218,6 +1224,9 @@ void managerSelect(File selection)
     explorerfolder = new File(managerpath);
 
     info = "*Test it with '-Open<' bottom.";
+
+    if (gui == 7) savePreferences();
+
     redraw();
   }
 }
@@ -1263,9 +1272,8 @@ void settingsSave(File selection)
           }
         }
       }
-      
+
       startrenders = false;
-      
     } else {
       error = true;
       if (generatepy) info = "*Warning No '.py' selected";
@@ -1314,6 +1322,8 @@ void blenderSelect(File selection)
       error = true;
       info = "*Warning No blender executable selected.";
     }
+    if (gui == 7) savePreferences();
+
     redraw();
   }
 }
