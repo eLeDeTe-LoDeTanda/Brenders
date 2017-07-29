@@ -64,15 +64,73 @@ void mouseEventsPreferences()
     info = "*Opening Blender...";
     exec(blenderpath);
   }
+
+  if (load_factory_()) {
+    if (os == "WINDOWS") { 
+      File f = new File(dataPath("Preferences"+File.separator+"extern_Windows.txt"));
+      f.delete();
+
+      write = createWriter(dataPath("Preferences"+File.separator+"extern_Windows.txt"));
+      write.println("[Blender]");
+      write.println("C:"+File.separator+"Program Files"+File.separator+"Blender Foundation"+File.separator+"blender"+File.separator+"Blender.exe");
+      write.println();
+      write.println("[Terminal]");
+      write.println("cmd.exe");
+      write.println();
+      write.println("[TextEditor]");
+      write.println("NOTEPAD.exe");
+      write.println();
+      write.println("[FileManager]");
+      write.println("explorer.exe");
+
+      write.flush();
+      write.close();
+
+      String lines[] = loadStrings(dataPath("Preferences"+File.separator+"extern_Windows.txt"));
+      for (int i = 0; i < lines.length; i++) {
+        if (lines[i].contains("[Terminal]")) terminalpath = lines[i+1];
+        if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
+        if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
+        if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
+      }
+    } else {
+      File f = new File(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
+      f.delete();
+
+      write = createWriter(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
+      write.println("[Blender]");
+      write.println("/usr/bin/blender");
+      write.println();
+      write.println("[Terminal]");
+      write.println("/usr/bin/xterm");
+      write.println();
+      write.println("[TextEditor]");
+      write.println("/usr/bin/vi");
+      write.println();
+      write.println("[FileManager]");
+      write.println("/usr/bin/nautilus");
+
+      write.flush();
+      write.close();
+
+      String lines[] = loadStrings(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
+      for (int i = 0; i < lines.length; i++) {
+        if (lines[i].contains("[Terminal]")) terminalpath = lines[i+1];
+        if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
+        if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
+        if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
+      }
+    }
+  }
 }
 
 void savePreferences()
 {
   redraw();
-  
+
   if (os == "WINDOWS") write = createWriter(dataPath("Preferences"+File.separator+"extern_Windows.txt"));
   else write = createWriter(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
- 
+
   write.println("[Blender]");
   write.println(blenderpath);
   write.println();

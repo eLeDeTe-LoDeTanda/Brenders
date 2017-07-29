@@ -40,8 +40,7 @@ void preferences_Gui()
   
   fill(acolor);
 
-  text("DEFAULT path", 265, 55);
-
+  text("DEFAULT aplications:", 265, 40);
 
   textSize(14);
   text("BLENDER", 245, 75);
@@ -90,7 +89,12 @@ void preferences_Gui()
   pathname = terminalpath;
   if (terminalpath.length() > 20) pathname = terminalpath.substring(0, 10)+"..."+terminalpath.substring(terminalpath.length() - 10);  
   text(File.separator+pathname, 265, 135);
+  
+  fill(bcolor);
+  textSize(14);
 
+  text(">>Load Factory preferences<<", 220, 270);
+  
   popStyle();
 }
 
@@ -129,4 +133,9 @@ boolean filemanager_default_()
 boolean filemanager_default_open_() 
 {
   return  (mouseX > 340 && mouseX < 400 && mouseY > 185 && mouseY < 200);
+}
+
+boolean load_factory_() 
+{
+  return  (mouseX > 215 && mouseX < 435 && mouseY > 250 && mouseY < 275);
 }
