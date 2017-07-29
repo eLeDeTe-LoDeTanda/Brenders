@@ -97,13 +97,13 @@ BRENDERSv1.0 TODO:
 
 **PREFERENCES**
 
-*Select Blender version default --- Seleccionar Blender por defecto
+*~Select Blender version default --- Seleccionar Blender por defecto~ :heavy_check_mark:
 
-*Select terminal default --- Seleccionar terminal por defecto
+*~Select terminal default --- Seleccionar terminal por defecto~ :heavy_check_mark:
 
-*Selet File Manager Default --- Seleccionar explorador de archivos por defecto
+*~Selet File Manager Default --- Seleccionar explorador de archivos por defecto~ :heavy_check_mark:
 
-*Select text editor default --- Seleccionar editor de texto por defecto
+*~Select text editor default --- Seleccionar editor de texto por defecto~ :heavy_check_mark:
 
 *Load Factory preferences --- Cargar preferencias a valores de fábrica
 
