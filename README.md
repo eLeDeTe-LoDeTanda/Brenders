@@ -95,7 +95,7 @@ BRENDERSv1.0 TODO:
 
 *~Delete .blend... --- Borrar .blend...~ :heavy_check_mark:
 
-*~Delete .* --- Borrar .*~ :heavy_check_mark:
+*~Delete selected extension --- Borrar extensión seleccionada~ :heavy_check_mark:
 
 **PREFERENCES**
 
