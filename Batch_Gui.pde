@@ -24,13 +24,64 @@
  *
  * ***** END GPL LICENSE BLOCK *****
  */
+String path_batch =  "none";
+String ext_del = "blend1";
+String new_name = "xxxxxxxxxxxxxxxx";
+boolean select_del = false;
 
 void batch_Gui()
 {
+  pushStyle();
+  
   surface.setTitle("Batch Processing");
   background(backgroundcolor);
-  tint(230, 250, 250);
+  tint(230, 230, 250);
   image(bg2, 0, 0);
 
   menuBar();
+
+  fill(acolor);
+  textSize(16);
+  text("Select folder:", 260, 70);
+
+  fill(bcolor);
+  rect(150, 102, 15, 15, 4);
+
+  fill(icolor);
+  textSize(11);
+  text("...", 153, 110);
+
+  fill(acolor);
+  pathname = path_batch;
+  if (path_batch.length() > 50) pathname = path_batch.substring(0, 25)+"..."+path_batch.substring(path_batch.length() - 25);
+  text(pathname, 170, 115);
+
+  textSize(14);
+  //text(">RENAME<   -Rename all files to: "+" >>"+new_name+"<<", 110, 200);
+  text(">DELETE<   -Delete all files ends with: "+" >>"+"."+ext_del+"<<", 130, 250);
+ 
+  popStyle();
+}
+
+boolean rename_batch_() 
+{
+  return  (mouseX > 245 && mouseX < 265 && mouseY > 180 && mouseY < 200);
+}
+boolean newname_batch_() 
+{
+  return  (mouseX > 320 && mouseX < 530 && mouseY > 180 && mouseY < 200);
+}
+
+boolean delete_batch_() 
+{
+  return  (mouseX > 130 && mouseX < 210 && mouseY > 235 && mouseY < 255);
+}
+boolean extension_batch_() 
+{
+  return  (mouseX > 340 && mouseX < 530 && mouseY > 235 && mouseY < 255);
+}
+
+boolean path_batch_() 
+{
+  return  (mouseX > 145 && mouseX < 170 && mouseY > 100 && mouseY < 120);
 }

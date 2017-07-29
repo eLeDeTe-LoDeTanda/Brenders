@@ -102,8 +102,7 @@ void draw() {
     ART_Gui();
     break;
   case 5:
-    //batch_Gui();
-    inDev_Gui();
+    batch_Gui();
     break;
   case 6:
     about();

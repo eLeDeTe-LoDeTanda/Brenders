@@ -52,6 +52,7 @@ void  mousePressed()
     } else if (gui == 4) {
       eventsART();
     } else if (gui == 5) {
+      mouseEventsBatch();
     } else if (gui == 6) {
       if  (mouseX > 270 && mouseX < 370 && mouseY > 145 && mouseY < 165) link("https://github.com/eLeDeTe-LoDeTanda/Brenders");
       if  (mouseX > 230 && mouseX < 410 && mouseY > 220 && mouseY < 240) link("http://lodetanda.blogspot.com/");
@@ -72,21 +73,23 @@ void  mousePressed()
 void keyPressed() 
 {
   if ('0' <= key && key <= '9') {
-    keyEventsCommandLine("number");
-    keyEventsART("number");
+    if (gui == 1) keyEventsCommandLine("number");
+    if (gui == 4) keyEventsART("number");
   }
   if (key==BACKSPACE) {
-    keyEventsCommandLine("BACKSPACE");
+    if (gui == 1) keyEventsCommandLine("BACKSPACE");
     keyEventsART("BACKSPACE");
+    if (gui == 5) keyEventsBatch("BACKSPACE");
   } else if (key==RETURN || key==ENTER) {
     rangeFix();
-    keyEventsCommandLine("ENTER");
-    keyEventsART("ENTER");
+    if (gui == 1) keyEventsCommandLine("ENTER");
+    if (gui == 4) keyEventsART("ENTER");
   } else if (keyCode == 27) {
-    keyEventsCommandLine("27");
-    keyEventsART("27");
+    if (gui == 1) keyEventsCommandLine("27");
+    if (gui == 4) keyEventsART("27");
   } else if (key != CODED) {
-    keyEventsCommandLine("CODED");
+    if (gui == 1) keyEventsCommandLine("CODED");
+    if (gui == 5) keyEventsBatch("CODED");
   }
   if (keyCode == 83) {
     save(dataPath("")+"/Screenshots/"+version+"_"+day()+"-"+month()+"-"+year()+"_"+hour()+":"+minute()+":"+second()+".png");
