@@ -40,7 +40,7 @@ void startGui()
   fill(acolor);
   textSize(14);
   text("Render Time Calculator", width / 2.9, height / 1.3 + 15);
-  text("Batch Process", width / 1.5, height / 1.3 + 15);
+  text("Batch Processing", width / 1.5, height / 1.3 + 15);
   text("Command line generator", width / 2 - 200, height / 3 - 40);
   text("Render Manager", width / 2, height / 4 - 40);
   text("Render multi .blend", width / 2 + 200, height / 3 - 40);
@@ -81,7 +81,7 @@ boolean renderTimeCalculator_()
   return  (mouseX > 195 && mouseX < 250 && mouseY > 230 && mouseY < 280);
 }
 
-boolean batchProcess_() 
+boolean batchProcessing_() 
 {
   return  (mouseX > 400 && mouseX < 450 && mouseY > 230 && mouseY < 280);
 }
