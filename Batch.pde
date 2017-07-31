@@ -116,8 +116,10 @@ void batchRename()
   for (int x = 0; x < fList.length; x++) {
     File f = new File(path_batch+fList[x]);
     File newf = new File(path_batch+new_name+nf(x + int(sframe), sframe.length())+"."+ext_delete);
-    if (!newf.exists()) {
-      f.renameTo(newf);
+    if (f.isFile()) {
+      if (!newf.exists()) {
+        f.renameTo(newf);
+      }
     }
   }
 }
