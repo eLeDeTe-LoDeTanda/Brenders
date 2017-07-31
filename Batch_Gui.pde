@@ -52,7 +52,7 @@ void batch_Gui()
   
   fill(acolor);
   textSize(16);
-  text("Select folder:", width / 2, 70);
+  text("Select folder:", width / 2, 55);
 
   fill(bcolor);
   rect(150, 102, 15, 15, 4);
@@ -63,17 +63,17 @@ void batch_Gui()
 
   fill(acolor);
   pathname = path_batch;
-  if (path_batch.length() > 40) pathname = path_batch.substring(0, 20)+"..."+path_batch.substring(path_batch.length() - 20);
-  text(pathname,  width / 2, 110);
+  if (path_batch.length() > 60) pathname = path_batch.substring(0, 30)+"..."+path_batch.substring(path_batch.length() - 30);
+  text(pathname,  width / 2, 85);
 
   textSize(14);
   fill(bcolor);
   text("RENAME o DELETE all files in: "+pathname,  width / 2, 150);
   
   fill(acolor);
-  text("                   -New Name: "+" >>"+new_name+sframe+"."+ext_rename+"<<",  width / 2, 200);
-  text("                   -Ends With: "+" >>"+"."+ext_delete+"<<",  width / 2, 250);
-  text("New name start:  >>"+sframe+"<<",  width / 2, 220);
+  text("                 -New Name: "+" >>"+new_name+sframe+"."+ext_rename+"<<",  width / 2, 200);
+  text("                 -Ends With: "+" >>"+"."+ext_delete+"<<",  width / 2, 250);
+  text("-New name start:  >>"+sframe+"<<",  width / 2, 220);
   fill(ecolor);
   text(">RENAME<", 110, 200);
   text(">DELETE<", 150, 250);
