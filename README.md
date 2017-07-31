@@ -91,7 +91,7 @@ BRENDERSv1.0 TODO:
 
 **BATCH PROCESSING**
 
-*Rename renders --- Renombrar renders
+*~Rename renders --- Renombrar renders~ :heavy_check_mark:
 
 *~Delete .blend... --- Borrar .blend...~ :heavy_check_mark:
 
