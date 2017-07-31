@@ -25,13 +25,17 @@
  * ***** END GPL LICENSE BLOCK *****
  */
 
-String path_batch =  "No folder selected...";
+String path_batch =  "";
 String ext_delete = "blend1";
+String ext_rename = "png";
 String new_name = "NewName-";
 boolean select_delete = false;
 boolean select_rename = false;
 boolean select_sframe = false;
 String sframe = "0000";
+
+int rename_files = 0;
+int delete_files = 0;
 
 void batch_Gui()
 {
@@ -43,61 +47,67 @@ void batch_Gui()
   image(bg2, 0, 0);
 
   menuBar();
-
+  
+  textAlign(CENTER, CENTER);
+  
   fill(acolor);
   textSize(16);
-  text("Select folder:", 260, 70);
+  text("Select folder:", width / 2, 70);
 
   fill(bcolor);
   rect(150, 102, 15, 15, 4);
 
   fill(icolor);
   textSize(11);
-  text("...", 153, 110);
+  text("...", 157, 105);
 
   fill(acolor);
   pathname = path_batch;
   if (path_batch.length() > 40) pathname = path_batch.substring(0, 20)+"..."+path_batch.substring(path_batch.length() - 20);
-  text(pathname, 170, 115);
+  text(pathname,  width / 2, 110);
 
   textSize(14);
   fill(bcolor);
-  text("RENAME o DELETE all files in: "+pathname, 130, 150);
+  text("RENAME o DELETE all files in: "+pathname,  width / 2, 150);
   
   fill(acolor);
-  text("                   -New Name: "+" >>"+new_name+sframe+"."+ext_delete+"<<", 110, 200);
-  text("                   -Ends With: "+" >>"+"."+ext_delete+"<<", 130, 250);
-  text("First Frame:  ", 250, 220);
-  text(">>"+sframe+"<<", 340, 220);
+  text("                   -New Name: "+" >>"+new_name+sframe+"."+ext_rename+"<<",  width / 2, 200);
+  text("                   -Ends With: "+" >>"+"."+ext_delete+"<<",  width / 2, 250);
+  text("New name start:  >>"+sframe+"<<",  width / 2, 220);
   fill(ecolor);
   text(">RENAME<", 110, 200);
-  text(">DELETE<", 130, 250);
+  text(">DELETE<", 150, 250);
+  
+  noFill();
+  rect(150, 275, 330, 55);
+  text(rename_files+"             files to Rename!", width / 2, 290);
+  text(delete_files+"             files to deleted!",  width / 2, 310);
 
   popStyle();
 }
 
 boolean rename_batch_() 
 {
-  return  (mouseX > 100 && mouseX < 200 && mouseY > 180 && mouseY < 200);
+  return  (mouseX > 70 && mouseX < 150 && mouseY > 190 && mouseY < 215);
 }
 boolean newname_batch_() 
 {
-  return  (mouseX > 320 && mouseX < 530 && mouseY > 180 && mouseY < 200);
+  return  (mouseX > 340 && mouseX < 500 && mouseY > 190 && mouseY < 215);
 }
 
 boolean sframe_batch_() 
 {
-  return  (mouseX > 320 && mouseX < 530 && mouseY > 205 && mouseY < 225);
+  return  (mouseX > 340 && mouseX < 500 && mouseY > 216 && mouseY < 230);
 }
 
 
 boolean delete_batch_() 
 {
-  return  (mouseX > 130 && mouseX < 210 && mouseY > 235 && mouseY < 255);
+  return  (mouseX > 105 && mouseX < 190 && mouseY > 240 && mouseY < 260);
 }
 boolean extension_batch_() 
 {
-  return  (mouseX > 340 && mouseX < 530 && mouseY > 235 && mouseY < 255);
+  return  (mouseX > 340 && mouseX < 500 && mouseY > 235 && mouseY < 255);
 }
 
 boolean path_batch_() 
