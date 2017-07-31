@@ -89,7 +89,7 @@ void pathBatch(File selection)
 
     ext_delete = selection.getName();
     ext_delete = ext_delete.substring(ext_delete.lastIndexOf(".")+1);
-
+    ext_rename = ext_delete;
     path_batch = path_batch.substring(0, path_batch.lastIndexOf(File.separator)+1);
 
     redraw();
@@ -102,8 +102,10 @@ void batchDelete()
   File fList[] = folder.listFiles();
 
   for (File f : fList) {
-    if (f.getName().endsWith("."+ext_delete)) {
-      f.delete();
+    if (f.isFile()) {
+      if (f.getName().endsWith("."+ext_delete)) {
+        f.delete();
+      }
     }
   }
 }
@@ -115,9 +117,9 @@ void batchRename()
 
   for (int x = 0; x < fList.length; x++) {
     File f = new File(path_batch+fList[x]);
-    File newf = new File(path_batch+new_name+nf(x + int(sframe), sframe.length())+"."+ext_delete);
+    File newf = new File(path_batch+new_name+nf(x + int(sframe), sframe.length())+"."+ext_rename);
     if (f.isFile()) {
-      if (!newf.exists() && f.getName().endsWith(ext_delete)) {
+      if (!newf.exists() && f.getName().endsWith(ext_rename)) {
         f.renameTo(newf);
       }
     }
