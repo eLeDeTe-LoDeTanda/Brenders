@@ -18,9 +18,11 @@ void keyEventsBatch (String keypress)
   } else if (keypress == "CODED") {
     if (select_delete) {
       ext_delete += key;
+      batchCountDeleteFiles();
     }
     if (select_rename) {
       new_name += key;
+      batchCountRenameFiles();
     }
   }
   if (keypress == "ENTER") {
@@ -62,9 +64,10 @@ void  mouseEventsBatch()
   if (newname_batch_()) { 
     esc = new_name;
     new_name = "";
+    select_rename = true;
     select_delete = false;
     select_sframe = false;
-    select_rename = true;
+    batchCountRenameFiles();
   }
   if (extension_batch_()) {
     esc = ext_delete;
@@ -72,13 +75,14 @@ void  mouseEventsBatch()
     select_delete = true;
     select_rename = false;
     select_sframe = false;
+    batchCountDeleteFiles();
   }
   if (sframe_batch_()) {
     esc = sframe;
     sframe = "";
+    select_sframe = true;
     select_delete = false;
     select_rename = false;
-    select_sframe = true;
   }
 }
 
@@ -92,7 +96,42 @@ void pathBatch(File selection)
     ext_rename = ext_delete;
     path_batch = path_batch.substring(0, path_batch.lastIndexOf(File.separator)+1);
 
+    batchCountDeleteFiles();
+    batchCountRenameFiles();
+
     redraw();
+  }
+}
+
+void batchCountRenameFiles()
+{
+  File dir = new File(path_batch);
+  String[] fList = sort(dir.list());
+  rename_files = 0;
+  for (int x = 0; x < fList.length; x++) {
+    File f = new File(path_batch+fList[x]);
+    File newf = new File(path_batch+new_name+nf(x + int(sframe), sframe.length())+"."+ext_rename);
+    if (f.isFile()) {
+      if (!newf.exists() && f.getName().endsWith(ext_rename)) {
+        rename_files = rename_files + 1;
+      }
+    }
+  }
+  redraw();
+}
+
+
+void batchCountDeleteFiles()
+{
+  File folder = new File(path_batch);
+  File fList[] = folder.listFiles();
+  delete_files = 0;
+  for (File f : fList) {
+    if (f.isFile()) {
+      if (f.getName().endsWith("."+ext_delete)) {
+        delete_files = delete_files + 1;
+      }
+    }
   }
 }
 
@@ -108,6 +147,7 @@ void batchDelete()
       }
     }
   }
+  redraw();
 }
 
 void batchRename()
