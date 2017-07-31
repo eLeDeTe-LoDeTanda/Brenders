@@ -150,16 +150,22 @@ void batchDelete()
   redraw();
 }
 
+int y = -1;
+
 void batchRename()
 {
+  y = -1;
   File dir = new File(path_batch);
   String[] fList = sort(dir.list());
 
   for (int x = 0; x < fList.length; x++) {
     File f = new File(path_batch+fList[x]);
-    File newf = new File(path_batch+new_name+nf(x + int(sframe), sframe.length())+"."+ext_rename);
-    if (f.isFile()) {
-      if (!newf.exists() && f.getName().endsWith(ext_rename)) {
+    if (f.isFile() && f.getName().endsWith(ext_rename)) {
+      y = y + 1;
+      File newf = new File(path_batch+new_name+nf(y + int(sframe), sframe.length())+"."+ext_rename);
+
+      if (!newf.exists()) {
+        print(y);
         f.renameTo(newf);
       }
     }
