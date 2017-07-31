@@ -40,7 +40,7 @@ void  mousePressed()
       if (renderTimeCalculator_()) {
         gui = 4;
       }
-      if (batchProcess_()) {
+      if (batchProcessing_()) {
         gui = 5;
       }
       if  (mouseX > 30 && mouseX < 50 && mouseY > 330 && mouseY < 350) gui = 6;
@@ -75,6 +75,7 @@ void keyPressed()
   if ('0' <= key && key <= '9') {
     if (gui == 1) keyEventsCommandLine("number");
     if (gui == 4) keyEventsART("number");
+    if (gui == 5) keyEventsBatch("number");
   }
   if (key==BACKSPACE) {
     if (gui == 1) keyEventsCommandLine("BACKSPACE");
@@ -84,9 +85,11 @@ void keyPressed()
     rangeFix();
     if (gui == 1) keyEventsCommandLine("ENTER");
     if (gui == 4) keyEventsART("ENTER");
+    if (gui == 5) keyEventsBatch("ENTER");
   } else if (keyCode == 27) {
     if (gui == 1) keyEventsCommandLine("27");
     if (gui == 4) keyEventsART("27");
+    if (gui == 5) keyEventsBatch("27");
   } else if (key != CODED) {
     if (gui == 1) keyEventsCommandLine("CODED");
     if (gui == 5) keyEventsBatch("CODED");

@@ -24,15 +24,19 @@
  *
  * ***** END GPL LICENSE BLOCK *****
  */
+
 String path_batch =  "No folder selected...";
-String ext_del = "blend1";
-String new_name = "xxxxxxxxxxxxxxxx";
-boolean select_del = false;
+String ext_delete = "blend1";
+String new_name = "NewName-";
+boolean select_delete = false;
+boolean select_rename = false;
+boolean select_sframe = false;
+String sframe = "0000";
 
 void batch_Gui()
 {
   pushStyle();
-  
+
   surface.setTitle("Batch Processing");
   background(backgroundcolor);
   tint(230, 230, 250);
@@ -53,26 +57,39 @@ void batch_Gui()
 
   fill(acolor);
   pathname = path_batch;
-  if (path_batch.length() > 50) pathname = path_batch.substring(0, 25)+"..."+path_batch.substring(path_batch.length() - 25);
+  if (path_batch.length() > 40) pathname = path_batch.substring(0, 20)+"..."+path_batch.substring(path_batch.length() - 20);
   text(pathname, 170, 115);
 
   textSize(14);
-  //text(">RENAME<   -Rename all files to: "+" >>"+new_name+"<<", 110, 200);
-  text("                   -Delete all files ends with: "+" >>"+"."+ext_del+"<<", 130, 250);
+  fill(bcolor);
+  text("RENAME o DELETE all files in: "+pathname, 130, 150);
+  
+  fill(acolor);
+  text("                   -New Name: "+" >>"+new_name+sframe+"."+ext_delete+"<<", 110, 200);
+  text("                   -Ends With: "+" >>"+"."+ext_delete+"<<", 130, 250);
+  text("First Frame:  ", 250, 220);
+  text(">>"+sframe+"<<", 340, 220);
   fill(ecolor);
+  text(">RENAME<", 110, 200);
   text(">DELETE<", 130, 250);
- 
+
   popStyle();
 }
 
 boolean rename_batch_() 
 {
-  return  (mouseX > 245 && mouseX < 265 && mouseY > 180 && mouseY < 200);
+  return  (mouseX > 100 && mouseX < 200 && mouseY > 180 && mouseY < 200);
 }
 boolean newname_batch_() 
 {
   return  (mouseX > 320 && mouseX < 530 && mouseY > 180 && mouseY < 200);
 }
+
+boolean sframe_batch_() 
+{
+  return  (mouseX > 320 && mouseX < 530 && mouseY > 205 && mouseY < 225);
+}
+
 
 boolean delete_batch_() 
 {
