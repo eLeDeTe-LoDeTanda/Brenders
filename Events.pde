@@ -94,7 +94,7 @@ void keyPressed()
     if (gui == 1) keyEventsCommandLine("CODED");
     if (gui == 5) keyEventsBatch("CODED");
   }
-  if (keyCode == 83) {
+  if (keyCode == 83 && keyCode == SHIFT) {
     save(dataPath("")+"/Screenshots/"+version+"_"+day()+"-"+month()+"-"+year()+"_"+hour()+":"+minute()+":"+second()+".png");
     info = "Screenshot saved in: data/screenshot/";
   }
