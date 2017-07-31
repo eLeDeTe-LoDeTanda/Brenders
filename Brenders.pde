@@ -72,6 +72,7 @@ void setup () {
   else if (os.indexOf("mac") != -1) os = "MACOSX";
   else os = "OTHER";
 
+  path_batch = dataPath("Test");
   initVarCommandLine(os);
 }
 
