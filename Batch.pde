@@ -51,6 +51,7 @@ void  mouseEventsBatch()
     select_rename = false;
     select_sframe = false;
     batchRename();
+    batchRename();
   }
   if (delete_batch_()) { 
     select_delete = false;
