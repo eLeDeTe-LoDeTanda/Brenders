@@ -52,14 +52,17 @@ void  mouseEventsBatch()
     select_delete = false;
     select_rename = false;
     select_sframe = false;
-    batchRename();
-    batchRename();
+    for (int x = 0; x < rename_files; x++) {
+      batchRename();
+    }
   }
   if (delete_batch_()) { 
     select_delete = false;
     select_rename = false;
     select_sframe = false;
     batchDelete();
+    batchCountDeleteFiles();
+    batchCountRenameFiles();
   }
   if (newname_batch_()) { 
     esc = new_name;
@@ -67,6 +70,7 @@ void  mouseEventsBatch()
     select_rename = true;
     select_delete = false;
     select_sframe = false;
+    batchCountDeleteFiles();
     batchCountRenameFiles();
   }
   if (extension_batch_()) {
@@ -157,15 +161,12 @@ void batchRename()
   y = -1;
   File dir = new File(path_batch);
   String[] fList = sort(dir.list());
-
   for (int x = 0; x < fList.length; x++) {
     File f = new File(path_batch+fList[x]);
     if (f.isFile() && f.getName().endsWith(ext_rename)) {
       y = y + 1;
       File newf = new File(path_batch+new_name+nf(y + int(sframe), sframe.length())+"."+ext_rename);
-
       if (!newf.exists()) {
-        print(y);
         f.renameTo(newf);
       }
     }
