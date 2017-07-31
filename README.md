@@ -93,7 +93,7 @@ BRENDERSv1.0 TODO:
 
 *~Rename renders --- Renombrar renders~ :heavy_check_mark:
 
-*~Select firs frame number --- Seleccionar el número del primer frame~ :heavy_check_mark:
+*~Select first frame number --- Seleccionar el número del primer frame~ :heavy_check_mark:
 
 *~Delete .blend... --- Borrar .blend...~ :heavy_check_mark:
 
