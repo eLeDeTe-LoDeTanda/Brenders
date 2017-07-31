@@ -117,7 +117,7 @@ void batchRename()
     File f = new File(path_batch+fList[x]);
     File newf = new File(path_batch+new_name+nf(x + int(sframe), sframe.length())+"."+ext_delete);
     if (f.isFile()) {
-      if (!newf.exists()) {
+      if (!newf.exists() && f.getName().endsWith(ext_delete)) {
         f.renameTo(newf);
       }
     }
