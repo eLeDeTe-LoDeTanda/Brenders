@@ -90,6 +90,10 @@ BRENDERSv1.0 TODO:
 
 *Select: Good or Bad --- Seleccionar: Bueno o Malo
 
+*Render All --- Renderizar todos
+
+*Render only: preview, final, good or bad --- Renderizar sólo: preview, final, bueno o malo 
+
 **APROXIMATE RENDER TIME CALCULATOR**
 
 *~Aproximate render time --- tiempo de render aproximado~ :heavy_check_mark:
