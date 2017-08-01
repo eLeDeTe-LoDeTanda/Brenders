@@ -86,6 +86,8 @@ BRENDERSv1.0 TODO:
 
 *preview renders --- Previsualizar renders
 
+*Open render --- Abrir render
+
 *Select: preview or final --- Seleccionar: previsualización o final
 
 *Select: Good or Bad --- Seleccionar: Bueno o Malo
