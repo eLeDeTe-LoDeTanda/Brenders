@@ -86,6 +86,10 @@ BRENDERSv1.0 TODO:
 
 *preview renders --- Previsualizar renders
 
+*Select: preview or final --- Seleccionar: previsualización o final
+
+*Select: Good or Bad --- Seleccionar: Bueno o Malo
+
 **APROXIMATE RENDER TIME CALCULATOR**
 
 *~Aproximate render time --- tiempo de render aproximado~ :heavy_check_mark:
