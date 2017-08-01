@@ -86,6 +86,8 @@ BRENDERSv1.0 TODO:
 
 *Update to last render finished --- Actualizar al último render finalizado 
 
+*Generate image preview from blend --- Generar imagen de previsualización del blend
+
 **RENDER MANAGER**
 
 *preview renders --- Previsualizar renders
