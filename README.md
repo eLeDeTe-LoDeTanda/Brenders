@@ -82,6 +82,10 @@ BRENDERSv1.0 TODO:
 
 *.blend Priority --- .blend Prioridad
 
+*Autorun renders file (.sh in Linux .bat in Windows) --- Archivo autoejecutable de renders (.sh en Linux .bat en Windows)
+
+*Update to last render finished --- Actualizar al último render finalizado 
+
 **RENDER MANAGER**
 
 *preview renders --- Previsualizar renders
