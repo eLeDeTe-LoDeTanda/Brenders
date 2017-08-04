@@ -78,15 +78,29 @@ BRENDERSv1.0 TODO:
 
 **RENDER MULTI-BLENDS**
 
+
+*New proyect --- Proyecto nuevo
+
+*Open proyect --- Abrir proyecto
+
+*Reload proyect --- Recargar proyecto
+
+*Recents proyects --- Proyectos recientes
+
 *Generate python script with multi-blends --- Generar python script con multi-blends
 
-*.blend Priority --- .blend Prioridad
+*Render order --- Orden de renderizado
+
+*Edit Render order in text editor --- Editar orden de render en editor de texto
+
+*Import render options --- Importar opciones de render
 
 *Autorun renders file (.sh in Linux .bat in Windows) --- Archivo autoejecutable de renders (.sh en Linux .bat en Windows)
 
 *Update to last render finished --- Actualizar al último render finalizado 
 
 *Generate image preview from blend --- Generar imagen de previsualización del blend
+
 
 **RENDER MANAGER**
 
