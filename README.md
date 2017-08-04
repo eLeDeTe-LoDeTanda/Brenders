@@ -78,7 +78,6 @@ BRENDERSv1.0 TODO:
 
 **RENDER MULTI-BLENDS**
 
-
 *New proyect --- Proyecto nuevo
 
 *Open proyect --- Abrir proyecto
@@ -87,7 +86,7 @@ BRENDERSv1.0 TODO:
 
 *Recents proyects --- Proyectos recientes
 
-*Generate python script with multi-blends --- Generar python script con multi-blends
+*Autorun with multi-blends --- Autoejecutable con multi-blends
 
 *Render order --- Orden de renderizado
 
