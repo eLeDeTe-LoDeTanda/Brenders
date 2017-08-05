@@ -42,7 +42,7 @@ void mouseEventsMultiblend()
         settingspath = path;
         settingsfolder = new File(path);
         settingsname = settingspath.substring(settingspath.lastIndexOf(File.separator));
-       // multiblend_order();
+        // multiblend_order();
         //loadMultiblend();
         //precheck();
         blendpre = requestImage(proyectpath+"Options"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
@@ -61,9 +61,7 @@ void mouseEventsMultiblend()
       }
     }
     if (reload_Multiblend_()) {
-      multiblend_order();
-      multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
-      //loadMultiblend();
+      loadMultiblend();
     }
 
     if (import_Multiblend_()) {
