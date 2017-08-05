@@ -24,7 +24,7 @@
  *
  * ***** END GPL LICENSE BLOCK *****
  */
- 
+
 void selectColor()
 {
   pushStyle();
@@ -87,8 +87,8 @@ void menuBar()
   textAlign(CENTER, CENTER);
   if  (mouseX > 0 && mouseX < 40 && mouseY > 0 && mouseY < 30) gui = 0;
   if  (mouseX > 40 && mouseX < 70 && mouseY > 0 && mouseY < 30) gui = 1;
-  if  (mouseX > 70 && mouseX < 90 && mouseY > 0 && mouseY < 30) gui = 2;
-  if  (mouseX > 90 && mouseX < 120 && mouseY > 0 && mouseY < 30) gui = 3;
+  if  (mouseX > 70 && mouseX < 90 && mouseY > 0 && mouseY < 30) gui = 3;
+  if  (mouseX > 90 && mouseX < 120 && mouseY > 0 && mouseY < 30) gui = 2;
   if  (mouseX > 120 && mouseX < 150 && mouseY > 0 && mouseY < 30) gui = 4;
   if  (mouseX > 150 && mouseX < 180 && mouseY > 0 && mouseY < 30) gui = 5;
 
@@ -121,17 +121,17 @@ void menuBar()
   if (gui == 2) {
     textSize(14);
     fill(bcolor, 200);
+    text("Render Manager", width / 2 + 240, 5);
+    fill(ccolor);
+  } else fill(bcolor, 100);
+  ellipse(110, 10, 15, 15); 
+  if (gui == 3) {
+    textSize(14);
+    fill(bcolor, 200);
     text("Rendering multi .blend", width / 2 + 200, 5);
     fill(ccolor);
   } else fill(bcolor, 100);
   ellipse(80, 10, 15, 15);
-  if (gui == 3) {
-    textSize(14);
-    fill(bcolor, 200);
-    text("Renders status", width / 2 + 240, 5);
-    fill(ccolor);
-  } else fill(bcolor, 100);
-  ellipse(110, 10, 15, 15); 
   if (gui == 4) {
     textSize(14);
     fill(bcolor, 200);
@@ -152,6 +152,6 @@ void menuBar()
 
 String fullDate ()
 {
-  String fulldate =  nf(day(), 2)+"-"+nf(month(), 2)+"-"+nf(year(), 2)+"_"+nf(hour(), 2)+":"+nf(minute(), 2)+":"+nf(second(), 2);
+  String fulldate =  nf(month(), 2)+"-"+nf(day(), 2)+"-"+nf(year(), 2)+"_"+nf(hour(), 2)+":"+nf(minute(), 2)+":"+nf(second(), 2);
   return fulldate;
 }
