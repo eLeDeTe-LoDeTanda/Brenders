@@ -84,7 +84,10 @@ void mouseEventsMultiblend()
         }
         multiblend_restart = false;
         info = "Rendering. You can close Brenders";
-      } else info = "Proyect empty";
+      } else {
+        error = true;
+        info = "Proyect empty";
+      }
     }
     if (overwrite_Multiblend_()) {
       multiblend_restart = true;
@@ -151,11 +154,6 @@ void openProyect(File selection)
       proyectname = proyectname.substring(0, proyectname.lastIndexOf("."));
       proyectpath = proyectpath.substring(0, proyectpath.lastIndexOf(File.separator)+1);
 
-      // outputfolder = new File(outputpath);
-      // proyectpath = proyectpath.substring(0, proyectpath.lastIndexOf(File.separator)+1);
-      //   multiblendRenameFiles();
-      precheck();
-
       loadMultiblend();
     } else {
       error = true;
@@ -172,7 +170,6 @@ void loadMultiblend()
   String lines[] = loadStrings(proyectpath+proyectname+".brenders");
   File dir = new File(proyectpath+"Options"+File.separator);
   String[] fList = dir.list();
-  // String[] multiblend_names = new String[fList.length];
   int x = 0;
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].contains("[Order]")) {
@@ -190,96 +187,17 @@ void loadMultiblend()
   info = proyectname;
 }
 
-
-/*
-void batchCountOrderFiles()
- {
- File folder = new File(proyectpath+"RenderOptions"+File.separator);
- File fList[] = folder.listFiles();
- order = 0;
- for (File f : fList) {
- if (f.isFile()) {
- if (f.getName().endsWith(".multiblend")) {
- order = order + 1;
- }
- }
- }
- }
- */
-
-/*
-void multiblendRenameFiles()
- {
- File dir = new File(proyectpath+"RenderOptions"+File.separator);
- String[] fList = sort(dir.list());
- int x = 0;
- for (int i = 0; i < fList.length; i++) {
- File f = new File(proyectpath+"RenderOptions"+File.separator+fList[x]);
- if (f.isFile()) { 
- if (f.getName().endsWith(".multiblend")) {
- File newf = new File(proyectpath+"RenderOptions"+File.separator+nf(x, 4)+"-"+proyectname+".multiblend");
- if (!newf.exists()) {
- f.renameTo(newf);
- }
- x = x + 1;
- }
- }
- }
- }*/
-
-
-/*
-void multiblend_save_order(String path)
- {
- multiblendRenameFiles();
- batchCountOrderFiles();
- File folder = new File(proyectpath);
- 
- String orderpath = folder+File.separator+"RenderOptions"+File.separator+nf(order, 4)+"-"+proyectname+".multiblend";
- File f = new File(orderpath);
- 
- if (path.endsWith(".txt")) {
- // commandLineOptions();
- loadCommandline(path);
- String fconv = orderpath.substring(0, orderpath.lastIndexOf("."))+".convert";
- generatepy = true;
- commandLineOptions();
- py_Save(fconv);
- path = fconv;
- if (!f.exists()) {
- saveBytes(f, loadBytes(path));
- }
- File fconvert = new File(fconv);
- fconvert.delete();
- } else {
- if (!f.exists()) {
- saveBytes(f, loadBytes(path));
- }
- }
- loadPy(orderpath);
- settingspath = orderpath;
- settingsfolder = new File(orderpath);
- settingsname = orderpath.substring(orderpath.lastIndexOf(File.separator) + 1);
- multiblend[order] = settingsname;
- multiblend_autorun(proyectpath+proyectname);
- 
- // multiblend_save_renderoptions();
- }
- */
-
 void multiblend_save(String path)
 {
   String multiblendpath = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend";
   File f = new File(multiblendpath);
 
   if (path.endsWith(".txt")) {
-    // commandLineOptions();
     loadCommandline(path);
     String fconv = multiblendpath.substring(0, multiblendpath.lastIndexOf("."))+".convert";
     generatepy = true;
     commandLineOptions();
     py_Save(fconv);
-    //println(multiblendpath);
     path = fconv;
     if (!f.exists()) {
       saveBytes(f, loadBytes(path));
@@ -293,41 +211,11 @@ void multiblend_save(String path)
   settingspath = multiblendpath;
   settingsfolder = new File(multiblendpath);
   settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
-  // multiblend_names[order] = settingsname;
   multiblend_order();
   multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
 
   precheck();
-  // multiblend_save_renderoptions();
 }
-
-/*
-void multiblend_save_renderoptions()
- {
- File dir = new File(proyectpath+File.separator+"RenderOptions"+File.separator);
- String[] fList = sort(dir.list());
- File file = new File(proyectpath+File.separator+File.separator+proyectname+".py");
- write = createWriter(file);
- for (int x = 0; x < fList.length; x++) {
- File f = new File(proyectpath+File.separator+"RenderOptions"+File.separator+fList[x]);
- if (f.isFile()) {
- if (f.getName().endsWith(".multiblend")) {
- String[] lines = loadStrings(f);
- write.println("#MultiBlend: "+x);
- write.println("####################################");
- write.println();
- for (int i = 0; i < lines.length; i++) {
- write.println(lines[i]);
- }
- }
- }
- }
- write.flush();
- write.close();
- 
- multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
- }
- */
 
 void multiblend_order()
 {
@@ -340,7 +228,6 @@ void multiblend_order()
     write.println("[Order]");
     File dir = new File(proyectpath+"Options"+File.separator);
     String[] fList = sort(dir.list());
-    // String[] multiblend_names = new String[fList.length];
     int x = 0;
     for (int i = 0; i < fList.length; i++) {
       File f = new File(proyectpath+"Options"+File.separator+fList[x]);
@@ -356,7 +243,6 @@ void multiblend_order()
   }
 }
 
-
 void multiblend_autorun(String path)
 {   
   String lines[] = loadStrings(proyectpath+proyectname+".brenders");
@@ -371,9 +257,6 @@ void multiblend_autorun(String path)
     }
   }
 
-  // File dir = new File(proyectpath+"RenderOptions"+File.separator);
-  // String[] fList = sort(dir.list());
-  // print(dir);
   if (os == "WINDOWS") {
     write = createWriter(path+".bat");
     write.println("@ECHO OFF");
@@ -440,16 +323,12 @@ void multiblend_autorun(String path)
 void multiblend_addtomulti()
 {
   String multiblendpath = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend";
-  // print(multiblendpath);
-  //String path = dataPath("tmp")+File.separator+"RenderOptions.py";
   commandLineOptions();
   py_Save(multiblendpath);
-  // multiblend_save(settingspath);
   add_tomulti = false;
   multiblend_order();
   multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
   info = "Saved: "+settingsname.substring(0, settingsname.lastIndexOf("."));
-  // new File(path).delete();
 }
 
 void multiblend_pre()
