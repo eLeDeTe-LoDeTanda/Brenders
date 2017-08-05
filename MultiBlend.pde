@@ -37,13 +37,22 @@ void mouseEventsMultiblend()
     if (multiblend_files > 0) {
       if (orderL_Multiblend_() ) {
         order = constrain(order - 1, 0, multiblend_files - 1);
-        loadPy(proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend");
-        blendpre = requestImage(proyectpath+"Options"+File.separator+"Previews"+File.separator+blendname.substring(0, blendname.lastIndexOf("."))+".png");
+        String path = proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
+        loadPy(path);
+        settingspath = path;
+        settingsfolder = new File(path);
+        settingsname = settingspath.substring(settingspath.lastIndexOf(File.separator));
+        // loadMultiblend();
+        blendpre = requestImage(proyectpath+"Options"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
       }
       if (orderR_Multiblend_() ) {
         order = constrain(order + 1, 0, multiblend_files - 1);
-        loadPy(proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend");
-        blendpre = requestImage(proyectpath+"Options"+File.separator+"Previews"+File.separator+blendname.substring(0, blendname.lastIndexOf("."))+".png");
+        String path = proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
+        loadPy(path);
+        settingspath = path;
+        settingsfolder = new File(path);
+        settingsname = settingspath.substring(settingspath.lastIndexOf(File.separator));
+        blendpre = requestImage(proyectpath+"Options"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
       }
     }
     if (reload_Multiblend_()) {
@@ -99,6 +108,7 @@ void mouseEventsMultiblend()
         multiblend_restart = false;
       }
       if (blendpre_Multiblend_()) {
+        loadPy(proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend");
         multiblend_pre();
       }
       if (framepreL_Multiblend_()) {
@@ -331,6 +341,7 @@ void multiblend_addtomulti()
   py_Save(multiblendpath);
   add_tomulti = false;
   multiblend_order();
+  loadMultiblend();
   multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
   info = "Saved: "+settingsname.substring(0, settingsname.lastIndexOf("."));
 }
@@ -363,16 +374,6 @@ void multiblend_pre()
   write.println("100");
   write.println();
 
-  write.print("bpy.data.scenes[Scenename].render.filepath = ");
-  write.println('"'+dataPath("tmp")+File.separator+blendname.substring(0, blendname.lastIndexOf("."))+".png"+'"');
-  write.print("bpy.data.scenes[Scenename].render.use_file_extension = ");
-  write.println("True");
-  write.print("bpy.data.scenes[Scenename].render.use_overwrite = ");
-  write.println("True");
-  write.print("bpy.data.scenes[Scenename].render.image_settings.file_format = ");
-  write.println('"'+"PNG"+'"');
-  write.println();
-
   write.println("# stamp");
   write.print("bpy.data.scenes[Scenename].render.use_stamp = ");
   write.println("False");
@@ -388,7 +389,7 @@ void multiblend_pre()
   write.println("bpy.ops.render.opengl(view_context = False)");
   write.println();
 
-  write.println("bpy.data.images['Render Result'].save_render("+'"'+proyectpath+"Options"+File.separator+"Previews"+File.separator+blendname.substring(0, blendname.lastIndexOf("."))+".png"+'"'+")");
+  write.println("bpy.data.images['Render Result'].save_render("+'"'+proyectpath+"Options"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png"+'"'+")");
   write.println();
 
   write.println("bpy.ops.wm.quit_blender()");
@@ -451,6 +452,6 @@ void multiblend_pre()
 
 void precheck()
 {
-  File img = new File(proyectpath+"Options"+File.separator+"Previews"+File.separator+blendname.substring(0, blendname.lastIndexOf("."))+".png");
+  File img = new File(proyectpath+"Options"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
   if (!img.exists())  multiblend_pre();
 }
