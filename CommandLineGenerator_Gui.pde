@@ -196,16 +196,15 @@ String pathname;
 void commandLineGenerator_Gui()
 {
   pushStyle();
-  
   pathname = blendname;
   if (blendname.length() > 20) pathname = blendname.substring(0, 10)+"..."+blendname.substring(blendname.length() - 10);
   surface.setTitle("ComandLineGenerator -"+pathname+"- "+version);
   background(backgroundcolor);
   tint(230, 230, 250);
   image(bg2, 0, 0);
-  
+
   menuBar();
-  
+
   stroke(icolor);
 
   textAlign(LEFT);
@@ -251,10 +250,12 @@ void commandLineGenerator_Gui()
 
   textSize(14);
   fill(bcolor);
-  rect(180, 145, 295, 25);
+  rect(174, 145, 295, 25);
   if (error) fill(ecolor);
   else fill(icolor);
-  text(info, 192, 162);
+  textAlign(CENTER);
+  text(info, width / 2, 162);
+  textAlign(LEFT);
 
   fill(bcolor);
   rect(15, 52, 15, 15, 4);
@@ -272,7 +273,7 @@ void commandLineGenerator_Gui()
   text("...", 18, 101);
   text("...", 348, 96);
   text("...", 18, 141);
-  
+
   fill(bcolor);
   textSize(14);
   ellipse(605, 40, 40, 40);
