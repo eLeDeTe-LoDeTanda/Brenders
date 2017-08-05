@@ -42,9 +42,6 @@ void mouseEventsMultiblend()
         settingspath = path;
         settingsfolder = new File(path);
         settingsname = settingspath.substring(settingspath.lastIndexOf(File.separator));
-        // multiblend_order();
-        //loadMultiblend();
-        //precheck();
         blendpre = requestImage(proyectpath+"Options"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
       }
       if (orderR_Multiblend_() ) {
@@ -54,9 +51,6 @@ void mouseEventsMultiblend()
         settingspath = path;
         settingsfolder = new File(path);
         settingsname = settingspath.substring(settingspath.lastIndexOf(File.separator));
-        //multiblend_order();
-        //loadMultiblend();
-        //precheck();
         blendpre = requestImage(proyectpath+"Options"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
       }
     }
@@ -82,6 +76,8 @@ void mouseEventsMultiblend()
     if (go_Multiblend_()) {
       if (multiblend_files > 0) {
         if (multiblend_restart) {
+          multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
+
           if (os == "WINDOWS") {
             String cmd[]= {terminalpath, "/c", "start", "/w", proyectpath+"Autorun"+File.separator+proyectname+".bat"};
             exec(cmd);
@@ -89,17 +85,20 @@ void mouseEventsMultiblend()
             String cmd[] = {terminalpath, "-e", proyectpath+"Autorun"+File.separator+proyectname+".sh"};
             exec(cmd);
           }
+          multiblend_restart = false;
+          info = "Rendering... You can close Brenders";
         } else {
-          if (os == "WINDOWS") {
-            String cmd[]= {terminalpath, "/c", "start", "/w", proyectpath+proyectname+"-continue.bat"};
-            exec(cmd);
-          } else {
-            String cmd[] = {terminalpath, "-e", proyectpath+proyectname+"-continue.sh"};
-            exec(cmd);
-          }
+          error = true;
+          info = "Rendering... 'Restart' for overwite";
+
+          /* if (os == "WINDOWS") {
+           String cmd[]= {terminalpath, "/c", "start", "/w", proyectpath+proyectname+"-continue.bat"};
+           exec(cmd);
+           } else {
+           String cmd[] = {terminalpath, "-e", proyectpath+proyectname+"-continue.sh"};
+           exec(cmd);
+           }*/
         }
-        multiblend_restart = false;
-        info = "Rendering. You can close Brenders";
       } else {
         error = true;
         info = "Proyect empty";
@@ -122,6 +121,9 @@ void mouseEventsMultiblend()
       if (framepreR_Multiblend_()) {
         frameprev = constrain(frameprev + 1, 0, 500000);
       }
+      if (renderoptions_Multiblend_()) {
+        gui = 1;
+      }
     }
   }
 }
@@ -131,8 +133,6 @@ void newProyect(File selection)
   if (selection != null) {
     proyectpath = selection.getAbsolutePath()+File.separator;
     proyectname = selection.getName();
-    // outputfolder = new File(outputpath);
-    // proyectpath = proyectpath.substring(0, proyectpath.lastIndexOf(File.separator)+1);
 
     File folder = new File(proyectpath);
     folder.mkdir();
@@ -265,8 +265,8 @@ void multiblend_order()
 void multiblend_autorun(String path)
 {   
   String lines[] = loadStrings(proyectpath+proyectname+".brenders");
-  File dir = new File(proyectpath+"Options"+File.separator);
-  String[] fList = dir.list();
+  //  File dir = new File(proyectpath+"Options"+File.separator);
+  //String[] fList = dir.list();
   String order[] = new String[multiblend_files];
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].contains("[Order]")) {
@@ -276,29 +276,29 @@ void multiblend_autorun(String path)
     }
   }
 
-  if (os == "WINDOWS") {
+  if (os == "WINDOWS") {/*
     write = createWriter(path+".bat");
-    write.println("@ECHO OFF");
-    write.println("COLOR 8F");
-    // write.print("type "+settingspath);
-    write.println();
-    write.println("@ECHO -");
-    write.println("@ECHO START renders...");
-    write.println("@ECHO -");
-    write.println("PAUSE");
-    write.println("@ECHO -");
-    write.println("@ECHO RENDERING...");
-    write.println("@ECHO -");
-    write.print("call ");
-    //write.println(proyectpath+File.separator+"RenderOptions"+File.separator+fList[x]);
-    write.println("@ECHO -");
-    write.println("@ECHO FINISH!");
-    write.println("@ECHO -");
-    write.println("PAUSE");
-    write.print("exit");
-
-    write.flush();
-    write.close();
+   write.println("@ECHO OFF");
+   write.println("COLOR 8F");
+   // write.print("type "+settingspath);
+   write.println();
+   write.println("@ECHO -");
+   write.println("@ECHO START renders...");
+   write.println("@ECHO -");
+   write.println("PAUSE");
+   write.println("@ECHO -");
+   write.println("@ECHO RENDERING...");
+   write.println("@ECHO -");
+   write.print("call ");
+   //write.println(proyectpath+File.separator+"RenderOptions"+File.separator+fList[x]);
+   write.println("@ECHO -");
+   write.println("@ECHO FINISH!");
+   write.println("@ECHO -");
+   write.println("PAUSE");
+   write.print("exit");
+   
+   write.flush();
+   write.close();*/
   } else {
     write = createWriter(path+".sh");
     write.println("#!/bin/bash");
@@ -313,7 +313,7 @@ void multiblend_autorun(String path)
     for (int a = 0; a < order.length; a++) {
       loadPy(proyectpath+"Options"+File.separator+order[a]);
       //write.print("xterm -e ");
-      write.print("echo $(date +'%H:%M:%S') Start: "+fList[a]+" 2>&1 | tee -a ");
+      write.print("echo $(date +'%H:%M:%S') Start: "+order[a]+" 2>&1 | tee -a ");
       write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
       write.println();
       write.print('"'+blenderpath+'"');
@@ -324,7 +324,7 @@ void multiblend_autorun(String path)
       write.print(" 2>&1 | tee ");
       write.println('"'+proyectpath+"Logs"+File.separator+"$(date +'%Y-%m-%d_%H:%M:%S_')"+order[a].substring(0, order[a].lastIndexOf("."))+".log"+'"');
       write.println();
-      write.print("echo $(date +'%H:%M:%S') Finish: "+fList[a]+" 2>&1 | tee -a ");
+      write.print("echo $(date +'%H:%M:%S') Finish: "+order[a]+" 2>&1 | tee -a ");
       write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
       write.println();
     }
@@ -404,32 +404,32 @@ void multiblend_pre()
   write.flush();
   write.close();
 
-  if (os == "WINDOWS") {
-    write = createWriter(dataPath("tmp")+File.separator+"blend_prev.bat");
-    write.println("@ECHO OFF");
-    write.println("COLOR 8F");
-    // write.print("type "+settingspath);
-    write.println();
-    write.println("@ECHO -");
-    write.println("@ECHO START renders...");
-    write.println("@ECHO -");
-    write.println("PAUSE");
-    write.println("@ECHO -");
-    write.println("@ECHO RENDERING...");
-    write.println("@ECHO -");
-    write.print("call ");
-    //write.println(proyectpath+File.separator+"RenderOptions"+File.separator+fList[x]);
-    write.println("@ECHO -");
-    write.println("@ECHO FINISH!");
-    write.println("@ECHO -");
-    write.println("PAUSE");
-    write.print("exit");
-
-    write.flush();
-    write.close();
-
-    String cmd[]= {terminalpath, "/c", "start", "/w", dataPath("tmp")+File.separator+"RenderOptions.bat"};
-    exec(cmd);
+  if (os == "WINDOWS") {/*
+   write = createWriter(dataPath("tmp")+File.separator+"blend_prev.bat");
+   write.println("@ECHO OFF");
+   write.println("COLOR 8F");
+   // write.print("type "+settingspath);
+   write.println();
+   write.println("@ECHO -");
+   write.println("@ECHO START renders...");
+   write.println("@ECHO -");
+   write.println("PAUSE");
+   write.println("@ECHO -");
+   write.println("@ECHO RENDERING...");
+   write.println("@ECHO -");
+   write.print("call ");
+   //write.println(proyectpath+File.separator+"RenderOptions"+File.separator+fList[x]);
+   write.println("@ECHO -");
+   write.println("@ECHO FINISH!");
+   write.println("@ECHO -");
+   write.println("PAUSE");
+   write.print("exit");
+   
+   write.flush();
+   write.close();
+   
+   String cmd[]= {terminalpath, "/c", "start", "/w", dataPath("tmp")+File.separator+"RenderOptions.bat"};
+   exec(cmd);*/
   } else {
     write = createWriter(dataPath("tmp")+File.separator+"blend_prev.sh");
     write.println("#!/bin/bash");
