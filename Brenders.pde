@@ -24,13 +24,15 @@
  *
  * ***** END GPL LICENSE BLOCK *****
  */
+ 
+XML xml;
 
 PrintWriter write;
 
 PImage bg;
 PImage bg2;
 PImage bg3;
-PImage bpnone;
+PImage blendpre;
 
 int gui = 0;
 
@@ -58,10 +60,10 @@ String esc;
 void setup () {
   size(640, 360);
 
-  bg = requestImage("Img_BG"+File.separator+"bg.png");
-  bg2 = requestImage("Img_BG"+File.separator+"bg2.png");
-  bg3 = requestImage("Img_BG"+File.separator+"bg3.png");
-  bpnone = requestImage("Blend_Previews"+File.separator+"None.png");
+  bg = requestImage("Img"+File.separator+"bg.png");
+  bg2 = requestImage("Img"+File.separator+"bg2.png");
+  bg3 = requestImage("Img"+File.separator+"bg3.png");
+  blendpre = requestImage("Img"+File.separator+"None.png");
 
   noLoop();
 
@@ -96,8 +98,7 @@ void draw() {
     inDev_Gui();
     break;
   case 3:
-    // multiBlend_Gui();
-    inDev_Gui();
+    multiBlend_Gui();
     break;
   case 4:
     ART_Gui();
