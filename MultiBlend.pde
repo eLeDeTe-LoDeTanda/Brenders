@@ -238,28 +238,28 @@ void multiblend_save(String path)
 
 void multiblend_order()
 {
-  if (os == "WINDOWS") {
-  } else {
-    write = createWriter(proyectpath+proyectname+".brenders");
-    write.println("[Proyect Name]");
-    write.println(proyectname);
-    write.println();
-    write.println("[Order]");
-    File dir = new File(proyectpath+"Options"+File.separator);
-    String[] fList = sort(dir.list());
-    int x = 0;
-    for (int i = 0; i < fList.length; i++) {
-      File f = new File(proyectpath+"Options"+File.separator+fList[x]);
-      if (f.isFile()) {
-        write.println(fList[x]);
-        multiblend_names[x] = fList[x].substring(0, fList[x].lastIndexOf("."));
-        multiblend_files = x + 1;
-        x = x + 1;
-      }
+  // if (os == "WINDOWS") {
+  // } else {
+  write = createWriter(proyectpath+proyectname+".brenders");
+  write.println("[Proyect Name]");
+  write.println(proyectname);
+  write.println();
+  write.println("[Order]");
+  File dir = new File(proyectpath+"Options"+File.separator);
+  String[] fList = sort(dir.list());
+  int x = 0;
+  for (int i = 0; i < fList.length; i++) {
+    File f = new File(proyectpath+"Options"+File.separator+fList[x]);
+    if (f.isFile()) {
+      write.println(fList[x]);
+      multiblend_names[x] = fList[x].substring(0, fList[x].lastIndexOf("."));
+      multiblend_files = x + 1;
+      x = x + 1;
     }
-    write.flush();
-    write.close();
   }
+  write.flush();
+  write.close();
+  // }
 }
 
 void multiblend_autorun(String path)
@@ -276,29 +276,45 @@ void multiblend_autorun(String path)
     }
   }
 
-  if (os == "WINDOWS") {/*
+  if (os == "WINDOWS") {
     write = createWriter(path+".bat");
-   write.println("@ECHO OFF");
-   write.println("COLOR 8F");
-   // write.print("type "+settingspath);
-   write.println();
-   write.println("@ECHO -");
-   write.println("@ECHO START renders...");
-   write.println("@ECHO -");
-   write.println("PAUSE");
-   write.println("@ECHO -");
-   write.println("@ECHO RENDERING...");
-   write.println("@ECHO -");
-   write.print("call ");
-   //write.println(proyectpath+File.separator+"RenderOptions"+File.separator+fList[x]);
-   write.println("@ECHO -");
-   write.println("@ECHO FINISH!");
-   write.println("@ECHO -");
-   write.println("PAUSE");
-   write.print("exit");
-   
-   write.flush();
-   write.close();*/
+    write.println("@ECHO OFF");
+    write.println("COLOR 8F");
+    write.println();
+    write.println("@ECHO -");
+    write.println("@ECHO START renders...");
+    write.println("@ECHO -");
+    write.println("PAUSE");
+    write.println("@ECHO -");
+    write.println("@ECHO RENDERING...");
+    write.println("@ECHO -");
+    for (int a = 0; a < order.length; a++) {
+      loadPy(proyectpath+"Options"+File.separator+order[a]);
+      //write.print("xterm -e ");
+      //write.print("echo $(date +'%H:%M:%S') Start: "+order[a]+" 2>&1 | tee -a ");
+      // write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
+      // write.println();
+      write.print("call ");
+      write.print('"'+blenderpath+'"');
+      write.print(" -b ");
+      write.print('"'+blendpath+blendname+'"');
+      write.print(" -P ");
+      write.print('"'+proyectpath+"Options"+File.separator+order[a]+'"');
+     // write.print(" 2>&1 | tee ");
+     // write.println('"'+proyectpath+"Logs"+File.separator+"$(date +'%Y-%m-%d_%H:%M:%S_')"+order[a].substring(0, order[a].lastIndexOf("."))+".log"+'"');
+      write.println();
+      // write.print("echo $(date +'%H:%M:%S') Finish: "+order[a]+" 2>&1 | tee -a ");
+      // write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
+      // write.println();
+    }   
+    write.println("@ECHO -");
+    write.println("@ECHO FINISH!");
+    write.println("@ECHO -");
+    write.println("PAUSE");
+    write.print("exit");
+
+    write.flush();
+    write.close();
   } else {
     write = createWriter(path+".sh");
     write.println("#!/bin/bash");
@@ -404,32 +420,26 @@ void multiblend_pre()
   write.flush();
   write.close();
 
-  if (os == "WINDOWS") {/*
-   write = createWriter(dataPath("tmp")+File.separator+"blend_prev.bat");
-   write.println("@ECHO OFF");
-   write.println("COLOR 8F");
-   // write.print("type "+settingspath);
-   write.println();
-   write.println("@ECHO -");
-   write.println("@ECHO START renders...");
-   write.println("@ECHO -");
-   write.println("PAUSE");
-   write.println("@ECHO -");
-   write.println("@ECHO RENDERING...");
-   write.println("@ECHO -");
-   write.print("call ");
-   //write.println(proyectpath+File.separator+"RenderOptions"+File.separator+fList[x]);
-   write.println("@ECHO -");
-   write.println("@ECHO FINISH!");
-   write.println("@ECHO -");
-   write.println("PAUSE");
-   write.print("exit");
-   
-   write.flush();
-   write.close();
-   
-   String cmd[]= {terminalpath, "/c", "start", "/w", dataPath("tmp")+File.separator+"RenderOptions.bat"};
-   exec(cmd);*/
+  if (os == "WINDOWS") {
+    write = createWriter(dataPath("tmp")+File.separator+"blend_prev.bat");
+
+    write.println("@ECHO OFF");
+    write.println("COLOR 8F");
+    write.println();
+    write.print("call ");
+    write.print('"'+blenderpath+'"');
+    write.print(" ");
+    write.print('"'+blendpath+blendname+'"');
+    write.print(" -P ");
+    write.print('"'+dataPath("tmp")+File.separator+"blend_prev.py"+'"');
+    write.println();
+    write.print("exit");
+
+    write.flush();
+    write.close();
+
+    String cmd[]= {terminalpath, "/c", "start", "/w", dataPath("tmp")+File.separator+"blend_prev.bat"};
+    exec(cmd);
   } else {
     write = createWriter(dataPath("tmp")+File.separator+"blend_prev.sh");
     write.println("#!/bin/bash");
