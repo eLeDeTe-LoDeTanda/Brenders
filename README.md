@@ -78,27 +78,25 @@ BRENDERSv1.0 TODO:
 
 **RENDER MULTI-BLENDS**
 
-*New proyect --- Proyecto nuevo
+*~New proyect --- Proyecto nuevo~ :heavy_check_mark:
 
-*Open proyect --- Abrir proyecto
+*~Open proyect --- Abrir proyecto~ :heavy_check_mark:
 
-*Reload proyect --- Recargar proyecto
+*~Reload proyect --- Recargar proyecto~ :heavy_check_mark:
 
 *Recents proyects --- Proyectos recientes
 
-*Autorun with multi-blends --- Autoejecutable con multi-blends
+*~Render order --- Orden de renderizado~ :heavy_check_mark:
 
-*Render order --- Orden de renderizado
+*~Edit Render order in text editor --- Editar orden de render en editor de texto~ :heavy_check_mark:
 
-*Edit Render order in text editor --- Editar orden de render en editor de texto
+*~Import render options --- Importar opciones de render~ :heavy_check_mark:
 
-*Import render options --- Importar opciones de render
-
-*Autorun renders file (.sh in Linux .bat in Windows) --- Archivo autoejecutable de renders (.sh en Linux .bat en Windows)
+*~Autorun renders file (.sh in Linux .bat in Windows) --- Archivo autoejecutable de renders (.sh en Linux .bat en Windows)~ :heavy_check_mark:
 
 *Update to last render finished --- Actualizar al último render finalizado 
 
-*Generate image preview from blend --- Generar imagen de previsualización del blend
+*~Generate image preview from blend --- Generar imagen de previsualización del blend~ :heavy_check_mark:
 
 
 **RENDER MANAGER**
