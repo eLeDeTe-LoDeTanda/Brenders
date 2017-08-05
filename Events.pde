@@ -49,6 +49,7 @@ void  mousePressed()
       mouseEventsCommandLine();
     } else if (gui == 2) {
     } else if (gui == 3) {
+      mouseEventsMultiblend();
     } else if (gui == 4) {
       eventsART();
     } else if (gui == 5) {
