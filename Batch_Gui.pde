@@ -63,7 +63,7 @@ void batch_Gui()
 
   fill(acolor);
   pathname = path_batch;
-  if (path_batch.length() > 60) pathname = path_batch.substring(0, 30)+"..."+path_batch.substring(path_batch.length() - 30);
+  if (path_batch.length() > 50) pathname = path_batch.substring(0, 25)+"..."+path_batch.substring(path_batch.length() - 25);
   text(pathname,  width / 2, 85);
 
   textSize(14);
