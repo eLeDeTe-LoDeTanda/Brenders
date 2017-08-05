@@ -232,37 +232,60 @@ void multiblend_save(String path)
   settingspath = multiblendpath;
   settingsfolder = new File(multiblendpath);
   settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
-  multiblend_order();
+  multiblend_addinorder();
   multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
 
   precheck();
 }
-
+/*
 void multiblend_order()
+ {
+ // if (os == "WINDOWS") {
+ // } else {
+ write = createWriter(proyectpath+proyectname+".brenders");
+ write.println("[Proyect Name]");
+ write.println(proyectname);
+ write.println();
+ write.println("[Order]");
+ File dir = new File(proyectpath+"Options"+File.separator);
+ String[] fList = sort(dir.list());
+ int x = 0;
+ for (int i = 0; i < fList.length; i++) {
+ File f = new File(proyectpath+"Options"+File.separator+fList[x]);
+ println(fList[x]);
+ println();
+ if (f.isFile()) {
+ write.println(fList[x]);
+ multiblend_names[x] = fList[x].substring(0, fList[x].lastIndexOf("."));
+ multiblend_files = x + 1;
+ x = x + 1;
+ }
+ }
+ write.flush();
+ write.close();
+ // }
+ }
+ */
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+
+void multiblend_addinorder()
 {
-  // if (os == "WINDOWS") {
-  // } else {
-  write = createWriter(proyectpath+proyectname+".brenders");
-  write.println("[Proyect Name]");
-  write.println(proyectname);
-  write.println();
-  write.println("[Order]");
-  File dir = new File(proyectpath+"Options"+File.separator);
-  String[] fList = sort(dir.list());
-  int x = 0;
-  for (int i = 0; i < fList.length; i++) {
-    File f = new File(proyectpath+"Options"+File.separator+fList[x]);
-    if (f.isFile()) {
-      write.println(fList[x]);
-      multiblend_names[x] = fList[x].substring(0, fList[x].lastIndexOf("."));
-      multiblend_files = x + 1;
-      x = x + 1;
-    }
+  String path = proyectpath+proyectname+".brenders";
+  String[] lines = loadStrings(path);
+
+  PrintWriter output = createWriter(path);
+
+  for (int i = 0; i < lines.length; i++) {
+    output.println(lines[i]);
   }
-  write.flush();
-  write.close();
-  // }
+ // output.println("\n"); 
+  output.print(settingsname);
+  output.flush();
+  output.close();
+  loadMultiblend();
 }
+
 
 void multiblend_autorun(String path)
 {   
@@ -302,8 +325,8 @@ void multiblend_autorun(String path)
       write.print('"'+blendpath+blendname+'"');
       write.print(" -P ");
       write.print('"'+proyectpath+"Options"+File.separator+order[a]+'"');
-     // write.print(" 2>&1 | tee ");
-     // write.println('"'+proyectpath+"Logs"+File.separator+"$(date +'%Y-%m-%d_%H:%M:%S_')"+order[a].substring(0, order[a].lastIndexOf("."))+".log"+'"');
+      // write.print(" 2>&1 | tee ");
+      // write.println('"'+proyectpath+"Logs"+File.separator+"$(date +'%Y-%m-%d_%H:%M:%S_')"+order[a].substring(0, order[a].lastIndexOf("."))+".log"+'"');
       write.println();
       // write.print("echo $(date +'%H:%M:%S') Finish: "+order[a]+" 2>&1 | tee -a ");
       // write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
@@ -363,7 +386,7 @@ void multiblend_addtomulti()
   commandLineOptions();
   py_Save(multiblendpath);
   add_tomulti = false;
-  multiblend_order();
+  multiblend_addinorder();
   loadMultiblend();
   multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
   info = "Saved: "+settingsname.substring(0, settingsname.lastIndexOf("."));
