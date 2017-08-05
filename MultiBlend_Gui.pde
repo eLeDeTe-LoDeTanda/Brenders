@@ -81,13 +81,18 @@ void multiBlend_Gui()
     text(">>Open Proyect Folder<<", width / 2, 120);
     if (multiblend_files > 0) {
       fill(acolor);
-      String name = multiblend_names[order];
+      String name = multiblend_names[order]+".multiblend";
       if (multiblend_names[order].length() > 18) name = multiblend_names[order].substring(0, 9)+"..."+multiblend_names[order].substring(multiblend_names[order].length() - 9);
-      text("-"+name+"-", width / 2, 200);
-     
+      text("-"+name+"-", width / 2, 190);
+      name = blendname;
+      if (blendname.length() > 18) name = blendname.substring(0, 9)+"..."+blendname.substring(blendname.length() - 9);
+      text("-"+name+"-", width / 2, 210);
+
+
+
       text("'"+multiblend_files+"' .blend to render", 170, 320);
       fill(bcolor);
-      text("<< Order:"+nf(order, 4)+">>", 170, 340);
+      text("<< Order: "+nf(order+1, 4)+" | "+nf(multiblend_files, 4)+">>", 170, 340);
       text("<<Render Options>>", width / 2, 240);
       fill(ccolor);
 

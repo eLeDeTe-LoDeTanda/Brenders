@@ -89,7 +89,7 @@ void mouseEventsMultiblend()
           info = "Rendering... You can close Brenders";
         } else {
           error = true;
-          info = "Rendering... 'Restart' for overwite";
+          info = "Rendering... 'Restart' for overwrite";
 
           /* if (os == "WINDOWS") {
            String cmd[]= {terminalpath, "/c", "start", "/w", proyectpath+proyectname+"-continue.bat"};
@@ -157,7 +157,9 @@ void newProyect(File selection)
     write.close();
     //info = "*You can test it with '-Open<' bottom.";
     // multiblendRenameFiles();
+    multiblend_files = 0;
     multiblend_active = true;
+    info = "New proyect created!";
 
     redraw();
   }
