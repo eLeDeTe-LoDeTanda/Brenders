@@ -49,9 +49,9 @@ void initVarCommandLine (String os)
     String lines[] = loadStrings(dataPath("Preferences"+File.separator+"extern_Windows.txt"));
     for (int i = 0; i < lines.length; i++) {
       if (lines[i].contains("[Terminal]")) terminalpath = lines[i+1];
-      if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
-      if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
-      if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
+      else if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
+      else if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
+      else if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
     }
   } else {
     File f = new File(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
@@ -84,18 +84,19 @@ void initVarCommandLine (String os)
   texteditorfolder = new File (texteditorpath);
   explorerfolder = new File (managerpath);
   blenderfolder = new File(blenderpath);
+  proyectfolder = new File(dataPath("Proyects")+File.separator+"newProyect");
 
   blendpath = dataPath("Test")+File.separator;
-  blendname = "BrenderTest.blend";
+  blendname = "BrendersTest.blend";
 
-  settingspath = dataPath("Test"+File.separator+"BrenderTest.py");
-  settingsname = "BrenderTest.py";
+  settingspath = dataPath("Test"+File.separator+"BrendersTest.py");
+  settingsname = "BrendersTest.py";
 
   outputpath = dataPath("Test"+File.separator+blendname.substring(0, blendname.lastIndexOf("."))+"_Renders")+File.separator;
   rendersname = blendname.substring(0, blendname.lastIndexOf("."))+"_####";
   playrendersfolder = new File(outputpath+rendersname);
 
-  settingsfolder = new File(dataPath("Test"+File.separator+"BrenderTest.py"));
+  settingsfolder = new File(dataPath("Test"+File.separator+"BrendersTest.py"));
   blendfolder = new File(blendpath+blendname);
   outputfolder = new File(outputpath+rendersname);
 
@@ -191,7 +192,7 @@ void initVarCommandLine (String os)
 
   fromblend[scene_name_id] = true;
 
-  for (int i = 0; i < 12; i++) multiblend[i] = "None";
+  for (int i = 0; i < multiblend_names.length; i++) multiblend_names[i] = "None";
 
   nameoption[pxX_id] = "Px_X"; 
   nameoption[pxY_id] = "Px_Y"; 
@@ -260,22 +261,30 @@ void settingsOpen(File selection)
 {
   if (selection != null) {
     String path  = selection.getAbsolutePath();
-    if (path.endsWith(".py")) {
-      loadPy(path);
-    } else {  
-      loadCommandline(path);
+    if (path.endsWith(".py") || path.endsWith(".txt") || path.endsWith(".multiblend")) { 
+      if (path.endsWith(".py") || path.endsWith(".multiblend")) {
+        loadPy(path);
+      } else if (path.endsWith(".txt")) {  
+        loadCommandline(path);
+      }
+      settingspath = path;
+      settingsfolder = new File(path);
+      settingsname = selection.getName();
+
+      if (gui == 3) selectOutput("Select a name for .multiblend:", "settingsSave", new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend"));
+
+      info = "'"+settingsname+ "' Loaded...";
+    } else {
+      error = true;
+      info = "*Warning No '.py' or '.txt' selected";
     }
-    settingspath = path;
-    settingsfolder = new File(path);
-    settingsname = selection.getName();
-    info = "'"+settingsname+ "' Loaded...";
     redraw();
   }
 }
 
-void loadCommandline(String pypath)
+void loadCommandline(String txtpath)
 {
-  String lines[] = loadStrings(pypath);
+  String lines[] = loadStrings(txtpath);
   String quotes = str('"');
 
   for (int i = 0; i <  fromblend.length; i++) fromblend[i] = true;
@@ -286,19 +295,19 @@ void loadCommandline(String pypath)
       if (lines[i].contains("ssh ")) {
         ssh = true;
         sshuser = trim(lines[i].substring(lines[i].indexOf("ssh ") + 4, lines[i].indexOf("@")));
-        println(sshuser);
+        // println(sshuser);
         sship = trim(lines[i].substring(lines[i].indexOf("@") + 1, lines[i].indexOf(" ", lines[i].indexOf("@") + 1)));
-        println(sship);
+        // println(sship);
         blenderpath = trim(lines[i].substring(lines[i].indexOf(sship) + sship.length(), lines[i].indexOf(" -")));
         if  (blenderpath.contains(quotes)) blenderpath = blenderpath.substring(blenderpath.indexOf(quotes) + 1, blenderpath.lastIndexOf(quotes));
         blenderfolder = new File(blenderpath);
-        println(blenderpath);
+        //println(blenderpath);
       } else {
         ssh = false;
         blenderpath = trim(lines[i].substring(0, lines[i].indexOf(" -")));
         if  (blenderpath.contains(quotes)) blenderpath = blenderpath.substring(blenderpath.indexOf(quotes) + 1, blenderpath.lastIndexOf(quotes));
         blenderfolder = new File(blenderpath);
-        println(blenderpath);
+        //println(blenderpath);
       }
       if (lines[i].contains(" -b ")) blendpath = trim(lines[i].substring(lines[i].indexOf(" -b "), lines[i].indexOf(" -", lines[i].indexOf(" -") + 1)));
       if (lines[i].contains(" --background ")) blendpath = trim(lines[i].substring(lines[i].indexOf(" --background "), lines[i].indexOf(" -", lines[i].indexOf(" -") + 1)));
@@ -306,8 +315,8 @@ void loadCommandline(String pypath)
       blendfolder = new File(blendpath);
       blendname = blendpath.substring(blendpath.lastIndexOf(File.separator) + 1);
       blendpath = blendpath.substring(0, blendpath.lastIndexOf(File.separator) + 1);
-      println(blendpath);
-      println(blendname);
+      // println(blendpath);
+      // println(blendname);
       if (lines[i].contains(" -o") || lines[i].contains(" --render-output")) {
         newoutput = true;
         fromblend[output_path_id] = false;
@@ -317,8 +326,8 @@ void loadCommandline(String pypath)
         outputfolder = new File(outputpath);
         rendersname = outputpath.substring(outputpath.lastIndexOf(File.separator) + 1);
         outputpath = outputpath.substring(0, outputpath.lastIndexOf(File.separator) + 1);
-        println(outputpath);
-        println(rendersname);
+        // println(outputpath);
+        // println(rendersname);
       } else {
         newoutput = false;
         fromblend[output_path_id] = true;
@@ -328,21 +337,21 @@ void loadCommandline(String pypath)
         if (lines[i].contains(" -S")) scenename = trim(lines[i].substring(lines[i].indexOf(" -S") + 3, lines[i].indexOf(" -", lines[i].indexOf(" -S") + 1)));
         if (lines[i].contains(" --scene")) scenename = trim(lines[i].substring(lines[i].indexOf(" --scene") + 8, lines[i].indexOf(" -", lines[i].indexOf(" --scene") + 1)));
         if  (scenename.contains(quotes)) scenename = scenename.substring(scenename.indexOf(quotes) + 1, scenename.lastIndexOf(quotes));
-        println(scenename);
+        // println(scenename);
       } else fromblend[scene_name_id] = true;
       if (lines[i].contains(" -E") || lines[i].contains(" --engine")) {
         fromblend[engine_id] = false;
         if (lines[i].contains(" -E")) valoption[engine_id] = trim(lines[i].substring(lines[i].indexOf(" -E") + 3, lines[i].indexOf(" -", lines[i].indexOf(" -E") + 1)));
         if (lines[i].contains(" --engine")) valoption[engine_id] = trim(lines[i].substring(lines[i].indexOf(" --engine") + 9, lines[i].indexOf(" -", lines[i].indexOf(" --engine") + 1)));
         if  (valoption[engine_id].contains(quotes)) valoption[engine_id] = valoption[engine_id].substring(valoption[engine_id].indexOf(quotes) + 1, scenename.lastIndexOf(quotes));
-        println(valoption[engine_id]);
+        //  println(valoption[engine_id]);
       } else fromblend[engine_id] = true;
       if (lines[i].contains(" -F") || lines[i].contains(" --render-format")) {
         fromblend[file_format_id] = false;
         if (lines[i].contains(" -F")) valoption[file_format_id] = trim(lines[i].substring(lines[i].indexOf(" -F") + 3, lines[i].indexOf(" -", lines[i].indexOf(" -F") + 1)));
         if (lines[i].contains(" --render-format")) valoption[file_format_id] = trim(lines[i].substring(lines[i].indexOf(" --render-format") + 16, lines[i].indexOf(" -", lines[i].indexOf(" --render-format") + 1)));
         if  (valoption[file_format_id].contains(quotes)) valoption[file_format_id] = valoption[file_format_id].substring(valoption[file_format_id].indexOf(quotes) + 1, valoption[file_format_id].lastIndexOf(quotes));
-        println(valoption[file_format_id]);
+        // println(valoption[file_format_id]);
       } else fromblend[file_format_id] = true;
       if (lines[i].contains(" -x") || lines[i].contains(" --use-extension")) {
         fromblend[add_extension_id] = false;
@@ -350,14 +359,14 @@ void loadCommandline(String pypath)
         if (lines[i].contains(" --use-extension")) valoption[add_extension_id] = trim(lines[i].substring(lines[i].indexOf(" --use-extension") + 16, lines[i].indexOf(" -", lines[i].indexOf(" --use-extension") + 1)));
         if (int(valoption[add_extension_id]) == 1) valoption[add_extension_id] = "True";
         else valoption[add_extension_id] = "False";
-        println(valoption[add_extension_id]);
+        // println(valoption[add_extension_id]);
       } else fromblend[add_extension_id] = true;
       if (lines[i].contains(" -t") || lines[i].contains(" --threads")) {
         fromblend[threads_id] = false;
         fromblend[threads_mode_id] = false;
         if (lines[i].contains(" -t")) valoption[threads_id] = trim(lines[i].substring(lines[i].indexOf(" -t") + 3, lines[i].indexOf(" -", lines[i].indexOf(" -t") + 1)));
         if (lines[i].contains(" --threads")) valoption[threads_id] = trim(lines[i].substring(lines[i].indexOf(" --threads") + 10, lines[i].indexOf(" -", lines[i].indexOf(" --threads") + 1)));
-        println(valoption[threads_id]);
+        // println(valoption[threads_id]);
       } else {
         fromblend[threads_id] = true;
         fromblend[threads_mode_id] = true;
@@ -373,7 +382,7 @@ void loadCommandline(String pypath)
         fromblend[frame_step_id] = false;
         if (lines[i].contains(" -s")) valoption[frame_start_id] = trim(lines[i].substring(lines[i].indexOf(" -s") + 3, lines[i].indexOf(" -", lines[i].indexOf(" -s") + 1)));
         if (lines[i].contains(" --frame-start")) valoption[frame_start_id] = trim(lines[i].substring(lines[i].indexOf(" --frame-start") + 14, lines[i].indexOf(" -", lines[i].indexOf(" --frame-start") + 1)));
-        println(valoption[frame_start_id]);
+        // println(valoption[frame_start_id]);
       } else {
         fromblend[animation_id] = true;
         fromblend[frame_start_id] = true;       
@@ -388,7 +397,7 @@ void loadCommandline(String pypath)
         fromblend[frame_step_id] = false;
         if (lines[i].contains(" -e")) valoption[frame_end_id] = trim(lines[i].substring(lines[i].indexOf(" -e") + 3, lines[i].indexOf(" -", lines[i].indexOf(" -e") + 1)));
         if (lines[i].contains(" --frame-end")) valoption[frame_end_id] = trim(lines[i].substring(lines[i].indexOf(" --frame-end") + 12, lines[i].indexOf(" -", lines[i].indexOf(" --frame-end") + 1)));
-        println(valoption[frame_end_id]);
+        //  println(valoption[frame_end_id]);
       } else {
         fromblend[animation_id] = true;
         fromblend[frame_start_id] = true;       
@@ -403,7 +412,7 @@ void loadCommandline(String pypath)
         fromblend[frame_step_id] = false;
         if (lines[i].contains(" -j")) valoption[frame_step_id] = trim(lines[i].substring(lines[i].indexOf(" -j") + 3, lines[i].indexOf(" -", lines[i].indexOf(" -j") + 1)));
         if (lines[i].contains(" --frame-jump")) valoption[frame_step_id] = trim(lines[i].substring(lines[i].indexOf(" --frame-jump") + 13, lines[i].indexOf(" -", lines[i].indexOf(" --frame-jump") + 1)));
-        println(valoption[frame_step_id]);
+        //  println(valoption[frame_step_id]);
       } else {
         fromblend[animation_id] = true;
         fromblend[frame_start_id] = true;       
@@ -427,7 +436,7 @@ void loadCommandline(String pypath)
           if (lines[i].contains(" -f")) valoption[frame_id] = trim(lines[i].substring(lines[i].indexOf(" -f") + 3));
           if (lines[i].contains(" --render-frame")) valoption[frame_id] = trim(lines[i].substring(lines[i].indexOf(" --render-frame") + 15));
         }
-        println(valoption[frame_id]);
+        //  println(valoption[frame_id]);
       } else fromblend[frame_id] = true;
     }
   }
@@ -441,24 +450,24 @@ void loadPy(String pypath)
   generatepy = true;
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].contains(" -P ") || lines[i].contains(" --python ")) {
-      if (!lines[i].contains(" -b ") || !lines[i].contains(" --background ")) oglrenders = true;
-      else oglrenders = false;
+      if (lines[i].contains(" -b ") || lines[i].contains(" --background ")) oglrenders = false;
+      else oglrenders = true;
       if (lines[i].contains("ssh ")) {
         ssh = true;
         sshuser = trim(lines[i].substring(lines[i].indexOf("ssh ") + 4, lines[i].indexOf("@")));
-        println(sshuser);
+        // println(sshuser);
         sship = trim(lines[i].substring(lines[i].indexOf("@") + 1, lines[i].indexOf(" ", lines[i].indexOf("@") + 1)));
-        println(sship);
+        // println(sship);
         blenderpath = trim(lines[i].substring(lines[i].indexOf(sship) + sship.length(), lines[i].indexOf(" -")));
         if  (blenderpath.contains(quotes)) blenderpath = blenderpath.substring(blenderpath.indexOf(quotes) + 1, blenderpath.lastIndexOf(quotes));
         blenderfolder = new File(blenderpath);
-        println(blenderpath);
+        //   println(blenderpath);
       } else {
         ssh = false;
         blenderpath = trim(lines[i].substring(0, lines[i].indexOf(" -")));
         if  (blenderpath.contains(quotes)) blenderpath = blenderpath.substring(blenderpath.indexOf(quotes) + 1, blenderpath.lastIndexOf(quotes));
         blenderfolder = new File(blenderpath);
-        println(blenderpath);
+        //  println(blenderpath);
       }
 
       blendpath = trim(lines[i].substring(lines[i].indexOf(" -"), lines[i].indexOf(" -", lines[i].indexOf(" -") + 1)));
@@ -466,8 +475,8 @@ void loadPy(String pypath)
       blendfolder = new File(blendpath);
       blendname = blendpath.substring(blendpath.lastIndexOf(File.separator) + 1);
       blendpath = blendpath.substring(0, blendpath.lastIndexOf(File.separator) + 1);
-      println(blendpath);
-      println(blendname);
+      //println(blendpath);
+      //println(blendname);
     }
 
     if  (!trim(lines[i]).startsWith("#")) {
@@ -1196,11 +1205,10 @@ void terminalSelect(File selection)
       write.close();
     }
     info = "*Test it with '-Open<' bottom.";
-    
+
     if (gui == 7) savePreferences();
-    
-    redraw();
   }
+  redraw();
 }
 
 void texteditorSelect(File selection) 
@@ -1212,9 +1220,8 @@ void texteditorSelect(File selection)
     info = "*Test it with '-Open<' bottom.";
 
     if (gui == 7) savePreferences();
-
-    redraw();
   }
+  redraw();
 }
 
 void managerSelect(File selection) 
@@ -1226,61 +1233,78 @@ void managerSelect(File selection)
     info = "*Test it with '-Open<' bottom.";
 
     if (gui == 7) savePreferences();
-
-    redraw();
   }
+  redraw();
 }
 
 void settingsSave(File selection) 
 {
   if (selection != null) {
+    String path = settingspath;
     settingspath = selection.getAbsolutePath();
-    if ((generatepy && settingspath.endsWith(".py")) || (!generatepy && settingspath.endsWith(".txt")) ) {
-      settingsfolder = new File(settingspath);
-      settingsname = selection.getName();
-
-      commandLineOptions();
-
-      if (generatepy) {
-        py_Save(settingspath);
-        if (os == "WINDOWS") {
-          bat_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".py.bat");
-          if (startrenders) {
-            String cmd[]= {terminalpath, "/c", "start", "/w", settingspath.substring(0, settingspath.lastIndexOf("."))+".py.bat"};
-            exec(cmd);
-          }
+    settingsname = selection.getName();
+    if (gui == 3) { 
+      multiblend_save(path);
+    } else {
+      if (add_tomulti) {
+        if (settingspath.endsWith(".multiblend")) { 
+          multiblend_addtomulti();
         } else {
-          sh_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".py.sh");
-          if (startrenders) {
-            String cmd[] = {terminalpath, "-e", settingspath.substring(0, settingspath.lastIndexOf("."))+".py.sh"};
-            exec(cmd);
-          }
+          error = true;
+          info = "*Warning No '.multiblend' selected";
         }
       } else {
-        Command_Line_Save(settingspath);
-        if (os == "WINDOWS") {
-          bat_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.bat");
-          if (startrenders) {
-            String cmd[]= {terminalpath, "/c", "start", "/w", settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.bat"};
-            exec(cmd);
+        //settingspath = selection.getAbsolutePath();
+
+        if ((generatepy && settingspath.endsWith(".py")) || (!generatepy && settingspath.endsWith(".txt")) || (generatepy && settingspath.endsWith(".multiblend"))) {
+          settingsfolder = new File(settingspath);
+
+          commandLineOptions();
+
+          if (generatepy) {
+            py_Save(settingspath);
+            if (!settingspath.endsWith(".multiblend")) {
+              if (os == "WINDOWS") {
+                bat_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".py.bat");
+                if (startrenders) {
+                  String cmd[]= {terminalpath, "/c", "start", "/w", settingspath.substring(0, settingspath.lastIndexOf("."))+".py.bat"};
+                  exec(cmd);
+                }
+              } else {
+                sh_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".py.sh");
+                if (startrenders) {
+                  String cmd[] = {terminalpath, "-e", settingspath.substring(0, settingspath.lastIndexOf("."))+".py.sh"};
+                  exec(cmd);
+                }
+              }
+            }
+          } else {
+            Command_Line_Save(settingspath);
+            if (os == "WINDOWS") {
+              bat_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.bat");
+              if (startrenders) {
+                String cmd[]= {terminalpath, "/c", "start", "/w", settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.bat"};
+                exec(cmd);
+              }
+            } else {
+              sh_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.sh");
+              if (startrenders) {
+                String cmd[] = {terminalpath, "-e", settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.sh"};
+                exec(cmd);
+              }
+            }
           }
+
+          startrenders = false;
         } else {
-          sh_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.sh");
-          if (startrenders) {
-            String cmd[] = {terminalpath, "-e", settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.sh"};
-            exec(cmd);
-          }
+          error = true;
+          if (generatepy) info = "*Warning No '.py' selected";
+          else info = "*Warning No '.txt' selected";
         }
       }
-
-      startrenders = false;
-    } else {
-      error = true;
-      if (generatepy) info = "*Warning No '.py' selected";
-      else info = "*Warning No '.txt' selected";
     }
-    redraw();
   }
+  redraw();
 }
 
 void settingsRename(File selection) 
@@ -1323,9 +1347,8 @@ void blenderSelect(File selection)
       info = "*Warning No blender executable selected.";
     }
     if (gui == 7) savePreferences();
-
-    redraw();
   }
+  redraw();
 }
 
 void blendSelect(File selection) 
@@ -1348,8 +1371,8 @@ void blendSelect(File selection)
       error = true;
       info = "***Warning No .blend selected.";
     }
-    redraw();
   }
+  redraw();
 }
 
 void newOutputSelect(File selection) 
@@ -1564,20 +1587,26 @@ void mouseEventsCommandLine ()
       info = "*Playing renders...";
     }
     if (add_to_multi_()) {
-      gui = 2;
+      if (multiblend_active) {
+        add_tomulti = true;
+        selectOutput("Select a name for .multiblend:", "settingsSave", new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend"));
+      } else {
+        error = true;
+        info = "NO Multiblend proyect available";
+      }
     }
     if (save_settings_()) {
       if  (!fromblend[frame_id] && generatepy && (valoption[frame_id].contains(".") || valoption[frame_id].contains(",") || valoption[frame_id].contains("+") || valoption[frame_id].contains("-") || valoption[frame_id] == "")) {
         error = true;
         info = "*Error in "+nameoption[frame_id];
       } else {
-        settingsName();
+        // settingsName();
         settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
         selectOutput("Settings to write to:", "settingsSave", settingsfolder);
       }
     } 
     if (rename_settings_()) {
-      settingsName();
+      //settingsName();
       settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
       selectOutput("Move and/or Rename: "+settingsname+" -Save changes-", "settingsRename", settingsfolder);
     }
