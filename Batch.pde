@@ -52,17 +52,14 @@ void  mouseEventsBatch()
     select_delete = false;
     select_rename = false;
     select_sframe = false;
-    for (int x = 0; x < rename_files; x++) {
-      batchRename();
-    }
+
+    batchRename();
   }
   if (delete_batch_()) { 
     select_delete = false;
     select_rename = false;
     select_sframe = false;
     batchDelete();
-    batchCountDeleteFiles();
-    batchCountRenameFiles();
   }
   if (newname_batch_()) { 
     esc = new_name;
@@ -70,8 +67,6 @@ void  mouseEventsBatch()
     select_rename = true;
     select_delete = false;
     select_sframe = false;
-    batchCountDeleteFiles();
-    batchCountRenameFiles();
   }
   if (extension_batch_()) {
     esc = ext_delete;
@@ -79,7 +74,6 @@ void  mouseEventsBatch()
     select_delete = true;
     select_rename = false;
     select_sframe = false;
-    batchCountDeleteFiles();
   }
   if (sframe_batch_()) {
     esc = sframe;
@@ -88,6 +82,8 @@ void  mouseEventsBatch()
     select_delete = false;
     select_rename = false;
   }
+  batchCountDeleteFiles();
+  batchCountRenameFiles();
 }
 
 void pathBatch(File selection) 
@@ -109,9 +105,9 @@ void pathBatch(File selection)
 
 void batchCountRenameFiles()
 {
+  rename_files = 0;
   File dir = new File(path_batch);
   String[] fList = sort(dir.list());
-  rename_files = 0;
   for (int x = 0; x < fList.length; x++) {
     File f = new File(path_batch+fList[x]);
     File newf = new File(path_batch+new_name+nf(x + int(sframe), sframe.length())+"."+ext_rename);
@@ -158,16 +154,18 @@ int y = -1;
 
 void batchRename()
 {
-  y = -1;
-  File dir = new File(path_batch);
-  String[] fList = sort(dir.list());
-  for (int x = 0; x < fList.length; x++) {
-    File f = new File(path_batch+fList[x]);
-    if (f.isFile() && f.getName().endsWith(ext_rename)) {
-      y = y + 1;
-      File newf = new File(path_batch+new_name+nf(y + int(sframe), sframe.length())+"."+ext_rename);
-      if (!newf.exists()) {
-        f.renameTo(newf);
+  for (int i = 0; i < rename_files; i++) {
+    y = -1;
+    File dir = new File(path_batch);
+    String[] fList = sort(dir.list());
+    for (int x = 0; x < fList.length; x++) {
+      File f = new File(path_batch+fList[x]);
+      if (f.isFile() && f.getName().endsWith(ext_rename)) {
+        y = y + 1;
+        File newf = new File(path_batch+new_name+nf(y + int(sframe), sframe.length())+"."+ext_rename);
+        if (!newf.exists()) {
+          f.renameTo(newf);
+        }
       }
     }
   }
