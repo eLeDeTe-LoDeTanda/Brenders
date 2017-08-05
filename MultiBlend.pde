@@ -34,15 +34,17 @@ void mouseEventsMultiblend()
   }
 
   if (multiblend_active) {
-    if (orderL_Multiblend_() ) {
-      order = constrain(order - 1, 0, multiblend_files - 1);
-      loadPy(proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend");
-      blendpre = requestImage(proyectpath+"Options"+File.separator+"Previews"+File.separator+blendname.substring(0, blendname.lastIndexOf("."))+".png");
-    }
-    if (orderR_Multiblend_() ) {
-      order = constrain(order + 1, 0, multiblend_files - 1);
-      loadPy(proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend");
-      blendpre = requestImage(proyectpath+"Options"+File.separator+"Previews"+File.separator+blendname.substring(0, blendname.lastIndexOf("."))+".png");
+    if (multiblend_files > 0) {
+      if (orderL_Multiblend_() ) {
+        order = constrain(order - 1, 0, multiblend_files - 1);
+        loadPy(proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend");
+        blendpre = requestImage(proyectpath+"Options"+File.separator+"Previews"+File.separator+blendname.substring(0, blendname.lastIndexOf("."))+".png");
+      }
+      if (orderR_Multiblend_() ) {
+        order = constrain(order + 1, 0, multiblend_files - 1);
+        loadPy(proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend");
+        blendpre = requestImage(proyectpath+"Options"+File.separator+"Previews"+File.separator+blendname.substring(0, blendname.lastIndexOf("."))+".png");
+      }
     }
     if (reload_Multiblend_()) {
       loadMultiblend();
@@ -89,20 +91,22 @@ void mouseEventsMultiblend()
         info = "Proyect empty";
       }
     }
-    if (overwrite_Multiblend_()) {
-      multiblend_restart = true;
-    }
-    if (continue_Multiblend_()) {
-      multiblend_restart = false;
-    }
-    if (blendpre_Multiblend_()) {
-      multiblend_pre();
-    }
-    if (framepreL_Multiblend_()) {
-      frameprev = constrain(frameprev - 1, 0, 500000);
-    }  
-    if (framepreR_Multiblend_()) {
-      frameprev = constrain(frameprev + 1, 0, 500000);
+    if (multiblend_files > 0) {
+      if (overwrite_Multiblend_()) {
+        multiblend_restart = true;
+      }
+      if (continue_Multiblend_()) {
+        multiblend_restart = false;
+      }
+      if (blendpre_Multiblend_()) {
+        multiblend_pre();
+      }
+      if (framepreL_Multiblend_()) {
+        frameprev = constrain(frameprev - 1, 0, 500000);
+      }  
+      if (framepreR_Multiblend_()) {
+        frameprev = constrain(frameprev + 1, 0, 500000);
+      }
     }
   }
 }
@@ -442,8 +446,6 @@ void multiblend_pre()
 
     String cmd[] = {terminalpath, "-e", dataPath("tmp")+File.separator+"blend_prev.sh"};
     exec(cmd);
-
-    blendpre = requestImage(proyectpath+"Options"+File.separator+"Previews"+File.separator+blendname.substring(0, blendname.lastIndexOf("."))+".png");
   }
 }
 

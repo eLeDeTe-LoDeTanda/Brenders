@@ -79,24 +79,25 @@ void multiBlend_Gui()
     text(">>'IMPORT' Render Options<<", width / 2, 80);
     text(">>Order 'EDIT'<<", width / 2, 100);
     text(">>Open Proyect Folder<<", width / 2, 120);
-   
-    String name = multiblend_names[order];
-    if (multiblend_names[order].length() > 18) name = multiblend_names[order].substring(0, 9)+"..."+multiblend_names[order].substring(multiblend_names[order].length() - 9);
-    text("<< Order:"+nf(order, 4)+" - "+name+">>", 170, 340);
-    fill(acolor);
-    text("'"+multiblend_files+"' .blend to render", 170, 320);
-    fill(ccolor);
-   
-    textAlign(LEFT);
-    textSize(12);
-    image(blendpre, 490, 200);
-    text("Preview", 500, 320);
-    fill(bcolor);
-    text(">> New preview <<", 495, 340);
-    textSize(10);
-    fill(ccolor);
-    text("Frame: <<"+nf(frameprev, 4)+">>", 510, 355);
+    if (multiblend_files > 0) {
+      String name = multiblend_names[order];
+      if (multiblend_names[order].length() > 18) name = multiblend_names[order].substring(0, 9)+"..."+multiblend_names[order].substring(multiblend_names[order].length() - 9);
+      text("<< Order:"+nf(order, 4)+" - "+name+">>", 170, 340);
+      fill(acolor);
+      text("'"+multiblend_files+"' .blend to render", 170, 320);
+      fill(ccolor);
 
+      textAlign(LEFT);
+      textSize(12);
+      image(blendpre, 490, 200);
+      text("Preview", 500, 320);
+      fill(bcolor);
+      text(">> New preview <<", 495, 340);
+      textSize(10);
+      fill(ccolor);
+      text("Frame: <<"+nf(frameprev, 4)+">>", 510, 355);
+    }
+    textAlign(LEFT);
     textSize(14);
     text("Start render", 342, 348);
     fill(bcolor);
