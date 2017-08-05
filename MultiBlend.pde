@@ -184,25 +184,43 @@ void openProyect(File selection)
   }
 }
 
+/*
+void loadMultiblend()
+ {
+ multiblend_active = true;
+ 
+ String lines[] = loadStrings(proyectpath+proyectname+".brenders");
+ File dir = new File(proyectpath+"Options"+File.separator);
+ String[] fList = dir.list();
+ int x = 0;
+ for (int i = 0; i < lines.length; i++) {
+ if (lines[i].contains("[Order]")) {
+ for (int e = 0; e < fList.length; e++) {
+ File f = new File(proyectpath+"Options"+File.separator+fList[x]);
+ if (f.isFile()) {
+ // println(multiblend_names.length);
+ multiblend_names[x] = lines[i + 1 + x].substring(0, lines[i + 1 + x].lastIndexOf("."));
+ multiblend_files = x + 1;
+ x = x + 1;
+ }
+ }
+ }
+ }
+ info = proyectname;
+ }
+ */
+
 void loadMultiblend()
 {
   multiblend_active = true;
 
   String lines[] = loadStrings(proyectpath+proyectname+".brenders");
-  File dir = new File(proyectpath+"Options"+File.separator);
-  String[] fList = dir.list();
   int x = 0;
   for (int i = 0; i < lines.length; i++) {
-    if (lines[i].contains("[Order]")) {
-      for (int e = 0; e < fList.length; e++) {
-        File f = new File(proyectpath+"Options"+File.separator+fList[x]);
-        if (f.isFile()) {
-          // println(multiblend_names.length);
-          multiblend_names[x] = lines[i + 1 + x].substring(0, lines[i + 1 + x].lastIndexOf("."));
-          multiblend_files = x + 1;
-          x = x + 1;
-        }
-      }
+    if (lines[i].contains(".multiblend")) {
+      multiblend_names[x] = lines[i].substring(0, lines[i].lastIndexOf("."));
+      multiblend_files = x + 1;
+      x = x + 1;
     }
   }
   info = proyectname;
@@ -279,7 +297,7 @@ void multiblend_addinorder()
   for (int i = 0; i < lines.length; i++) {
     output.println(lines[i]);
   }
- // output.println("\n"); 
+  // output.println("\n"); 
   output.print(settingsname);
   output.flush();
   output.close();
