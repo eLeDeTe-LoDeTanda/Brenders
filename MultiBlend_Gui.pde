@@ -80,11 +80,15 @@ void multiBlend_Gui()
     text(">>Order 'EDIT'<<", width / 2, 100);
     text(">>Open Proyect Folder<<", width / 2, 120);
     if (multiblend_files > 0) {
+      fill(acolor);
       String name = multiblend_names[order];
       if (multiblend_names[order].length() > 18) name = multiblend_names[order].substring(0, 9)+"..."+multiblend_names[order].substring(multiblend_names[order].length() - 9);
-      text("<< Order:"+nf(order, 4)+" - "+name+">>", 170, 340);
-      fill(acolor);
+      text("-"+name+"-", width / 2, 200);
+     
       text("'"+multiblend_files+"' .blend to render", 170, 320);
+      fill(bcolor);
+      text("<< Order:"+nf(order, 4)+">>", 170, 340);
+      text("<<Render Options>>", width / 2, 240);
       fill(ccolor);
 
       textAlign(LEFT);
@@ -184,4 +188,9 @@ boolean framepreL_Multiblend_()
 boolean framepreR_Multiblend_()
 {
   return  (mouseX > 580 && mouseX < 605 && mouseY > 345 && mouseY < 360);
+}
+
+boolean renderoptions_Multiblend_()
+{
+  return  (mouseX > 245 && mouseX < 400 && mouseY > 220 && mouseY < 245);
 }
