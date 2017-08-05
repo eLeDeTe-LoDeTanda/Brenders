@@ -25,9 +25,9 @@
  * ***** END GPL LICENSE BLOCK *****
  */
  
-void rendersStatus_Gui()
+void renderManager_Gui()
 {
-  surface.setTitle("Render Status -"+proyectname+"- "+version);
+  surface.setTitle("Render Manager -"+proyectname+"- "+version);
   background(backgroundcolor);
   tint(250, 240, 240);
   image(bg2, 0, 0);
