@@ -24,9 +24,6 @@
  *
  * ***** END GPL LICENSE BLOCK *****
  */
- 
-XML xml;
-
 PrintWriter write;
 
 PImage bg;
