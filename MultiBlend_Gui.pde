@@ -46,7 +46,9 @@ File proyectfolder;
 void multiBlend_Gui()
 {
   pushStyle();
-  surface.setTitle("MultiBlend -"+proyectname+"- "+version);
+  pathname = proyectname;
+  if (proyectname.length() > 20) pathname = proyectname.substring(0, 10)+"..."+proyectname.substring(proyectname.length() - 10);
+  surface.setTitle("MultiBlend -"+pathname+"- "+version);
   background(backgroundcolor);
   tint(230, 250, 230);
   image(bg2, 0, 0);
@@ -72,10 +74,15 @@ void multiBlend_Gui()
   if (error) fill(ecolor);
   else fill(icolor);
   textAlign(CENTER);
-  text(info, width / 2, 162);
+  String inf = info;
+  if (info.length() > 36) inf = info.substring(0, 18)+"..."+info.substring(info.length() - 18);
+  text(inf, width / 2, 162);
 
   if (multiblend_active) {
     fill(bcolor);
+    pathname = proyectname;
+    if (proyectname.length() > 20) pathname = proyectname.substring(0, 10)+"..."+proyectname.substring(proyectname.length() - 10);
+    text(pathname, width / 2, 13);
     text(">>'IMPORT' Render Options<<", width / 2, 80);
     text(">>Order 'EDIT'<<", width / 2, 100);
     text(">>Open Proyect Folder<<", width / 2, 120);
@@ -100,7 +107,7 @@ void multiBlend_Gui()
       text("> Open Blend <", 505, 185);
       image(blendpre, 490, 190);
       fill(bcolor);
-      text(">> New preview <<", 495, 330);
+      text(">> New Preview <<", 495, 330);
       textSize(10);
       fill(ccolor);
       text("Frame: <<"+nf(frameprev, 4)+">>", 510, 345);

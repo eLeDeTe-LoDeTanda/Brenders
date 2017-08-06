@@ -104,7 +104,7 @@ void menuBar()
   if (gui == 0) {
     textSize(15);
     fill(bcolor, 200);
-    text(description, width / 2 + 120, 5);
+    text(description, width / 2 + 135, 5);
     fill(ccolor);
   } else fill(bcolor, 100);
   ellipse(20, 10, 15, 15);
@@ -121,28 +121,28 @@ void menuBar()
   if (gui == 2) {
     textSize(14);
     fill(bcolor, 200);
-    text("Render Manager", width / 2 + 240, 5);
+    text("Render Manager", width / 2 + 255, 5);
     fill(ccolor);
   } else fill(bcolor, 100);
   ellipse(110, 10, 15, 15); 
   if (gui == 3) {
     textSize(14);
     fill(bcolor, 200);
-    text("Rendering multi .blend", width / 2 + 200, 5);
+    text("Rendering multiblend", width / 2 + 240, 5);
     fill(ccolor);
   } else fill(bcolor, 100);
   ellipse(80, 10, 15, 15);
   if (gui == 4) {
     textSize(14);
     fill(bcolor, 200);
-    text("Approximate Render Time", width / 2 + 200, 5);
+    text("Approximate Render Time", width / 2 + 220, 5);
     fill(ccolor);
   } else fill(bcolor, 100);
   ellipse(140, 10, 15, 15); 
   if (gui == 5) {
     textSize(14);
     fill(bcolor, 200);
-    text("Batch Process", width / 2 + 200, 5);
+    text("Batch Processing", width / 2 + 255, 5);
     fill(ccolor);
   } else fill(bcolor, 100);
   ellipse(170, 10, 15, 15);
