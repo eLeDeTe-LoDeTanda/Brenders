@@ -74,60 +74,60 @@ void multiBlend_Gui()
   textAlign(CENTER);
   text(info, width / 2, 162);
 
-  fill(bcolor);
   if (multiblend_active) {
+    fill(bcolor);
     text(">>'IMPORT' Render Options<<", width / 2, 80);
     text(">>Order 'EDIT'<<", width / 2, 100);
     text(">>Open Proyect Folder<<", width / 2, 120);
+    text(">>RENDER MANAGER<<", width / 2, 140);
+
     if (multiblend_files > 0) {
       fill(acolor);
       String name = multiblend_names[order]+".multiblend";
       if (multiblend_names[order].length() > 18) name = multiblend_names[order].substring(0, 9)+"..."+multiblend_names[order].substring(multiblend_names[order].length() - 9);
-      text("-"+name+"-", width / 2, 190);
+      text("-"+name+"-", width / 2, 200);
       name = blendname;
       if (blendname.length() > 18) name = blendname.substring(0, 9)+"..."+blendname.substring(blendname.length() - 9);
-      text("-"+name+"-", width / 2, 210);
-
-
-
-      text("'"+multiblend_files+"' .blend to render", 170, 320);
+      text("-"+name+"-", width / 2, 230);
+      text("*"+multiblend_files+"*  .blend to render", 135, 310);
       fill(bcolor);
-      text("<< Order: "+nf(order+1, 4)+" | "+nf(multiblend_files, 4)+">>", 170, 340);
-      text("<<Render Options>>", width / 2, 240);
+      text("<< Order: "+nf(order+1, 4)+" | "+nf(multiblend_files, 4)+">>", 135, 330);
+      text("<<Render Options>>", width / 2, 260);
       fill(ccolor);
 
       textAlign(LEFT);
       textSize(12);
-      image(blendpre, 490, 200);
-      text("Preview", 500, 320);
+      text("> Open Blend <", 505, 185);
+      image(blendpre, 490, 190);
       fill(bcolor);
-      text(">> New preview <<", 495, 340);
+      text(">> New preview <<", 495, 330);
       textSize(10);
       fill(ccolor);
-      text("Frame: <<"+nf(frameprev, 4)+">>", 510, 355);
+      text("Frame: <<"+nf(frameprev, 4)+">>", 510, 345);
     }
-    textAlign(LEFT);
+    textAlign(CENTER);
     textSize(14);
-    text("Start render", 342, 348);
+    text("Start render", width / 2 + 2, 340);
     fill(bcolor);
-    ellipse(380, 315, 40, 40);
+    ellipse(width / 2, 305, 40, 40);
     fill(icolor);
-    text("Go!", 370, 320);
+    text("Go!", width / 2 + 1, 310);
     fill(acolor);
     textSize(11);
-    text("o Restart", 410, 310);
-    text("o Rendering", 410, 330);
+    textAlign(LEFT);
+    text("o Restart", 400, 310);
+    text("o Rendering", 400, 330);
     if (multiblend_restart) {
       fill(ccolor);
-      ellipse(413, 307, 8, 8);
+      ellipse(403, 307, 8, 8);
     } else {
       fill(ccolor);
-      ellipse(413, 327, 8, 8);
+      ellipse(403, 327, 8, 8);
     }
-    fill(acolor);
   } else {
+    fill(ecolor);
     textSize(16);
-    text("No Proyect Open", width / 2, 280);
+    text("No Proyect Open", width / 2, 270);
   } 
   popStyle();
 }
@@ -158,44 +158,52 @@ boolean open_folder_Multiblend_()
 {
   return  (mouseX > 270 && mouseX < 370 && mouseY > 106 && mouseY < 125);
 }
+boolean rendermanager_Multiblend_() 
+{
+  return  (mouseX > 270 && mouseX < 370 && mouseY > 126 && mouseY < 145);
+}
 
 boolean go_Multiblend_() 
 {
-  return  (mouseX > 360 && mouseX < 400 && mouseY > 295 && mouseY < 335);
+  return  (mouseX > 290 && mouseX < 345 && mouseY > 280 && mouseY < 330);
 }
 
 boolean overwrite_Multiblend_() 
 {
-  return  (mouseX > 410 && mouseX < 470 && mouseY > 300 && mouseY < 310);
+  return  (mouseX > 400 && mouseX < 470 && mouseY > 300 && mouseY < 310);
 }
 boolean continue_Multiblend_() 
 {
-  return  (mouseX > 410 && mouseX < 470 && mouseY > 320 && mouseY < 330);
+  return  (mouseX > 400 && mouseX < 470 && mouseY > 320 && mouseY < 330);
 }
 
 boolean orderL_Multiblend_() 
 {
-  return  (mouseX > 0 && mouseX < 150 && mouseY > 320 && mouseY < 350);
+  return  (mouseX > 0 && mouseX < 230 && mouseY > 315 && mouseY < 340);
 }
 boolean orderR_Multiblend_() 
 {
-  return  (mouseX > 200 && mouseX < 320 && mouseY > 320 && mouseY < 350);
+  return  (mouseX > 200 && mouseX < 320 && mouseY > 320 && mouseY < 340);
 }
 
+boolean openblend_Multiblend_() 
+{
+  return  (mouseX > 495 && mouseX < 615 && mouseY > 175 && mouseY < 190);
+}
 boolean blendpre_Multiblend_() 
 {
-  return  (mouseX > 495 && mouseX < 615 && mouseY > 325 && mouseY < 345);
+  return  (mouseX > 495 && mouseX < 615 && mouseY > 315 && mouseY < 335);
 }
 boolean framepreL_Multiblend_()
 {
-  return  (mouseX > 545 && mouseX < 570 && mouseY > 345 && mouseY < 360);
+  return  (mouseX > 545 && mouseX < 570 && mouseY > 335 && mouseY < 350);
 }
 boolean framepreR_Multiblend_()
 {
-  return  (mouseX > 580 && mouseX < 605 && mouseY > 345 && mouseY < 360);
+  return  (mouseX > 580 && mouseX < 605 && mouseY > 335 && mouseY < 350);
 }
 
 boolean renderoptions_Multiblend_()
 {
-  return  (mouseX > 245 && mouseX < 400 && mouseY > 220 && mouseY < 245);
+  return  (mouseX > 245 && mouseX < 400 && mouseY > 240 && mouseY < 270);
 }
