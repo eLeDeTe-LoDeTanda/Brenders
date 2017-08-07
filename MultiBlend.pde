@@ -213,6 +213,7 @@ void loadMultiblend()
   int x = 0;
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].contains(".multiblend")) {
+      lines[i] = trim(lines[i]);
       multiblend_names[x] = lines[i].substring(0, lines[i].lastIndexOf("."));
       multiblend_files = x + 1;
       x = x + 1;
@@ -252,7 +253,11 @@ void multiblend_save(String path)
   precheck();
 }
 
-
+void multiblend_del(String path)
+{
+  System.out.println(path.replaceAll("\\s", ""));
+  //f.delete();
+}
 void multiblend_addinorder()
 {
   String path = proyectpath+proyectname+".brenders";
@@ -261,11 +266,13 @@ void multiblend_addinorder()
   write = createWriter(path);
 
   for (int i = 0; i < lines.length; i++) {
-    write.println(lines[i]);
+    write.println(trim(lines[i]));
   } 
   write.print(settingsname);
+
   write.flush();
   write.close();
+
   loadMultiblend();
 }
 
@@ -276,11 +283,12 @@ void multiblend_autorun(String path)
   //  File dir = new File(proyectpath+"Options"+File.separator);
   //String[] fList = dir.list();
   String order[] = new String[multiblend_files];
+  int x = 0;
   for (int i = 0; i < lines.length; i++) {
-    if (lines[i].contains("[Order]")) {
-      for (int e = 0; e < multiblend_files; e++) {
-        order[e] = lines[i + 1 + e];
-      }
+    if (lines[i].contains(".multiblend")) {
+      lines[i] = trim(lines[i]);
+      order[x] = lines[i];
+      x = x + 1;
     }
   }
 
@@ -466,12 +474,11 @@ void multiblend_pre()
     write.flush();
     write.close();
 
-    File fsh = new File(dataPath("tmp")+File.separator+"blend_prev.sh");
-    fsh.setExecutable(true, false);
+    File f_sh = new File(dataPath("tmp")+File.separator+"blend_prev.sh");
+    f_sh.setExecutable(true, false);
 
     try {
       String cmd[] = {terminalpath, "-e", dataPath("tmp")+File.separator+"blend_prev.sh"};
-      //exec(cmd);
       Process proc = Runtime.getRuntime().exec(cmd);
       proc.waitFor();
     } 
@@ -481,11 +488,11 @@ void multiblend_pre()
     blendpre = requestImage(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
 
     if (os == "WINDOWS") {
-      File fbat = new File (dataPath("tmp")+File.separator+"blend_prev.bat");
-      fbat.delete();
-    } else fsh.delete();
-    File fpy = new File (dataPath("tmp")+File.separator+"blend_prev.py");
-    fpy.delete();
+      File f_bat = new File (dataPath("tmp")+File.separator+"blend_prev.bat");
+      f_bat.delete();
+    } else f_sh.delete();
+    File f_py = new File (dataPath("tmp")+File.separator+"blend_prev.py");
+    f_py.delete();
   }
 }
 
@@ -495,7 +502,4 @@ void precheck()
   File img = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
   if (!img.exists()) blendpre = requestImage("Img"+File.separator+"None.png");
   else  blendpre = requestImage(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
-
-  /* File img = new File(proyectpath+"Options"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
-   if (!img.exists())  multiblend_pre();*/
 }
