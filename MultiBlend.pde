@@ -60,6 +60,7 @@ void mouseEventsMultiblend()
       }
     }
     if (reload_Multiblend_()) {
+      multiblend_addinorder(false);
       loadMultiblend();
       precheck();
     }
@@ -244,7 +245,7 @@ void multiblend_save(String path)
   settingspath = multiblendpath;
   settingsfolder = new File(multiblendpath);
   settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
-  multiblend_addinorder();
+  multiblend_addinorder(true);
   multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
 
   order = multiblend_files - 1;
@@ -303,7 +304,7 @@ void multiblend_delete()
 }
 
 
-void multiblend_addinorder()
+void multiblend_addinorder(boolean add)
 {
   String path = proyectpath+proyectname+".brenders";
   String[] lines = loadStrings(path);
@@ -312,8 +313,14 @@ void multiblend_addinorder()
 
   for (int i = 0; i < lines.length; i++) {
     write.println(trim(lines[i]));
+    if (lines[i].contains("[Order]")) break;
   } 
-  write.print(settingsname);
+  for (int i = 0; i < lines.length; i++) {
+    if (lines[i].contains(".multiblend")) {
+      write.println(trim(lines[i]));
+    }
+  }
+  if (add) write.print(settingsname);
 
   write.flush();
   write.close();
@@ -411,7 +418,7 @@ void multiblend_addtomulti()
   commandLineOptions();
   py_Save(multiblendpath);
   add_tomulti = false;
-  multiblend_addinorder();
+  multiblend_addinorder(true);
 
   order = multiblend_files - 1;
   loadMultiblend();
