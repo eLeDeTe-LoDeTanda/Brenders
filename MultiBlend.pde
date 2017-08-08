@@ -60,8 +60,8 @@ void mouseEventsMultiblend()
       }
     }
     if (reload_Multiblend_()) {
-      multiblend_addinorder(false);
-      loadMultiblend();
+      loadMultiblend(false);
+
       precheck();
     }
 
@@ -101,11 +101,13 @@ void mouseEventsMultiblend()
     }
     if (multiblend_files > 0) {
       if (order_Multiblend_()) {
+        multiblend_selectinorder();
         if (os == "WINDOWS") exec(texteditorpath, proyectpath+proyectname+".brenders");
         else {
           String cmd[] = {terminalpath, "-e", texteditorpath, proyectpath+proyectname+".brenders"};
           exec(cmd);
         }
+        info = "'RELOAD' when finish";
       }
       if (rename_Multiblend_()) {
         settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
@@ -113,7 +115,7 @@ void mouseEventsMultiblend()
       }
       if (delete_Multiblend_()) {
         multiblend_delete();
-        loadMultiblend();
+        loadMultiblend(false);
       }
       if (overwrite_Multiblend_()) {
         multiblend_restart = true;
@@ -189,7 +191,7 @@ void openProyect(File selection)
       proyectname = proyectname.substring(0, proyectname.lastIndexOf("."));
       proyectpath = proyectpath.substring(0, proyectpath.lastIndexOf(File.separator)+1);
 
-      loadMultiblend();
+      loadMultiblend(false);
     } else {
       error = true;
       info = "*Warning No '.brenders' selected";
@@ -202,8 +204,9 @@ void openProyect(File selection)
 }
 
 
-void loadMultiblend()
+void loadMultiblend(boolean addmulti)
 {
+  multiblend_addinorder(addmulti);
   multiblend_active = true;
 
   String lines[] = loadStrings(proyectpath+proyectname+".brenders");
@@ -245,11 +248,11 @@ void multiblend_save(String path)
   settingspath = multiblendpath;
   settingsfolder = new File(multiblendpath);
   settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
-  multiblend_addinorder(true);
-  multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
 
+  loadMultiblend(true);
   order = multiblend_files - 1;
-  loadMultiblend();
+
+  multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
 
   precheck();
 }
@@ -273,7 +276,7 @@ void multiblend_rename()
   write.flush();
   write.close();
 
-  loadMultiblend();
+  loadMultiblend(false);
 }
 
 void multiblend_delete()
@@ -300,7 +303,7 @@ void multiblend_delete()
   write.close();
 
   order = 0;
-  loadMultiblend();
+  loadMultiblend(false);
 }
 
 
@@ -317,15 +320,36 @@ void multiblend_addinorder(boolean add)
   } 
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].contains(".multiblend")) {
-      write.println(trim(lines[i]));
+      write.println(trim(lines[i].substring(0, lines[i].lastIndexOf(".multiblend") + 11)));
     }
   }
   if (add) write.print(settingsname);
 
   write.flush();
   write.close();
+}
 
-  loadMultiblend();
+
+void multiblend_selectinorder()
+{
+  loadMultiblend(false);
+  
+  String path = proyectpath+proyectname+".brenders";
+  String lines[] = loadStrings(path);
+  write = createWriter(path);
+  int x = 0;
+  for (int i = 0; i < lines.length; i++) {
+    x = x + 1;
+    if (!lines[i].contains(".multiblend")) {
+      write.println(trim(lines[i]));
+      if (lines[i].contains("[Order]")) x = -1;
+    } else {
+      if (x != order) write.println(trim(lines[i]));
+      else  write.println(trim(lines[i])+"  <<<<-Selected->>>>");
+    }
+  } 
+  write.flush();
+  write.close();
 }
 
 
@@ -420,10 +444,9 @@ void multiblend_addtomulti()
   commandLineOptions();
   py_Save(multiblendpath);
   add_tomulti = false;
-  multiblend_addinorder(true);
-
+  
   order = multiblend_files - 1;
-  loadMultiblend();
+  loadMultiblend(true);
 
   multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
   info = "Saved: "+settingsname.substring(0, settingsname.lastIndexOf("."));
