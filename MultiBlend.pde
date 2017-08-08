@@ -358,7 +358,8 @@ void multiblend_autorun(String path)
       loadPy(proyectpath+"Options"+File.separator+order_name[a]);
       write.print("call ");
       write.print('"'+blenderpath+'"');
-      write.print(" -b ");
+      if (!oglrenders) write.print(" -b ");
+      else write.print(" - ");
       write.print('"'+blendpath+blendname+'"');
       write.print(" -P ");
       write.print('"'+proyectpath+"Options"+File.separator+order_name[a]+'"');
@@ -389,7 +390,8 @@ void multiblend_autorun(String path)
       write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
       write.println();
       write.print('"'+blenderpath+'"');
-      write.print(" -b ");
+      if (!oglrenders) write.print(" -b ");
+      else write.print(" - ");
       write.print('"'+blendpath+blendname+'"');
       write.print(" -P ");
       write.print('"'+proyectpath+"Options"+File.separator+order_name[a]+'"');
