@@ -61,19 +61,11 @@ void mouseEventsMultiblend()
     }
     if (reload_Multiblend_()) {
       loadMultiblend();
-
       precheck();
     }
 
     if (import_Multiblend_()) {
       selectInput("Select your .py or commandline file", "settingsOpen", settingsfolder);
-    }
-    if (edit_order_Multiblend_()) {
-      if (os == "WINDOWS") exec(texteditorpath, proyectpath+proyectname+".brenders");
-      else {
-        String cmd[] = {terminalpath, "-e", texteditorpath, proyectpath+proyectname+".brenders"};
-        exec(cmd);
-      }
     }
     if (open_folder_Multiblend_()) {
       info = "*Opening...";
@@ -100,14 +92,6 @@ void mouseEventsMultiblend()
         } else {
           error = true;
           info = "Rendering... 'Restart' for overwrite";
-
-          /* if (os == "WINDOWS") {
-           String cmd[]= {terminalpath, "/c", "start", "/w", proyectpath+proyectname+"-continue.bat"};
-           exec(cmd);
-           } else {
-           String cmd[] = {terminalpath, "-e", proyectpath+proyectname+"-continue.sh"};
-           exec(cmd);
-           }*/
         }
       } else {
         error = true;
@@ -115,6 +99,21 @@ void mouseEventsMultiblend()
       }
     }
     if (multiblend_files > 0) {
+      if (order_Multiblend_()) {
+        if (os == "WINDOWS") exec(texteditorpath, proyectpath+proyectname+".brenders");
+        else {
+          String cmd[] = {terminalpath, "-e", texteditorpath, proyectpath+proyectname+".brenders"};
+          exec(cmd);
+        }
+      }
+      if (rename_Multiblend_()) {
+        settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
+        selectOutput("New name: "+settingsname, "settingsRename", settingsfolder);
+      }
+      if (delete_Multiblend_()) {
+        multiblend_delete();
+        loadMultiblend();
+      }
       if (overwrite_Multiblend_()) {
         multiblend_restart = true;
       }
@@ -136,7 +135,7 @@ void mouseEventsMultiblend()
       if (framepreR_Multiblend_()) {
         frameprev = constrain(frameprev + 1, 0, 500000);
       }
-      if (renderoptions_Multiblend_()) {
+      if (edit_Multiblend_()) {
         gui = 1;
       }
     }
@@ -160,8 +159,6 @@ void newProyect(File selection)
     folder.mkdir();
     folder = new File(proyectpath+"Logs");
     folder.mkdir();
-    // folder = new File(proyectpath+"Options"+File.separator+"Previews");
-    // folder.mkdir();
 
     write = createWriter(proyectpath+proyectname+".brenders");
     write.println("[Proyect Name]");
@@ -171,8 +168,7 @@ void newProyect(File selection)
 
     write.flush();
     write.close();
-    //info = "*You can test it with '-Open<' bottom.";
-    // multiblendRenameFiles();
+
     multiblend_files = 0;
     multiblend_active = true;
     info = "New proyect created!";
@@ -220,6 +216,7 @@ void loadMultiblend()
     }
   }
   info = proyectname;
+  redraw();
 }
 
 
@@ -250,14 +247,62 @@ void multiblend_save(String path)
   multiblend_addinorder();
   multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
 
+  order = multiblend_files - 1;
+  loadMultiblend();
+
   precheck();
 }
 
-void multiblend_del(String path)
+void multiblend_rename()
 {
-  System.out.println(path.replaceAll("\\s", ""));
-  //f.delete();
+  String path = proyectpath+proyectname+".brenders";
+  String lines[] = loadStrings(path);
+  write = createWriter(path);
+  int x = 0;
+  for (int i = 0; i < lines.length; i++) {
+    x = x + 1;
+    if (!lines[i].contains(".multiblend")) {
+      write.println(trim(lines[i]));
+      if (lines[i].contains("[Order]")) x = -1;
+    } else {
+      if (x == order) write.println(settingsname);
+      else write.println(trim(lines[i]));
+    }
+  } 
+  write.flush();
+  write.close();
+
+  loadMultiblend();
 }
+
+void multiblend_delete()
+{
+  File f = new File(settingspath);
+  f.delete();
+  File f_pre = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
+  f_pre.delete();
+
+  String path = proyectpath+proyectname+".brenders";
+  String lines[] = loadStrings(path);
+  write = createWriter(path);
+  int x = 0;
+  for (int i = 0; i < lines.length; i++) {
+    x = x + 1;
+    if (!lines[i].contains(".multiblend")) {
+      write.println(trim(lines[i]));
+      if (lines[i].contains("[Order]")) x = -1;
+    } else {
+      if (x != order) write.println(trim(lines[i]));
+    }
+  } 
+  write.flush();
+  write.close();
+
+  order = 0;
+  loadMultiblend();
+}
+
+
 void multiblend_addinorder()
 {
   String path = proyectpath+proyectname+".brenders";
@@ -280,14 +325,12 @@ void multiblend_addinorder()
 void multiblend_autorun(String path)
 {   
   String lines[] = loadStrings(proyectpath+proyectname+".brenders");
-  //  File dir = new File(proyectpath+"Options"+File.separator);
-  //String[] fList = dir.list();
-  String order[] = new String[multiblend_files];
+  String order_name[] = new String[multiblend_files];
   int x = 0;
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].contains(".multiblend")) {
       lines[i] = trim(lines[i]);
-      order[x] = lines[i];
+      order_name[x] = lines[i];
       x = x + 1;
     }
   }
@@ -304,24 +347,15 @@ void multiblend_autorun(String path)
     write.println("@ECHO -");
     write.println("@ECHO RENDERING...");
     write.println("@ECHO -");
-    for (int a = 0; a < order.length; a++) {
-      loadPy(proyectpath+"Options"+File.separator+order[a]);
-      //write.print("xterm -e ");
-      //write.print("echo $(date +'%H:%M:%S') Start: "+order[a]+" 2>&1 | tee -a ");
-      // write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
-      // write.println();
+    for (int a = 0; a < order_name.length; a++) {
+      loadPy(proyectpath+"Options"+File.separator+order_name[a]);
       write.print("call ");
       write.print('"'+blenderpath+'"');
       write.print(" -b ");
       write.print('"'+blendpath+blendname+'"');
       write.print(" -P ");
-      write.print('"'+proyectpath+"Options"+File.separator+order[a]+'"');
-      // write.print(" 2>&1 | tee ");
-      // write.println('"'+proyectpath+"Logs"+File.separator+"$(date +'%Y-%m-%d_%H:%M:%S_')"+order[a].substring(0, order[a].lastIndexOf("."))+".log"+'"');
+      write.print('"'+proyectpath+"Options"+File.separator+order_name[a]+'"');
       write.println();
-      // write.print("echo $(date +'%H:%M:%S') Finish: "+order[a]+" 2>&1 | tee -a ");
-      // write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
-      // write.println();
     }   
     write.println("@ECHO -");
     write.println("@ECHO FINISH!");
@@ -342,21 +376,20 @@ void multiblend_autorun(String path)
     write.print("echo ---------- $(date +'%Y-%m-%d') ---------- 2>&1 | tee -a ");
     write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
 
-    for (int a = 0; a < order.length; a++) {
-      loadPy(proyectpath+"Options"+File.separator+order[a]);
-      //write.print("xterm -e ");
-      write.print("echo $(date +'%H:%M:%S') Start: "+order[a]+" 2>&1 | tee -a ");
+    for (int a = 0; a < order_name.length; a++) {
+      loadPy(proyectpath+"Options"+File.separator+order_name[a]);
+      write.print("echo $(date +'%H:%M:%S') Start: "+order_name[a]+" 2>&1 | tee -a ");
       write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
       write.println();
       write.print('"'+blenderpath+'"');
       write.print(" -b ");
       write.print('"'+blendpath+blendname+'"');
       write.print(" -P ");
-      write.print('"'+proyectpath+"Options"+File.separator+order[a]+'"');
+      write.print('"'+proyectpath+"Options"+File.separator+order_name[a]+'"');
       write.print(" 2>&1 | tee ");
-      write.println('"'+proyectpath+"Logs"+File.separator+"$(date +'%Y-%m-%d_%H:%M:%S_')"+order[a].substring(0, order[a].lastIndexOf("."))+".log"+'"');
+      write.println('"'+proyectpath+"Logs"+File.separator+"$(date +'%Y-%m-%d_%H:%M:%S_')"+order_name[a].substring(0, order_name[a].lastIndexOf("."))+".log"+'"');
       write.println();
-      write.print("echo $(date +'%H:%M:%S') Finish: "+order[a]+" 2>&1 | tee -a ");
+      write.print("echo $(date +'%H:%M:%S') Finish: "+order_name[a]+" 2>&1 | tee -a ");
       write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
       write.println();
     }
@@ -379,7 +412,10 @@ void multiblend_addtomulti()
   py_Save(multiblendpath);
   add_tomulti = false;
   multiblend_addinorder();
+
+  order = multiblend_files - 1;
   loadMultiblend();
+
   multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
   info = "Saved: "+settingsname.substring(0, settingsname.lastIndexOf("."));
 }
