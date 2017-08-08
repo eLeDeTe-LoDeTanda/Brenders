@@ -83,23 +83,43 @@ void multiBlend_Gui()
     pathname = proyectname;
     if (proyectname.length() > 20) pathname = proyectname.substring(0, 10)+"..."+proyectname.substring(proyectname.length() - 10);
     text(pathname, width / 2, 13);
-    text(">>'IMPORT' Render Options<<", width / 2, 80);
-    text(">>Order 'EDIT'<<", width / 2, 100);
-    text(">>Open Proyect Folder<<", width / 2, 120);
-    text(">>RENDER MANAGER<<", width / 2, 140);
+    text(">>OPEN Proyect Folder<<", width / 2, 95);
+    text(">>RENDER MANAGER<<", width / 2, 115);
 
+    fill(bcolor);
+    rect(width / 2 - 25, 205, 50, 12);
+    fill(icolor);
+    textSize(10);
+    text("IMPORT", width / 2, 215);
+
+    textSize(14);
     if (multiblend_files > 0) {
       fill(acolor);
       String name = multiblend_names[order]+".multiblend";
       if (multiblend_names[order].length() > 18) name = multiblend_names[order].substring(0, 9)+"..."+multiblend_names[order].substring(multiblend_names[order].length() - 9);
-      text("-"+name+"-", width / 2, 200);
+      text("-"+name+"-", width / 2, 185);
       name = blendname;
-      if (blendname.length() > 18) name = blendname.substring(0, 9)+"..."+blendname.substring(blendname.length() - 9);
-      text("-"+name+"-", width / 2, 230);
+      textSize(12);
+      if (blendname.length() > 20) name = blendname.substring(0, 10)+"..."+blendname.substring(blendname.length() - 10);
+      text("-"+name+"-", width / 2, 200);
       text("*"+multiblend_files+"*  .blend to render", 135, 310);
       fill(bcolor);
       text("<< Order: "+nf(order+1, 4)+" | "+nf(multiblend_files, 4)+">>", 135, 330);
-      text("<<Render Options>>", width / 2, 260);
+
+      fill(bcolor);
+      rect(width / 2 - 25, 205, 50, 12);
+      rect(width / 2 - 25, 220, 50, 12);
+      rect(width / 2 - 25, 235, 50, 12);
+      rect(width / 2 - 25, 250, 50, 12);
+      rect(width / 2 - 25, 265, 50, 12);
+      fill(icolor);
+      textSize(10);
+      text("IMPORT", width / 2, 215);
+      text("ORDER", width / 2, 230);
+      text("EDIT", width / 2, 245);
+      text("RENAME", width / 2, 260);
+      text("DELETE", width / 2, 275);
+
       fill(ccolor);
 
       textAlign(LEFT);
@@ -153,21 +173,13 @@ boolean reload_Multiblend_()
   return  (mouseX > 260 && mouseX < 380 && mouseY > 35 && mouseY < 60);
 }
 
-boolean import_Multiblend_() 
-{
-  return  (mouseX > 270 && mouseX < 370 && mouseY > 60 && mouseY < 85);
-}
-boolean edit_order_Multiblend_() 
-{
-  return  (mouseX > 270 && mouseX < 370 && mouseY > 86 && mouseY < 105);
-}
 boolean open_folder_Multiblend_() 
 {
-  return  (mouseX > 270 && mouseX < 370 && mouseY > 106 && mouseY < 125);
+  return  (mouseX > 270 && mouseX < 370 && mouseY > 80 && mouseY < 100);
 }
 boolean rendermanager_Multiblend_() 
 {
-  return  (mouseX > 270 && mouseX < 370 && mouseY > 126 && mouseY < 145);
+  return  (mouseX > 270 && mouseX < 370 && mouseY > 100 && mouseY < 120);
 }
 
 boolean go_Multiblend_() 
@@ -186,11 +198,11 @@ boolean continue_Multiblend_()
 
 boolean orderL_Multiblend_() 
 {
-  return  (mouseX > 0 && mouseX < 230 && mouseY > 315 && mouseY < 340);
+  return  (mouseX > 0 && mouseX < 115 && mouseY > 315 && mouseY < 340);
 }
 boolean orderR_Multiblend_() 
 {
-  return  (mouseX > 200 && mouseX < 320 && mouseY > 320 && mouseY < 340);
+  return  (mouseX > 160 && mouseX < 230 && mouseY > 315 && mouseY < 340);
 }
 
 boolean openblend_Multiblend_() 
@@ -210,7 +222,23 @@ boolean framepreR_Multiblend_()
   return  (mouseX > 580 && mouseX < 605 && mouseY > 335 && mouseY < 350);
 }
 
-boolean renderoptions_Multiblend_()
+boolean import_Multiblend_()
 {
-  return  (mouseX > 245 && mouseX < 400 && mouseY > 240 && mouseY < 270);
+  return  (mouseX > 290 && mouseX < 350 && mouseY > 205 && mouseY < 220);
+}
+boolean order_Multiblend_()
+{
+  return  (mouseX > 290 && mouseX < 350 && mouseY > 220 && mouseY < 235);
+}
+boolean edit_Multiblend_()
+{
+  return  (mouseX > 290 && mouseX < 350 && mouseY > 235 && mouseY < 250);
+}
+boolean rename_Multiblend_()
+{
+  return  (mouseX > 290 && mouseX < 350 && mouseY > 250 && mouseY < 265);
+}
+boolean delete_Multiblend_()
+{
+  return  (mouseX > 290 && mouseX < 350 && mouseY > 265 && mouseY < 280);
 }
