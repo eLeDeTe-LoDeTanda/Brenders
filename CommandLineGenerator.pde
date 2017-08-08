@@ -1315,10 +1315,18 @@ void settingsRename(File selection)
     File originalname = new File(settingspath);
     File newname = new File(newFile);
 
+    File prename = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
+
     settingsfolder = newname;
     settingspath = newFile;
     settingsname = selection.getName();
     originalname.renameTo(newname);
+
+    if (gui == 3) {
+      File prenewname = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
+      prename.renameTo(prenewname);
+      multiblend_rename();
+    }
 
     if (generatepy) {
       String lines[] = loadStrings(settingspath);
@@ -1329,6 +1337,11 @@ void settingsRename(File selection)
         }
       }
       saveStrings(newname, lines);
+    }
+    if (gui == 3) {
+      multiblend_rename();
+      File prenewname = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
+      prename.renameTo(prenewname);
     }
   }
   redraw();
