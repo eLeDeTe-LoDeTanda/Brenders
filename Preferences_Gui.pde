@@ -28,6 +28,7 @@
 void preferences_Gui()
 {
   pushStyle();
+
   background(backgroundcolor);
   tint(230, 230, 250);
   image(bg2, 0, 0);
@@ -37,7 +38,7 @@ void preferences_Gui()
   stroke(icolor);
 
   textAlign(LEFT);
-  
+
   fill(acolor);
 
   text("DEFAULT aplications:", 265, 40);
@@ -62,12 +63,18 @@ void preferences_Gui()
   text("file MANAGER", 245, 195);
   textSize(10);
   text("-Open<", 350, 195);
+  
+    textSize(14);
+  text("image VIEWER", 245, 235);
+  textSize(10);
+  text("-Open<", 350, 235);
 
   fill(bcolor);
   rect(245, 82, 15, 15, 4);
   rect(245, 122, 15, 15, 4);
   rect(245, 162, 15, 15, 4);
   rect(245, 202, 15, 15, 4);
+  rect(245, 242, 15, 15, 4);
 
   fill(icolor);
   textSize(11);
@@ -75,6 +82,7 @@ void preferences_Gui()
   text("...", 248, 131);
   text("...", 248, 171);
   text("...", 248, 211);
+  text("...", 248, 251);
 
   fill(acolor);
   pathname = blenderpath;
@@ -88,13 +96,16 @@ void preferences_Gui()
   text(pathname, 265, 215);
   pathname = terminalpath;
   if (terminalpath.length() > 20) pathname = terminalpath.substring(0, 10)+"..."+terminalpath.substring(terminalpath.length() - 10);  
-  text(File.separator+pathname, 265, 135);
-  
+  text(pathname, 265, 135);
+  pathname = imageviewerpath;
+  if (imageviewerpath.length() > 20) pathname = imageviewerpath.substring(0, 10)+"..."+imageviewerpath.substring(imageviewerpath.length() - 10);  
+  text(pathname, 265, 255);
+
   fill(bcolor);
   textSize(14);
 
-  text(">>Load Factory preferences<<", 220, 270);
-  
+  text(">>Load Factory preferences<<", 220, 300);
+
   popStyle();
 }
 
@@ -135,7 +146,16 @@ boolean filemanager_default_open_()
   return  (mouseX > 340 && mouseX < 400 && mouseY > 185 && mouseY < 200);
 }
 
+boolean imageviewer_default_() 
+{
+  return  (mouseX > 245 && mouseX < 265 && mouseY > 240 && mouseY < 260);
+}
+boolean imageviewer_default_open_() 
+{
+  return  (mouseX > 340 && mouseX < 400 && mouseY > 225 && mouseY < 240);
+}
+
 boolean load_factory_() 
 {
-  return  (mouseX > 215 && mouseX < 435 && mouseY > 250 && mouseY < 275);
+  return  (mouseX > 215 && mouseX < 435 && mouseY > 285 && mouseY < 305);
 }
