@@ -63,8 +63,8 @@ void preferences_Gui()
   text("file MANAGER", 245, 195);
   textSize(10);
   text("-Open<", 350, 195);
-  
-    textSize(14);
+
+  textSize(14);
   text("image VIEWER", 245, 235);
   textSize(10);
   text("-Open<", 350, 235);
@@ -97,10 +97,11 @@ void preferences_Gui()
   pathname = terminalpath;
   if (terminalpath.length() > 20) pathname = terminalpath.substring(0, 10)+"..."+terminalpath.substring(terminalpath.length() - 10);  
   text(pathname, 265, 135);
+  //if (os != "WINDOWS") {
   pathname = imageviewerpath;
   if (imageviewerpath.length() > 20) pathname = imageviewerpath.substring(0, 10)+"..."+imageviewerpath.substring(imageviewerpath.length() - 10);  
   text(pathname, 265, 255);
-
+  // }
   fill(bcolor);
   textSize(14);
 
