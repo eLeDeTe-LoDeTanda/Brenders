@@ -101,9 +101,9 @@ BRENDERSv1.0 TODO:
 
 **RENDER MANAGER**
 
-*preview renders --- Previsualizar renders
+*~preview renders --- Previsualizar renders~ :heavy_check_mark:
 
-*Open render --- Abrir render
+*~Open render --- Abrir render~ :heavy_check_mark:
 
 *Select: preview or final --- Seleccionar: previsualización o final
 
