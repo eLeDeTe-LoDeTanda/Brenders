@@ -42,6 +42,9 @@ void initVarCommandLine (String os)
       write.println();
       write.println("[FileManager]");
       write.println("explorer.exe");
+      write.println();
+      write.println("[ImageViewer]");
+      write.println("explorer.exe");
 
       write.flush();
       write.close();
@@ -52,6 +55,7 @@ void initVarCommandLine (String os)
       else if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
       else if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
       else if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
+      else if (lines[i].contains("[ImageViewer]")) imageviewerpath = lines[i+1];
     }
   } else {
     File f = new File(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
@@ -68,6 +72,9 @@ void initVarCommandLine (String os)
       write.println();
       write.println("[FileManager]");
       write.println("/usr/bin/nautilus");
+      write.println();
+      write.println("[ImageViewer]");
+      write.println("/usr/bin/eog");
 
       write.flush();
       write.close();
@@ -75,13 +82,15 @@ void initVarCommandLine (String os)
     String lines[] = loadStrings(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
     for (int i = 0; i < lines.length; i++) {
       if (lines[i].contains("[Terminal]")) terminalpath = lines[i+1];
-      if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
-      if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
-      if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
+      else if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
+      else if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
+      else if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
+      else if (lines[i].contains("[ImageViewer]")) imageviewerpath = lines[i+1];
     }
   }
   terminalfolder = new File (terminalpath);
   texteditorfolder = new File (texteditorpath);
+  imageviewerfolder = new File (imageviewerpath);
   explorerfolder = new File (managerpath);
   blenderfolder = new File(blenderpath);
   proyectfolder = new File(dataPath("Proyects")+File.separator+"newProyect");
@@ -1237,6 +1246,19 @@ void managerSelect(File selection)
   redraw();
 }
 
+void imageviewerSelect(File selection) 
+{
+  if (selection != null) {
+    imageviewerpath = selection.getAbsolutePath();
+    imageviewerfolder = new File(imageviewerpath);
+
+    info = "*Test it with '-Open<' bottom.";
+
+    if (gui == 7) savePreferences();
+  }
+  redraw();
+}
+
 void settingsSave(File selection) 
 {
   if (selection != null) {
@@ -1649,7 +1671,7 @@ void mouseEventsCommandLine ()
         exec(cmd);
       }
     }
-
+    
     if (savelogs_()) savelogs = !savelogs;
 
     if (generatepy) {
