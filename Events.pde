@@ -26,48 +26,50 @@
 
 void  mousePressed()
 {
-  if (mouseButton == LEFT) {
-    if (gui == 0) {
-      if (commandlinegenerator_()) {
-        gui = 1;
-      }
-      if (rendersStatus_()) {
-        gui = 2;
-      }
-      if (renderingMultiBlend_()) {
-        gui = 3;
-      }
-      if (renderTimeCalculator_()) {
-        gui = 4;
-      }
-      if (batchProcessing_()) {
-        gui = 5;
-      }
-      if  (mouseX > 30 && mouseX < 50 && mouseY > 330 && mouseY < 350) gui = 6;
-      if  (mouseX > width - 60 && mouseX < width && mouseY > 330 && mouseY < 350) gui = 7;
-    } else if (gui == 1) {
-      mouseEventsCommandLine();
-    } else if (gui == 2) {
-    } else if (gui == 3) {
-      mouseEventsMultiblend();
-    } else if (gui == 4) {
-      eventsART();
-    } else if (gui == 5) {
-      mouseEventsBatch();
-    } else if (gui == 6) {
-      if  (mouseX > 270 && mouseX < 370 && mouseY > 145 && mouseY < 165) link("https://github.com/eLeDeTe-LoDeTanda/Brenders");
-      if  (mouseX > 230 && mouseX < 410 && mouseY > 220 && mouseY < 240) link("http://lodetanda.blogspot.com/");
-    } else if (gui == 7) {
-      mouseEventsPreferences();
+  //if (mouseButton == LEFT) {
+  if (gui == 0) {
+    if (commandlinegenerator_()) {
+      gui = 1;
     }
-  }
-  if (mouseButton == RIGHT) {
-    if (selectoption[renders_name_id]) rendersname = esc;
-    for (int i = 0; i < selectoption.length; i++) {
-      if (selectoption[i]) valoption[i] = esc;
+    if (rendersStatus_()) {
+      gui = 2;
     }
-    selectcolor = false;
+    if (renderingMultiBlend_()) {
+      gui = 3;
+    }
+    if (renderTimeCalculator_()) {
+      gui = 4;
+    }
+    if (batchProcessing_()) {
+      gui = 5;
+    }
+    if  (mouseX > 30 && mouseX < 50 && mouseY > 330 && mouseY < 350) gui = 6;
+    if  (mouseX > width - 60 && mouseX < width && mouseY > 330 && mouseY < 350) gui = 7;
+  } else if (gui == 1) {
+    if (mouseButton == LEFT) mouseEventsCommandLine();
+    if (mouseButton == RIGHT) {
+      if (selectoption[renders_name_id]) rendersname = esc;
+      for (int i = 0; i < selectoption.length; i++) {
+        if (selectoption[i]) valoption[i] = esc;
+      }
+      selectcolor = false;
+    }
+  } else if (gui == 2) {
+    mouseEventsManager();
+  } else if (gui == 3) {
+    mouseEventsMultiblend();
+  } else if (gui == 4) {
+    eventsART();
+  } else if (gui == 5) {
+    mouseEventsBatch();
+  } else if (gui == 6) {
+    if  (mouseX > 270 && mouseX < 370 && mouseY > 145 && mouseY < 165) link("https://github.com/eLeDeTe-LoDeTanda/Brenders");
+    if  (mouseX > 230 && mouseX < 410 && mouseY > 220 && mouseY < 240) link("http://lodetanda.blogspot.com/");
+  } else if (gui == 7) {
+    mouseEventsPreferences();
   }
+  // }
+
   redraw();
 }
 
