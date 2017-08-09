@@ -30,6 +30,7 @@ PImage bg;
 PImage bg2;
 PImage bg3;
 PImage blendpre;
+PImage renderpre;
 
 int gui = 0;
 
@@ -91,7 +92,7 @@ void draw() {
     commandLineGenerator_Gui();
     break;
   case 2:
-    //rendersStatus_Gui();
+    //renderManager_Gui();
     inDev_Gui();
     break;
   case 3:
