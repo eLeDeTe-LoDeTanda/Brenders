@@ -54,6 +54,11 @@ void mouseEventsPreferences()
     info = "*Opening...";
     exec(managerpath);
   }
+  if (imageviewer_default_()) selectInput("Select Text editor executable:", "imageviewerSelect", imageviewerfolder);
+  if (imageviewer_default_open_()) {
+    info = "*Opening...";
+    exec(imageviewerpath);
+  }
   if (settings_path_open_()) {
     info = "*Opening...";
     String cmd[] = {managerpath, settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)};
@@ -82,6 +87,9 @@ void mouseEventsPreferences()
       write.println();
       write.println("[FileManager]");
       write.println("explorer.exe");
+      write.println();
+      write.println("[ImageViewer]");
+      write.println("explorer.exe");
 
       write.flush();
       write.close();
@@ -89,9 +97,10 @@ void mouseEventsPreferences()
       String lines[] = loadStrings(dataPath("Preferences"+File.separator+"extern_Windows.txt"));
       for (int i = 0; i < lines.length; i++) {
         if (lines[i].contains("[Terminal]")) terminalpath = lines[i+1];
-        if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
-        if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
-        if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
+        else if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
+        else if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
+        else if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
+        else if (lines[i].contains("[ImageViewer]")) imageviewerpath = lines[i+1];
       }
     } else {
       File f = new File(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
@@ -109,6 +118,9 @@ void mouseEventsPreferences()
       write.println();
       write.println("[FileManager]");
       write.println("/usr/bin/nautilus");
+      write.println();
+      write.println("[ImageViewer]");
+      write.println("/usr/bin/eog");
 
       write.flush();
       write.close();
@@ -116,9 +128,10 @@ void mouseEventsPreferences()
       String lines[] = loadStrings(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
       for (int i = 0; i < lines.length; i++) {
         if (lines[i].contains("[Terminal]")) terminalpath = lines[i+1];
-        if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
-        if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
-        if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
+        else if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
+        else if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
+        else if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
+        else if (lines[i].contains("[ImageViewer]")) imageviewerpath = lines[i+1];
       }
     }
   }
@@ -142,6 +155,9 @@ void savePreferences()
   write.println();
   write.println("[FileManager]");
   write.println(managerpath);
+  write.println();
+  write.println("[ImageViewer]");
+  write.println(imageviewerpath);
 
   write.flush();
   write.close();
