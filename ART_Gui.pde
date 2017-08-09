@@ -46,6 +46,8 @@ String [] valART = new String[6];
 
 void ART_Gui()
 {
+  pushStyle();
+
   surface.setTitle("ART -Approximate Render Time Calculator-");
   background(backgroundcolor);
   tint(220, 220, 230);
@@ -114,4 +116,6 @@ void ART_Gui()
   am = aniDuration/60;
   ah = am / 60;
   am = am % 60;
+
+  popStyle();
 }
