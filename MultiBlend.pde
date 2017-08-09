@@ -78,7 +78,7 @@ void mouseEventsMultiblend()
     }
     if (go_Multiblend_()) {
       if (multiblend_files > 0) {
-       // rendersManager();
+        // rendersManager();
         if (multiblend_restart) {
           loadMultiblend(false);
           multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
@@ -176,6 +176,7 @@ void newProyect(File selection)
 
     multiblend_files = 0;
     multiblend_active = true;
+
     info = "New proyect created!";
 
     redraw();
@@ -210,7 +211,8 @@ void loadMultiblend(boolean addmulti)
 {
   multiblend_addinorder(addmulti);
   multiblend_active = true;
-
+  multiblend_files = 0;
+  
   String lines[] = loadStrings(proyectpath+proyectname+".brenders");
   int x = 0;
   for (int i = 0; i < lines.length; i++) {
@@ -254,6 +256,8 @@ void multiblend_save(String path)
   order = multiblend_files;
 
   loadMultiblend(true);
+
+  jsonManager();
 
   multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
 
@@ -323,7 +327,11 @@ void multiblend_addinorder(boolean add)
   } 
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].contains(".multiblend")) {
-      write.println(trim(lines[i].substring(0, lines[i].lastIndexOf(".multiblend") + 11)));
+      String multipath = trim(lines[i].substring(0, lines[i].lastIndexOf(".multiblend") + 11));
+
+      File f = new File(proyectpath+"Options"+File.separator+multipath);
+      
+      if (f.exists()) write.println(multipath);
     }
   }
   if (add) write.print(settingsname);
@@ -451,6 +459,8 @@ void multiblend_addtomulti()
   order = multiblend_files;
 
   loadMultiblend(true);
+
+  jsonManager();
 
   multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
   info = "Saved: "+settingsname.substring(0, settingsname.lastIndexOf("."));
