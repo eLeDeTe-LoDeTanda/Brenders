@@ -86,6 +86,10 @@ BRENDERSv1.0 TODO:
 
 *Recents proyects --- Proyectos recientes
 
+*~Rename multiblend --- Renombrar multiblend~ :heavy_check_mark:
+
+*~Delete multiblend --- Borrar multiblend~ :heavy_check_mark:
+
 *~Render order --- Orden de renderizado~ :heavy_check_mark:
 
 *~Edit Render order in text editor --- Editar orden de render en editor de texto~ :heavy_check_mark:
