@@ -35,7 +35,7 @@ int frameprev = 1;
 
 boolean multiblend_restart= true;
 
-String proyectname = "NO proyect open";
+String proyectname = "NO PROYECT OPEN";
 String[] multiblend_names = new String[24];
 String[] names = new String[12];
 
@@ -46,6 +46,7 @@ File proyectfolder;
 void multiBlend_Gui()
 {
   pushStyle();
+  
   pathname = proyectname;
   if (proyectname.length() > 20) pathname = proyectname.substring(0, 10)+"..."+proyectname.substring(proyectname.length() - 10);
   surface.setTitle("MultiBlend -"+pathname+"- "+version);
@@ -156,6 +157,7 @@ void multiBlend_Gui()
     textSize(16);
     text("No Proyect Open", width / 2, 270);
   } 
+  
   popStyle();
 }
 
