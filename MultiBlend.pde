@@ -78,7 +78,9 @@ void mouseEventsMultiblend()
     }
     if (go_Multiblend_()) {
       if (multiblend_files > 0) {
+       // rendersManager();
         if (multiblend_restart) {
+          loadMultiblend(false);
           multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
 
           if (os == "WINDOWS") {
@@ -249,8 +251,9 @@ void multiblend_save(String path)
   settingsfolder = new File(multiblendpath);
   settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
 
+  order = multiblend_files;
+
   loadMultiblend(true);
-  order = multiblend_files - 1;
 
   multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
 
@@ -333,7 +336,7 @@ void multiblend_addinorder(boolean add)
 void multiblend_selectinorder()
 {
   loadMultiblend(false);
-  
+
   String path = proyectpath+proyectname+".brenders";
   String lines[] = loadStrings(path);
   write = createWriter(path);
@@ -444,8 +447,9 @@ void multiblend_addtomulti()
   commandLineOptions();
   py_Save(multiblendpath);
   add_tomulti = false;
-  
-  order = multiblend_files - 1;
+
+  order = multiblend_files;
+
   loadMultiblend(true);
 
   multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
@@ -568,6 +572,6 @@ void multiblend_pre()
 void precheck()
 {
   File img = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
-  if (!img.exists()) blendpre = requestImage("Img"+File.separator+"None.png");
-  else  blendpre = requestImage(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
+  if (!img.exists()) blendpre = loadImage("Img"+File.separator+"None.png");
+  else  blendpre = loadImage(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
 }
