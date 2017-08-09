@@ -43,7 +43,7 @@ void startGui()
   text("Batch Processing", width / 1.5, height / 1.3 + 15);
   text("Command line generator", width / 2 - 200, height / 3 - 40);
   text("Render Manager", width / 2, height / 4 - 40);
-  text("Render multi .blend", width / 2 + 200, height / 3 - 40);
+  text("Multiblend", width / 2 + 200, height / 3 - 40);
   textSize(12);
   text("About", 40, height - 40);
   text(version, width / 2, height - 20);
