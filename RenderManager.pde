@@ -40,10 +40,10 @@ void mouseEventsManager()
         endframemanager = int(valoption[frame_end_id]);
       }
       if (manager_good()) {
-        rendersManager("good");
+        rendersManager("good", framemanager);
       }
       if (manager_bad()) {
-        rendersManager("bad");
+        rendersManager("bad", framemanager);
       }
       if (mouseX >= 20 && mouseX <= 625 && mouseY >= 30 && mouseY <=  325) {
         int X = floor(map(mouseX, 20, 620, 0, 15));
@@ -60,7 +60,8 @@ void mouseEventsManager()
         }
         if (mouseButton == CENTER) {
           if (framemanager <= int(valoption[frame_end_id])) {
-            String prepath = proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_"+nf(framemanager, 4)+".png";
+            String prepath = outputpath+rendersname.substring(0, rendersname.lastIndexOf("_"))+"_"+nf(framemanager, 4)+".png";
+            //print(prepath);
             if (os == "WINDOWS") {
               String cmd[] = {"rundll32.exe", "C:"+File.separator+"WINDOWS"+File.separator+"System32"+File.separator+"shimgvw.dll,ImageView_Fullscreen", prepath};
               exec(cmd);
@@ -75,27 +76,42 @@ void mouseEventsManager()
   }
 }
 
-void rendersManager(String option) 
+void rendersManager(String option, int frame)
 {
-  write = createWriter(proyectpath+"Manager"+File.separator+"RendersControl-FINAL.Manager");
-  write.println("[Proyect Name]");
-  write.println(proyectname);
-  write.println();
-  write.println("[Renders]");
-  write.println();
-  write.println(settingsname);
-  for (int i = 0; i <= int(valoption[frame_end_id]); i++) {
-    if (option == "good") write.print("Good  ");
-    else if (option == "bad")  write.print("Bad   ");
-    else if (option == "empty")  write.print("Empty ");
-    write.print(" Frame:");
-    write.println(nf(int(valoption[frame_start_id]) + i, 5));
-  }
-  write.flush();
-  write.close();
+  JSONObject rendermanager;
+
+  rendermanager = new JSONObject();
+
+  rendermanager.setInt("Frame", frame);
+  rendermanager.setString("Render", option);
+  
+   saveJSONObject(rendermanager, proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
 }
 
-void getrenderoutputManager() 
+void jsonManager() 
 {
-  
+  JSONArray rendercontrol;
+
+  rendercontrol = new JSONArray();
+
+  for (int i = int(valoption[frame_start_id]); i <= int(valoption[frame_end_id]); i++) {
+
+    JSONObject rendermanager = new JSONObject();
+
+    rendermanager.setInt("Frame", i);
+    rendermanager.setString("Multi", settingsname);
+    rendermanager.setString("Status", "Waiting");
+    rendermanager.setString("Render", "None");
+    if (newoutput) {
+      rendermanager.setString("Render path", outputpath);
+      rendermanager.setString("Render path", rendersname);
+    } else {
+      rendermanager.setString("Render path", "From .blend");
+      rendermanager.setString("Render name", "From .blend");
+    }
+
+    rendercontrol.setJSONObject(i, rendermanager);
+  }
+
+  saveJSONArray(rendercontrol, proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
 }
