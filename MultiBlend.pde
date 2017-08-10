@@ -134,12 +134,28 @@ void mouseEventsMultiblend()
     if (multiblend_files > 0) {
       if (order_Multiblend_()) {
         multiblend_selectinorder();
-        if (os == "WINDOWS") exec(texteditorpath, proyectpath+proyectname+".brenders");
-        else {
-          String cmd[] = {terminalpath, "-e", texteditorpath, proyectpath+proyectname+".brenders"};
-          exec(cmd);
+        if (os == "WINDOWS") {
+          try {
+            String cmd[] = {texteditorpath, proyectpath+proyectname+".brenders"};
+            Process proc = Runtime.getRuntime().exec(cmd);
+            proc.waitFor();
+          } 
+          catch(Exception e) {
+            e.printStackTrace();
+          }
+        } else {
+          try {
+            String cmd[] = {terminalpath, "-e", texteditorpath, proyectpath+proyectname+".brenders"};
+            Process proc = Runtime.getRuntime().exec(cmd);
+            proc.waitFor();
+          } 
+          catch(Exception e) {
+            e.printStackTrace();
+          }
         }
-        info = "'RELOAD' when finish";
+        loadMultiblend(false);
+        precheck();
+        info = "'RELOADED' new order";
       }
       if (rename_Multiblend_()) {
         settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
@@ -188,8 +204,6 @@ void mouseEventsMultiblend()
 
     precheck();
   }
-
-  redraw();
 }
 
 
@@ -226,9 +240,8 @@ void newProyect(File selection)
     info = "New proyect created!";
 
     addrecentproyect();
-
-    redraw();
   }
+  redraw();
 }
 
 
@@ -251,9 +264,8 @@ void openProyect(File selection)
     precheck();
 
     addrecentproyect();
-
-    redraw();
   }
+  redraw();
 }
 
 
@@ -274,7 +286,6 @@ void loadMultiblend(boolean addmulti)
     }
   }
   info = proyectname;
-  redraw();
 }
 
 
@@ -586,9 +597,14 @@ void multiblend_pre()
 
     write.flush();
     write.close();
-
-    String cmd[]= {terminalpath, "/c", "start", "/w", dataPath("tmp")+File.separator+"blend_prev.bat"};
-    exec(cmd);
+    try {
+      String cmd[]= {terminalpath, "/c", "start", "/w", dataPath("tmp")+File.separator+"blend_prev.bat"};
+      Process proc = Runtime.getRuntime().exec(cmd);
+      proc.waitFor();
+    } 
+    catch(Exception e) {
+      e.printStackTrace();
+    }
   } else {
     write = createWriter(dataPath("tmp")+File.separator+"blend_prev.sh");
     write.println("#!/bin/bash");
@@ -618,11 +634,13 @@ void multiblend_pre()
       e.printStackTrace();
     }
     blendpre = requestImage(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
-
-    if (os == "WINDOWS") {
-      File f_bat = new File (dataPath("tmp")+File.separator+"blend_prev.bat");
-      f_bat.delete();
-    } else f_sh.delete();
+  }
+  if (os == "WINDOWS") {
+    File f_bat = new File (dataPath("tmp")+File.separator+"blend_prev.bat");
+    f_bat.delete();
+  } else {
+    File f_sh = new File(dataPath("tmp")+File.separator+"blend_prev.sh");
+    f_sh.delete();
     File f_py = new File (dataPath("tmp")+File.separator+"blend_prev.py");
     f_py.delete();
   }
@@ -649,7 +667,7 @@ void addrecentproyect()
 
   write.flush();
   write.close();
-  
+
   String lines[] = loadStrings(dataPath("Proyects")+File.separator+"recent.txt");
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].contains("[Recent]")) {
