@@ -26,33 +26,63 @@
 
 void initvarMultiblend()
 {
-  File f = new File(dataPath(dataPath("Proyects")+File.separator+"recent.txt"));
-  if (!f.exists()) {
-    write = createWriter(dataPath("Proyects")+File.separator+"recent.txt");
-    write.println("[Recent]");
-    write.println("None");
-    write.println("None");
-    write.println("None");
-    write.println("None");
-    write.println("None");
-    write.println("None");
+  if (os == "WINDOWS") {
+    File f = new File(dataPath(dataPath("Proyects")+File.separator+"recent_Windows.txt"));
+    if (!f.exists()) {
+      write = createWriter(dataPath("Proyects")+File.separator+"recent_Windows.txt");
+      write.println("[Recent]");
+      write.println("None");
+      write.println("None");
+      write.println("None");
+      write.println("None");
+      write.println("None");
+      write.println("None");
 
-    write.flush();
-    write.close();
-  }
-  String lines[] = loadStrings(dataPath("Proyects")+File.separator+"recent.txt");
-  for (int i = 0; i < lines.length; i++) {
-    if (lines[i].contains("[Recent]")) {
-      recentproyect[0] = lines[i+1];
-      recentproyect[1] = lines[i+2];
-      recentproyect[2] = lines[i+3];
-      recentproyect[3] = lines[i+4];
-      recentproyect[4] = lines[i+5];
-      recentproyect[5] = lines[i+6];  
-      break;
+      write.flush();
+      write.close();
+    } 
+    String lines[] = loadStrings(dataPath("Proyects")+File.separator+"recent_Windows.txt");
+    for (int i = 0; i < lines.length; i++) {
+      if (lines[i].contains("[Recent]")) {
+        recentproyect[0] = lines[i+1];
+        recentproyect[1] = lines[i+2];
+        recentproyect[2] = lines[i+3];
+        recentproyect[3] = lines[i+4];
+        recentproyect[4] = lines[i+5];
+        recentproyect[5] = lines[i+6];  
+        break;
+      }
+    }
+  } else {
+    File f = new File(dataPath(dataPath("Proyects")+File.separator+"recent_Linux.txt"));
+    if (!f.exists()) {
+      write = createWriter(dataPath("Proyects")+File.separator+"recent_Linux.txt");
+      write.println("[Recent]");
+      write.println("None");
+      write.println("None");
+      write.println("None");
+      write.println("None");
+      write.println("None");
+      write.println("None");
+
+      write.flush();
+      write.close();
+    } 
+    String lines[] = loadStrings(dataPath("Proyects")+File.separator+"recent_Linux.txt");
+    for (int i = 0; i < lines.length; i++) {
+      if (lines[i].contains("[Recent]")) {
+        recentproyect[0] = lines[i+1];
+        recentproyect[1] = lines[i+2];
+        recentproyect[2] = lines[i+3];
+        recentproyect[3] = lines[i+4];
+        recentproyect[4] = lines[i+5];
+        recentproyect[5] = lines[i+6];  
+        break;
+      }
     }
   }
 }
+
 
 void mouseEventsMultiblend() 
 {
@@ -191,18 +221,18 @@ void mouseEventsMultiblend()
       }
     }
   } else if (recent_Multiblend_()) {
-    int Y = floor(map(mouseY, 220, 320, 0, 5));
-
+    int Y = floor(map(mouseY, 215, 320, 0, 5));
+    
     String path = recentproyect[Y]; 
-    println(Y);
+    if (path.endsWith(".blenders")) {
+      proyectpath = path; 
+      proyectname = path.substring(path.lastIndexOf(File.separator) + 1, path.lastIndexOf("."));
+      proyectpath = proyectpath.substring(0, proyectpath.lastIndexOf(File.separator) + 1);
 
-    proyectpath = path; 
-    proyectname = path.substring(path.lastIndexOf(File.separator) + 1, path.lastIndexOf("."));
-    proyectpath = proyectpath.substring(0, proyectpath.lastIndexOf(File.separator) + 1);
+      loadMultiblend(false);
 
-    loadMultiblend(false);
-
-    precheck();
+      precheck();
+    }
   }
 }
 
