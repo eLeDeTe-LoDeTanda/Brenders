@@ -69,7 +69,6 @@ void  mousePressed()
     mouseEventsPreferences();
   }
   // }
-
   redraw();
 }
 
@@ -104,5 +103,6 @@ void keyPressed()
   if (keyCode == 27) key = 0;
 
   selectcolor = false;
+ 
   redraw();
 }
