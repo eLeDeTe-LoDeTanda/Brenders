@@ -155,7 +155,7 @@ void multiBlend_Gui()
   } else {
     fill(ecolor);
     textSize(16);
-    text("No Proyect Open", width / 2, 120);
+    text("No Proyect Open", width / 2, 105);
     fill(acolor);
     text("Recent:", width / 2, 200);
     fill(bcolor);
