@@ -143,6 +143,8 @@ BRENDERSv1.0 TODO:
 
 *~Select text editor default --- Seleccionar editor de texto por defecto~ :heavy_check_mark:
 
+*~Select image viewer default --- Seleccionar visor de imágenes por defecto~ :heavy_check_mark:
+
 *~Load Factory preferences --- Cargar preferencias a valores de fábrica~ :heavy_check_mark:
 
 **START**
