@@ -76,7 +76,7 @@ BRENDERSv1.0 TODO:
 *~Start render in terminal --- Renderizar en terminal~ :heavy_check_mark:
 
 
-**RENDER MULTI-BLENDS**
+**RENDER MULTIBLEND**
 
 *~New proyect --- Proyecto nuevo~ :heavy_check_mark:
 
@@ -84,7 +84,7 @@ BRENDERSv1.0 TODO:
 
 *~Reload proyect --- Recargar proyecto~ :heavy_check_mark:
 
-*Recents proyects --- Proyectos recientes
+*~Recents proyects --- Proyectos recientes~ :heavy_check_mark:
 
 *~Rename multiblend --- Renombrar multiblend~ :heavy_check_mark:
 
