@@ -139,8 +139,6 @@ void mouseEventsPreferences()
 
 void savePreferences()
 {
-  redraw();
-
   if (os == "WINDOWS") write = createWriter(dataPath("Preferences"+File.separator+"extern_Windows.txt"));
   else write = createWriter(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
 
