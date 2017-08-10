@@ -37,7 +37,7 @@ boolean multiblend_restart= true;
 
 String proyectname = "NO PROYECT OPEN";
 String[] multiblend_names = new String[24];
-String[] names = new String[12];
+String[] recentproyect = new String[6];
 
 String proyectpath;
 
@@ -46,7 +46,7 @@ File proyectfolder;
 void multiBlend_Gui()
 {
   pushStyle();
-  
+
   pathname = proyectname;
   if (proyectname.length() > 20) pathname = proyectname.substring(0, 10)+"..."+proyectname.substring(proyectname.length() - 10);
   surface.setTitle("MultiBlend -"+pathname+"- "+version);
@@ -155,9 +155,18 @@ void multiBlend_Gui()
   } else {
     fill(ecolor);
     textSize(16);
-    text("No Proyect Open", width / 2, 270);
+    text("No Proyect Open", width / 2, 120);
+    fill(acolor);
+    text("Recent:", width / 2, 200);
+    fill(bcolor);
+    text(recentproyect[0].substring(recentproyect[0].lastIndexOf(File.separator) + 1), width / 2, 230);
+    text(recentproyect[1].substring(recentproyect[1].lastIndexOf(File.separator) + 1), width / 2, 250);
+    text(recentproyect[2].substring(recentproyect[2].lastIndexOf(File.separator) + 1), width / 2, 270);
+    text(recentproyect[3].substring(recentproyect[3].lastIndexOf(File.separator) + 1), width / 2, 290);
+    text(recentproyect[4].substring(recentproyect[4].lastIndexOf(File.separator) + 1), width / 2, 310);
+    text(recentproyect[5].substring(recentproyect[5].lastIndexOf(File.separator) + 1), width / 2, 330);
   } 
-  
+
   popStyle();
 }
 
@@ -243,4 +252,9 @@ boolean rename_Multiblend_()
 boolean delete_Multiblend_()
 {
   return  (mouseX > 290 && mouseX < 350 && mouseY > 265 && mouseY < 280);
+}
+
+boolean recent_Multiblend_()
+{
+  return  (mouseX > 200 && mouseX < 460 && mouseY > 210 && mouseY < 340);
 }
