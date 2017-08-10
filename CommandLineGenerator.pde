@@ -287,8 +287,8 @@ void settingsOpen(File selection)
       error = true;
       info = "*Warning No '.py' or '.txt' selected";
     }
-    redraw();
   }
+  redraw();
 }
 
 void loadCommandline(String txtpath)
@@ -1218,7 +1218,7 @@ void terminalSelect(File selection)
     if (gui == 7) savePreferences();
   }
   redraw();
-}
+}  
 
 void texteditorSelect(File selection) 
 {
@@ -1419,8 +1419,8 @@ void newOutputSelect(File selection)
     outputpath = outputpath.substring(0, outputpath.lastIndexOf(File.separator)+1);
 
     info = "*You can test it with '-Open<' bottom.";
-    redraw();
   }
+  redraw();
 }
 
 void startRendersToPlaySelect(File selection) 
@@ -1430,7 +1430,10 @@ void startRendersToPlaySelect(File selection)
     playrendersfolder = new File(startrender);
     selectInput("Select END Render - Cancel to ALL", "endRendersToPlaySelect", playrendersfolder);
   }
+  redraw();
 }
+
+
 void endRendersToPlaySelect(File selection) 
 {
   if (selection != null) {
@@ -1459,6 +1462,7 @@ void endRendersToPlaySelect(File selection)
       exec(cmd);
     }
   }
+  redraw();
 }
 
 void rangeFix() 
@@ -1671,7 +1675,7 @@ void mouseEventsCommandLine ()
         exec(cmd);
       }
     }
-    
+
     if (savelogs_()) savelogs = !savelogs;
 
     if (generatepy) {
