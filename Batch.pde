@@ -125,9 +125,8 @@ void pathBatch(File selection)
 
     batchCountDeleteFiles();
     batchCountRenameFiles();
-
-    redraw();
   }
+    redraw();
 }
 
 void batchCountRenameFiles()
@@ -144,7 +143,6 @@ void batchCountRenameFiles()
       }
     }
   }
-  redraw();
 }
 
 
@@ -174,7 +172,6 @@ void batchDelete()
       }
     }
   }
-  redraw();
 }
 
 int y = -1;
