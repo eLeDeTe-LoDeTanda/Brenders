@@ -222,7 +222,7 @@ void mouseEventsMultiblend()
     }
   } else if (recent_Multiblend_()) {
     int Y = floor(map(mouseY, 215, 320, 0, 5));
-    
+
     String path = recentproyect[Y]; 
     if (path.endsWith(".blenders")) {
       proyectpath = path; 
@@ -686,28 +686,56 @@ void precheck()
 
 void addrecentproyect()
 {
-  write = createWriter(dataPath("Proyects")+File.separator+"recent.txt");
-  write.println("[Recent]");
-  write.println(proyectpath+proyectname+".brenders");
-  write.println(recentproyect[0]);
-  write.println(recentproyect[1]);
-  write.println(recentproyect[2]);
-  write.println(recentproyect[3]);
-  write.println(recentproyect[4]);
+  if (os == "WINDOWS") {
+    write = createWriter(dataPath("Proyects")+File.separator+"recent_Windows.txt");
+    write.println("[Recent]");
+    write.println(proyectpath+proyectname+".brenders");
+    write.println(recentproyect[0]);
+    write.println(recentproyect[1]);
+    write.println(recentproyect[2]);
+    write.println(recentproyect[3]);
+    write.println(recentproyect[4]);
 
-  write.flush();
-  write.close();
+    write.flush();
+    write.close();
 
-  String lines[] = loadStrings(dataPath("Proyects")+File.separator+"recent.txt");
-  for (int i = 0; i < lines.length; i++) {
-    if (lines[i].contains("[Recent]")) {
-      recentproyect[0] = lines[i+1];
-      recentproyect[1] = lines[i+2];
-      recentproyect[2] = lines[i+3];
-      recentproyect[3] = lines[i+4];
-      recentproyect[4] = lines[i+5];
-      recentproyect[5] = lines[i+6];  
-      break;
+    String lines[] = loadStrings(dataPath("Proyects")+File.separator+"recent_Windows.txt");
+    for (int i = 0; i < lines.length; i++) {
+      if (lines[i].contains("[Recent]")) {
+        recentproyect[0] = lines[i+1];
+        recentproyect[1] = lines[i+2];
+        recentproyect[2] = lines[i+3];
+        recentproyect[3] = lines[i+4];
+        recentproyect[4] = lines[i+5];
+        recentproyect[5] = lines[i+6];  
+        break;
+      }
+    }
+  } else {
+    write = createWriter(dataPath("Proyects")+File.separator+"recent_Linux.txt");
+  
+    write.println("[Recent]");
+    write.println(proyectpath+proyectname+".brenders");
+    write.println(recentproyect[0]);
+    write.println(recentproyect[1]);
+    write.println(recentproyect[2]);
+    write.println(recentproyect[3]);
+    write.println(recentproyect[4]);
+
+    write.flush();
+    write.close();
+
+    String lines[] = loadStrings(dataPath("Proyects")+File.separator+"recent_Linux.txt");
+    for (int i = 0; i < lines.length; i++) {
+      if (lines[i].contains("[Recent]")) {
+        recentproyect[0] = lines[i+1];
+        recentproyect[1] = lines[i+2];
+        recentproyect[2] = lines[i+3];
+        recentproyect[3] = lines[i+4];
+        recentproyect[4] = lines[i+5];
+        recentproyect[5] = lines[i+6];  
+        break;
+      }
     }
   }
 }
