@@ -32,8 +32,6 @@ int endframemanager;
 
 void renderManager_Gui()
 {
-  int e = 0;
-
   pushStyle();
 
   surface.setTitle("Render Manager -"+proyectname+"- "+version);
@@ -56,13 +54,12 @@ void renderManager_Gui()
             textSize(10);
             text("Empty", 22 + x * 40, 50 + i * 30);
 
-            renderpre = loadImage(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_"+nf(framemanager, 4)+".png");
-            try { 
-              image(renderpre, 20 + x * 40, 32 + i * 30);
-            }
-            catch(Exception r) {
-              r.printStackTrace();
-            }
+            File img = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_"+nf(framemanager, 4)+".png");
+            if (!img.exists()) renderpre = loadImage("Img"+File.separator+"Manager-none.png");
+            else  renderpre = loadImage(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_"+nf(framemanager, 4)+".png");
+
+            image(renderpre, 20 + x * 40, 32 + i * 30);
+
             fill(acolor);
             textSize(8);
             text(nf(framemanager, 5), 26 + x * 40, 60 + i * 30);
