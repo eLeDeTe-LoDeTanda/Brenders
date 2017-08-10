@@ -24,6 +24,36 @@
  * ***** END GPL LICENSE BLOCK *****
  */
 
+void initvarMultiblend()
+{
+  File f = new File(dataPath(dataPath("Proyects")+File.separator+"recent.txt"));
+  if (!f.exists()) {
+    write = createWriter(dataPath("Proyects")+File.separator+"recent.txt");
+    write.println("[Recent]");
+    write.println("None");
+    write.println("None");
+    write.println("None");
+    write.println("None");
+    write.println("None");
+    write.println("None");
+
+    write.flush();
+    write.close();
+  }
+  String lines[] = loadStrings(dataPath("Proyects")+File.separator+"recent.txt");
+  for (int i = 0; i < lines.length; i++) {
+    if (lines[i].contains("[Recent]")) {
+      recentproyect[0] = lines[i+1];
+      recentproyect[1] = lines[i+2];
+      recentproyect[2] = lines[i+3];
+      recentproyect[3] = lines[i+4];
+      recentproyect[4] = lines[i+5];
+      recentproyect[5] = lines[i+6];  
+      break;
+    }
+  }
+}
+
 void mouseEventsMultiblend() 
 {
   if (new_Proyect_Multiblend_()) {
@@ -144,8 +174,24 @@ void mouseEventsMultiblend()
         gui = 1;
       }
     }
+  } else if (recent_Multiblend_()) {
+    int Y = floor(map(mouseY, 220, 320, 0, 5));
+
+    String path = recentproyect[Y]; 
+    println(Y);
+
+    proyectpath = path; 
+    proyectname = path.substring(path.lastIndexOf(File.separator) + 1, path.lastIndexOf("."));
+    proyectpath = proyectpath.substring(0, proyectpath.lastIndexOf(File.separator) + 1);
+
+    loadMultiblend(false);
+
+    precheck();
   }
+
+  redraw();
 }
+
 
 
 void newProyect(File selection) 
@@ -179,6 +225,8 @@ void newProyect(File selection)
 
     info = "New proyect created!";
 
+    addrecentproyect();
+
     redraw();
   }
 }
@@ -202,6 +250,8 @@ void openProyect(File selection)
 
     precheck();
 
+    addrecentproyect();
+
     redraw();
   }
 }
@@ -212,7 +262,7 @@ void loadMultiblend(boolean addmulti)
   multiblend_addinorder(addmulti);
   multiblend_active = true;
   multiblend_files = 0;
-  
+
   String lines[] = loadStrings(proyectpath+proyectname+".brenders");
   int x = 0;
   for (int i = 0; i < lines.length; i++) {
@@ -330,7 +380,7 @@ void multiblend_addinorder(boolean add)
       String multipath = trim(lines[i].substring(0, lines[i].lastIndexOf(".multiblend") + 11));
 
       File f = new File(proyectpath+"Options"+File.separator+multipath);
-      
+
       if (f.exists()) write.println(multipath);
     }
   }
@@ -584,4 +634,32 @@ void precheck()
   File img = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
   if (!img.exists()) blendpre = loadImage("Img"+File.separator+"None.png");
   else  blendpre = loadImage(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
+}
+
+void addrecentproyect()
+{
+  write = createWriter(dataPath("Proyects")+File.separator+"recent.txt");
+  write.println("[Recent]");
+  write.println(proyectpath+proyectname+".brenders");
+  write.println(recentproyect[0]);
+  write.println(recentproyect[1]);
+  write.println(recentproyect[2]);
+  write.println(recentproyect[3]);
+  write.println(recentproyect[4]);
+
+  write.flush();
+  write.close();
+  
+  String lines[] = loadStrings(dataPath("Proyects")+File.separator+"recent.txt");
+  for (int i = 0; i < lines.length; i++) {
+    if (lines[i].contains("[Recent]")) {
+      recentproyect[0] = lines[i+1];
+      recentproyect[1] = lines[i+2];
+      recentproyect[2] = lines[i+3];
+      recentproyect[3] = lines[i+4];
+      recentproyect[4] = lines[i+5];
+      recentproyect[5] = lines[i+6];  
+      break;
+    }
+  }
 }
