@@ -224,7 +224,7 @@ void mouseEventsMultiblend()
     int Y = floor(map(mouseY, 215, 320, 0, 5));
 
     String path = recentproyect[Y]; 
-    if (path.endsWith(".blenders")) {
+    if (path.endsWith(".brenders")) {
       proyectpath = path; 
       proyectname = path.substring(path.lastIndexOf(File.separator) + 1, path.lastIndexOf("."));
       proyectpath = proyectpath.substring(0, proyectpath.lastIndexOf(File.separator) + 1);
