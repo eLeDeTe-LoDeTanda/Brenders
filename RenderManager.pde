@@ -176,6 +176,19 @@ void framepreview(String frame)
 }
 
 
+void loadfromblend()
+{
+  String lines[] = loadStrings(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")) + ".txt");
+  for (int i = 0; i < lines.length; i++) {
+    write.println(trim(lines[i]));
+    if (lines[i].contains("[RendersOutput]")) outputpath = lines[i+1];
+    else if (lines[i].contains("[RenderName]")) rendersname = lines[i+1];
+    else if (lines[i].contains("[StartFrame]")) valoption[frame_start_id] = lines[i+1];
+    else if (lines[i].contains("[EndFrame]")) valoption[frame_end_id] = lines[i+1];
+  }
+}
+
+
 void fromblend()
 {
   File f = new File(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")) + ".txt");
@@ -267,15 +280,6 @@ void fromblend()
     write.println(line[0].substring(line[0].lastIndexOf("***") + 3));
     write.flush();
     write.close();
-
-    String lines[] = loadStrings(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")) + ".txt");
-    for (int i = 0; i < lines.length; i++) {
-      write.println(trim(lines[i]));
-      if (lines[i].contains("[RendersOutput]")) outputpath = lines[i+1];
-      else if (lines[i].contains("[RenderName]")) rendersname = lines[i+1];
-      else if (lines[i].contains("[StartFrame]")) valoption[frame_start_id] = lines[i+1];
-      else if (lines[i].contains("[EndFrame]")) valoption[frame_end_id] = lines[i+1];
-    } 
 
     if (os == "WINDOWS") {
       File f_bat = new File (dataPath("tmp")+File.separator+"fromblend.bat");
