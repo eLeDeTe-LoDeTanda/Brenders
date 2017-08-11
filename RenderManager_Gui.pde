@@ -30,6 +30,8 @@ int framemanager;
 int startframemanager;
 int endframemanager;
 
+boolean updating;
+
 void renderManager_Gui()
 {
   pushStyle();
@@ -39,11 +41,13 @@ void renderManager_Gui()
   tint(250, 240, 240);
   image(bg2, 0, 0);
   menuBar();
-
+ 
+  String prepath;
+  
   for (int i = 0; i < 10; i++) {
     for (int x = 0; x < 15; x++) {
       fill(acolor, 20);
-      rect(20 + x * 40, 32 + i * 30, 40, 20);
+      rect(20 + x * 40, 32 + i * 30, 40, 22);
 
       if (multiblend_active) {
         if (multiblend_files > 0) {
@@ -54,9 +58,11 @@ void renderManager_Gui()
             textSize(10);
             text("Empty", 22 + x * 40, 50 + i * 30);
 
-            File img = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_"+nf(framemanager, 4)+".png");
+            prepath = proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(framemanager, 4)+".png";
+
+            File img = new File(prepath);
             if (!img.exists()) renderpre = loadImage("Img"+File.separator+"Manager-none.png");
-            else  renderpre = loadImage(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_"+nf(framemanager, 4)+".png");
+            else  renderpre = loadImage(prepath);
 
             image(renderpre, 20 + x * 40, 32 + i * 30);
 
@@ -70,9 +76,10 @@ void renderManager_Gui()
   }
   textAlign(CENTER, CENTER);
   textSize(14);
-  pathname = settingsname;
-  if (settingsname.length() > 20) pathname = settingsname.substring(0, 10)+"..."+settingsname.substring(settingsname.length() - 10);
-  text(pathname, width / 2, 5);
+  fill(acolor);
+  String name = multiblend_names[order]+".multiblend";
+  if (multiblend_names[order].length() > 20) pathname = multiblend_names[order].substring(0, 10)+"..."+multiblend_names[order].substring(multiblend_names[order].length() - 10);
+  text(name, width / 2 + 15, 5);
 
   fill(bcolor);
   textSize(12);
@@ -89,6 +96,7 @@ void renderManager_Gui()
     if (multiblend_files <= 0) {
       text("-EMPTY proyect-", 550, 345);
     } else {
+      text("Update previews: >ALL<  >NEWS<", width / 2 + 100, 22);
       text("WAITING...", 550, 345);
     }
   } else {
@@ -99,8 +107,10 @@ void renderManager_Gui()
     textSize(12);
     fill(bcolor);
   }
+
   popStyle();
 }
+
 
 boolean manager_L() 
 {
@@ -122,4 +132,13 @@ boolean manager_good()
 boolean manager_bad() 
 {
   return  (mouseX > 425 && mouseX < 470 && mouseY > 340 && mouseY < 355);
+}
+
+boolean manager_reloadallpre() 
+{
+  return  (mouseX > 420 && mouseX < 460 && mouseY > 10 && mouseY < 25);
+}
+boolean manager_reloadnewpre() 
+{
+  return  (mouseX > 470 && mouseX < 520 && mouseY > 10 && mouseY < 30);
 }
