@@ -106,7 +106,7 @@ void mouseEventsMultiblend()
 
         precheck();
 
-        fromblend();
+        fromblend(false);
         loadfromblend();
       }
       if (orderR_Multiblend_() ) {
@@ -121,7 +121,7 @@ void mouseEventsMultiblend()
 
         precheck();
 
-        fromblend();
+        fromblend(false);
         loadfromblend();
       }
     }
@@ -294,12 +294,17 @@ void openProyect(File selection)
       proyectpath = proyectpath.substring(0, proyectpath.lastIndexOf(File.separator)+1);
 
       loadMultiblend(false);
-      String multiblendpath = proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
-      loadPy(multiblendpath);
-      settingspath = multiblendpath;
-      settingsfolder = new File(multiblendpath);
-      settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
 
+      String multiblendpath;
+      for (int i = 0; i < multiblend_files; i++) {
+        multiblendpath = proyectpath+"Options"+File.separator+multiblend_names[i]+".multiblend";
+
+        loadPy(multiblendpath);
+        settingspath = multiblendpath;
+        settingsfolder = new File(multiblendpath);
+        settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
+        fromblend(true);
+      }
       precheck();
       addrecentproyect();
     } else {
