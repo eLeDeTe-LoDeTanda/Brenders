@@ -107,6 +107,7 @@ void mouseEventsMultiblend()
         precheck();
 
         fromblend();
+        loadfromblend();
       }
       if (orderR_Multiblend_() ) {
         order = constrain(order + 1, 0, multiblend_files - 1);
@@ -121,6 +122,7 @@ void mouseEventsMultiblend()
         precheck();
 
         fromblend();
+        loadfromblend();
       }
     }
     if (reload_Multiblend_()) {
