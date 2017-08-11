@@ -105,6 +105,8 @@ void mouseEventsMultiblend()
         settingsname = settingspath.substring(settingspath.lastIndexOf(File.separator));
 
         precheck();
+
+        fromblend();
       }
       if (orderR_Multiblend_() ) {
         order = constrain(order + 1, 0, multiblend_files - 1);
@@ -117,6 +119,8 @@ void mouseEventsMultiblend()
         settingsname = settingspath.substring(settingspath.lastIndexOf(File.separator));
 
         precheck();
+
+        fromblend();
       }
     }
     if (reload_Multiblend_()) {
@@ -228,14 +232,18 @@ void mouseEventsMultiblend()
       proyectpath = path; 
       proyectname = path.substring(path.lastIndexOf(File.separator) + 1, path.lastIndexOf("."));
       proyectpath = proyectpath.substring(0, proyectpath.lastIndexOf(File.separator) + 1);
-
       loadMultiblend(false);
+      loadMultiblend(false);
+      String multiblendpath = proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
+      loadPy(multiblendpath);
+      settingspath = multiblendpath;
+      settingsfolder = new File(multiblendpath);
+      settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
 
       precheck();
     }
   }
 }
-
 
 
 void newProyect(File selection) 
@@ -286,14 +294,18 @@ void openProyect(File selection)
       proyectpath = proyectpath.substring(0, proyectpath.lastIndexOf(File.separator)+1);
 
       loadMultiblend(false);
+      String multiblendpath = proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
+      loadPy(multiblendpath);
+      settingspath = multiblendpath;
+      settingsfolder = new File(multiblendpath);
+      settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
+
+      precheck();
+      addrecentproyect();
     } else {
       error = true;
       info = "*Warning No '.brenders' selected";
     }
-
-    precheck();
-
-    addrecentproyect();
   }
   redraw();
 }
@@ -355,6 +367,7 @@ void multiblend_save(String path)
   precheck();
 }
 
+
 void multiblend_rename()
 {
   String path = proyectpath+proyectname+".brenders";
@@ -376,6 +389,7 @@ void multiblend_rename()
 
   loadMultiblend(false);
 }
+
 
 void multiblend_delete()
 {
@@ -713,7 +727,7 @@ void addrecentproyect()
     }
   } else {
     write = createWriter(dataPath("Proyects")+File.separator+"recent_Linux.txt");
-  
+
     write.println("[Recent]");
     write.println(proyectpath+proyectname+".brenders");
     write.println(recentproyect[0]);
