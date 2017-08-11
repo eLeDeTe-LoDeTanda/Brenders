@@ -128,7 +128,6 @@ void mouseEventsMultiblend()
 
       precheck();
     }
-
     if (import_Multiblend_()) {
       selectInput("Select your .py or commandline file", "settingsOpen", settingsfolder);
     }
@@ -142,7 +141,6 @@ void mouseEventsMultiblend()
     }
     if (go_Multiblend_()) {
       if (multiblend_files > 0) {
-        // rendersManager();
         if (multiblend_restart) {
           loadMultiblend(false);
           multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
