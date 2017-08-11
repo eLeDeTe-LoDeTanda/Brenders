@@ -70,6 +70,7 @@ void keyEventsBatch (String keypress)
   }
 }
 
+
 void  mouseEventsBatch()
 {
   if (path_batch_()) {
@@ -113,6 +114,7 @@ void  mouseEventsBatch()
   batchCountRenameFiles();
 }
 
+
 void pathBatch(File selection) 
 {
   if (selection != null) {
@@ -128,6 +130,7 @@ void pathBatch(File selection)
   }
     redraw();
 }
+
 
 void batchCountRenameFiles()
 {
@@ -159,6 +162,7 @@ void batchCountDeleteFiles()
     }
   }
 }
+
 
 void batchDelete()
 {
