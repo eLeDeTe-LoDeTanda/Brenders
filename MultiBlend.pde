@@ -637,7 +637,7 @@ void multiblend_pre()
     write.println();
     write.print("call ");
     write.print('"'+blenderpath+'"');
-    write.print(" ");
+    write.print(" - ");
     write.print('"'+blendpath+blendname+'"');
     write.print(" -P ");
     write.print('"'+dataPath("tmp")+File.separator+"blend_prev.py"+'"');
@@ -663,7 +663,7 @@ void multiblend_pre()
     write.println("# Command Line:");
     write.println();
     write.print('"'+blenderpath+'"');
-    write.print(" ");
+    write.print(" - ");
     write.print('"'+blendpath+blendname+'"');
     write.print(" -P ");
     write.print('"'+dataPath("tmp")+File.separator+"blend_prev.py"+'"');
@@ -682,17 +682,17 @@ void multiblend_pre()
     catch(Exception e) {
       e.printStackTrace();
     }
-    blendpre = requestImage(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
   }
-  if (os == "WINDOWS") {
-    File f_bat = new File (dataPath("tmp")+File.separator+"blend_prev.bat");
-    f_bat.delete();
-  } else {
-    File f_sh = new File(dataPath("tmp")+File.separator+"blend_prev.sh");
-    f_sh.delete();
-    File f_py = new File (dataPath("tmp")+File.separator+"blend_prev.py");
-    f_py.delete();
-  }
+  blendpre = loadImage(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
+
+  File f_bat = new File (dataPath("tmp")+File.separator+"blend_prev.bat");
+  f_bat.delete();
+
+  File f_sh = new File(dataPath("tmp")+File.separator+"blend_prev.sh");
+  f_sh.delete();
+ 
+  File f_py = new File (dataPath("tmp")+File.separator+"blend_prev.py");
+  f_py.delete();
 }
 
 
