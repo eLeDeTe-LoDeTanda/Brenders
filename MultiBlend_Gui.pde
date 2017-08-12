@@ -31,7 +31,7 @@ boolean add_tomulti= false;
 int multiblend_files = 0;
 int order = 0;
 
-int frameprev = 1;
+String frameprev = "1";
 
 boolean multiblend_restart= true;
 
@@ -131,7 +131,7 @@ void multiBlend_Gui()
       text(">> New Preview <<", 495, 330);
       textSize(10);
       fill(ccolor);
-      text("Frame: <<"+nf(frameprev, 4)+">>", 510, 345);
+      text("Frame: <<"+nf(int(frameprev), 4)+">>", 510, 345);
     }
     textAlign(CENTER);
     textSize(14);
@@ -226,11 +226,15 @@ boolean blendpre_Multiblend_()
 }
 boolean framepreL_Multiblend_()
 {
-  return  (mouseX > 545 && mouseX < 570 && mouseY > 335 && mouseY < 350);
+  return  (mouseX > 545 && mouseX < 565 && mouseY > 335 && mouseY < 350);
 }
 boolean framepreR_Multiblend_()
 {
-  return  (mouseX > 580 && mouseX < 605 && mouseY > 335 && mouseY < 350);
+  return  (mouseX > 590 && mouseX < 605 && mouseY > 335 && mouseY < 350);
+}
+boolean framepre_Multiblend_()
+{
+  return  (mouseX > 566 && mouseX < 589 && mouseY > 335 && mouseY < 350);
 }
 
 boolean import_Multiblend_()
