@@ -74,7 +74,7 @@ void keyEventsBatch (String keypress)
 void  mouseEventsBatch()
 {
   if (path_batch_()) {
-    selectInput("Select path:", "pathBatch");
+    selectInput("Select path:", "pathBatch", outputfolder);
   }
   if (rename_batch_()) { 
     select_delete = false;

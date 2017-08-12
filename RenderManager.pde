@@ -60,7 +60,7 @@ void mouseEventsManager()
         }
         if (mouseButton == CENTER) {
           if (framemanager <= int(valoption[frame_end_id])) {
-            String prepath = outputpath+rendersname+nf(framemanager, 4)+".png";
+            String prepath = outputpath+rendersname+nf(framemanager, 4)+extensionname(valoption[file_format_id]);
             //print(prepath);
             if (os == "WINDOWS") {
               String cmd[] = {"rundll32.exe", "C:"+File.separator+"WINDOWS"+File.separator+"System32"+File.separator+"shimgvw.dll,ImageView_Fullscreen", prepath};
@@ -134,7 +134,7 @@ void allpreviews()
     if (f.exists()) {
       img = loadImage(outputpath+rendersname+nf(i, 4)+".png");
       img.resize(40, 23);
-      img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
+      img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+extensionname(valoption[file_format_id]));
       System.gc(); 
       redraw();
     }
@@ -146,13 +146,13 @@ void newspreviews()
 {
   PImage img;
   for (int i = int(valoption[frame_start_id]); i <= int(valoption[frame_end_id]); i++) {
-    File fp = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
+    File fp = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+extensionname(valoption[file_format_id]));
     if (!fp.exists()) {
       File f = new File(outputpath+rendersname+nf(i, 4)+".png");
       if (f.exists()) {
         img = loadImage(outputpath+rendersname+nf(i, 4)+".png");
         img.resize(40, 23);
-        img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
+        img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+extensionname(valoption[file_format_id]));
 
         System.gc();
         redraw();
@@ -169,7 +169,7 @@ void framepreview(String frame)
   if (f.exists()) {
     img = loadImage(frame);
     img.resize(40, 23);
-    img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(framemanager, 4)+".png");
+    img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(framemanager, 4)+extensionname(valoption[file_format_id]));
     System.gc();
   }
   updating = false;
@@ -184,13 +184,13 @@ void loadfromblend()
       if (fromblend[output_path_id]) {
         if (lines[i+1].startsWith("//")) outputpath = blendpath+lines[i+1].substring(2);
         else outputpath = lines[i+1];
-       // println(outputpath);
+        // println(outputpath);
       }
     } else if (lines[i].contains("[RenderName]")) {
       if (fromblend[output_path_id]) {
         if (!lines[i+1].contains("#")) rendersname = lines[i+1];
         else rendersname = lines[i+1].substring(0, lines[i+1].indexOf("#"));
-       // println(rendersname);
+        // println(rendersname);
       }
     } else if (lines[i].contains("[StartFrame]")) {
       if (fromblend[frame_start_id]) valoption[frame_start_id] = lines[i+1];
@@ -309,4 +309,38 @@ void fromblend(boolean forcetowrite)
       f_txt.delete();
     }
   }
+}
+
+
+String extensionname(String ext)
+{
+  if (ext == "PNG") {
+    ext = ".png";
+  } else if (ext == "JPEG") {
+    ext = ".jpg";
+  } else if (ext == "TARGA") {
+    ext = ".tga";
+  } else if (ext == "TARGA_RAW") {
+    ext = ".tga";
+  } else   if (ext == "TIFF") {
+    ext = ".tif";
+  } else if (ext == "IRIS") {
+    ext = ".rgb";
+  } else if (ext == "BMP") {
+    ext = ".bmp";
+  } else if (ext == "JPEG2000") {
+    ext = ".jp2";
+  } else if (ext == "OPEN_EXR") {
+    ext = ".exr";
+  } else if (ext == "OPEN_EXR_MULTILAYER") {
+    ext = ".exr";
+  } else if (ext == "CINEON") {
+    ext = ".cin";
+  } else if (ext == "DPX") {
+    ext = ".dpx";
+  } else if (ext == "HDR") {
+    ext = ".hdr";
+  }
+  return ext;
+
 }

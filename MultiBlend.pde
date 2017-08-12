@@ -127,7 +127,8 @@ void mouseEventsMultiblend()
     }
     if (reload_Multiblend_()) {
       loadMultiblend(false);
-
+      fromblend(true);
+      loadfromblend();
       precheck();
     }
     if (import_Multiblend_()) {
@@ -233,13 +234,18 @@ void mouseEventsMultiblend()
       proyectname = path.substring(path.lastIndexOf(File.separator) + 1, path.lastIndexOf("."));
       proyectpath = proyectpath.substring(0, proyectpath.lastIndexOf(File.separator) + 1);
       loadMultiblend(false);
-      loadMultiblend(false);
-      String multiblendpath = proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
-      loadPy(multiblendpath);
-      settingspath = multiblendpath;
-      settingsfolder = new File(multiblendpath);
-      settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
 
+      String multiblendpath;
+      for (int i = 0; i < multiblend_files; i++) {
+        multiblendpath = proyectpath+"Options"+File.separator+multiblend_names[i]+".multiblend";
+
+        loadPy(multiblendpath);
+        settingspath = multiblendpath;
+        settingsfolder = new File(multiblendpath);
+        settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
+        fromblend(true);
+        loadfromblend();
+      }
       precheck();
     }
   }
@@ -304,6 +310,7 @@ void openProyect(File selection)
         settingsfolder = new File(multiblendpath);
         settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
         fromblend(true);
+        loadfromblend();
       }
       precheck();
       addrecentproyect();
@@ -364,6 +371,9 @@ void multiblend_save(String path)
   order = multiblend_files;
 
   loadMultiblend(true);
+
+  fromblend(false);
+  loadfromblend();
 
   jsonManager();
 
@@ -690,7 +700,7 @@ void multiblend_pre()
 
   File f_sh = new File(dataPath("tmp")+File.separator+"blend_prev.sh");
   f_sh.delete();
- 
+
   File f_py = new File (dataPath("tmp")+File.separator+"blend_prev.py");
   f_py.delete();
 }
