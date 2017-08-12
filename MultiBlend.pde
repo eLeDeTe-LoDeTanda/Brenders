@@ -84,6 +84,13 @@ void initvarMultiblend()
 }
 
 
+void keyEventsMultiblend(String keypress)
+{
+  if (keypress == "number") {
+    if (frameprev.length() < 5) frameprev += key;
+  }
+}
+
 void mouseEventsMultiblend() 
 {
   if (new_Proyect_Multiblend_()) {
@@ -215,11 +222,14 @@ void mouseEventsMultiblend()
         loadPy(proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend");
         multiblend_pre();
       }
+      if (framepre_Multiblend_()) {
+        frameprev = "";
+      } 
       if (framepreL_Multiblend_()) {
-        frameprev = constrain(frameprev - 1, 0, 500000);
+        frameprev = str(constrain(int(frameprev) - 1, 0, 500000));
       }  
       if (framepreR_Multiblend_()) {
-        frameprev = constrain(frameprev + 1, 0, 500000);
+        frameprev = str(constrain(int(frameprev) + 1, 0, 500000));
       }
       if (edit_Multiblend_()) {
         gui = 1;
