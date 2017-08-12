@@ -27,9 +27,9 @@
 void initvarMultiblend()
 {
   if (os == "WINDOWS") {
-    File f = new File(dataPath(dataPath("Proyects")+File.separator+"recent_Windows.txt"));
+    File f = new File(dataPath("Preferences"+File.separator+"recent_Windows.txt"));
     if (!f.exists()) {
-      write = createWriter(dataPath("Proyects")+File.separator+"recent_Windows.txt");
+      write = createWriter(dataPath("Proyects"+File.separator+"recent_Windows.txt"));
       write.println("[Recent]");
       write.println("None");
       write.println("None");
@@ -41,7 +41,7 @@ void initvarMultiblend()
       write.flush();
       write.close();
     } 
-    String lines[] = loadStrings(dataPath("Proyects")+File.separator+"recent_Windows.txt");
+    String lines[] = loadStrings(dataPath("Proyects"+File.separator+"recent_Windows.txt"));
     for (int i = 0; i < lines.length; i++) {
       if (lines[i].contains("[Recent]")) {
         recentproyect[0] = lines[i+1];
@@ -54,9 +54,9 @@ void initvarMultiblend()
       }
     }
   } else {
-    File f = new File(dataPath(dataPath("Proyects")+File.separator+"recent_Linux.txt"));
+    File f = new File(dataPath("Preferences"+File.separator+"recent_Linux.txt"));
     if (!f.exists()) {
-      write = createWriter(dataPath("Proyects")+File.separator+"recent_Linux.txt");
+      write = createWriter(dataPath("Preferences"+File.separator+"recent_Linux.txt"));
       write.println("[Recent]");
       write.println("None");
       write.println("None");
@@ -68,7 +68,7 @@ void initvarMultiblend()
       write.flush();
       write.close();
     } 
-    String lines[] = loadStrings(dataPath("Proyects")+File.separator+"recent_Linux.txt");
+    String lines[] = loadStrings(dataPath("Preferences"+File.separator+"recent_Linux.txt"));
     for (int i = 0; i < lines.length; i++) {
       if (lines[i].contains("[Recent]")) {
         recentproyect[0] = lines[i+1];
@@ -716,7 +716,7 @@ void precheck()
 void addrecentproyect()
 {
   if (os == "WINDOWS") {
-    write = createWriter(dataPath("Proyects")+File.separator+"recent_Windows.txt");
+    write = createWriter(dataPath("Preferences"+File.separator+"recent_Windows.txt"));
     write.println("[Recent]");
     write.println(proyectpath+proyectname+".brenders");
     write.println(recentproyect[0]);
@@ -728,7 +728,7 @@ void addrecentproyect()
     write.flush();
     write.close();
 
-    String lines[] = loadStrings(dataPath("Proyects")+File.separator+"recent_Windows.txt");
+    String lines[] = loadStrings(dataPath("Preferences"+File.separator+"recent_Windows.txt"));
     for (int i = 0; i < lines.length; i++) {
       if (lines[i].contains("[Recent]")) {
         recentproyect[0] = lines[i+1];
@@ -741,7 +741,7 @@ void addrecentproyect()
       }
     }
   } else {
-    write = createWriter(dataPath("Proyects")+File.separator+"recent_Linux.txt");
+    write = createWriter(dataPath("Preferences"+File.separator+"recent_Linux.txt"));
 
     write.println("[Recent]");
     write.println(proyectpath+proyectname+".brenders");
@@ -754,7 +754,7 @@ void addrecentproyect()
     write.flush();
     write.close();
 
-    String lines[] = loadStrings(dataPath("Proyects")+File.separator+"recent_Linux.txt");
+    String lines[] = loadStrings(dataPath("Preferences"+File.separator+"recent_Linux.txt"));
     for (int i = 0; i < lines.length; i++) {
       if (lines[i].contains("[Recent]")) {
         recentproyect[0] = lines[i+1];
