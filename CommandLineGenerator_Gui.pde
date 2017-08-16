@@ -376,7 +376,7 @@ void commandLineGenerator_Gui()
     else fill(icolor);
     text(valoption[percentage_id], 40, 250); 
     if (selectoption[percentage_id]) line(textWidth(valoption[percentage_id]) + 43, 240, textWidth(valoption[percentage_id]) + 43, 250);
-    if (!fromblend[pxX_id]) text("("+(int(valoption[pxX_id])*int(valoption[percentage_id]))/100+"x"+(int(valoption[pxY_id])*int(valoption[percentage_id]))/100+")", 65, 250);
+    if (!fromblend[pxX_id]) text("("+(int(valoption[pxX_id]) * int(valoption[percentage_id])) / 100+"x"+(int(valoption[pxY_id]) * int(valoption[percentage_id])) / 100+")", 65, 250);
   }
   if (selectoption[anti_aliasing_id]) {
     noFill();
@@ -730,19 +730,19 @@ void commandLineGenerator_Gui()
   else fill(icolor);
   textSize(9);
   if (generatepy) {
-    if (valoption[file_format_id] == "PNG") {
+    if (valoption[file_format_id].equals("PNG")) {
       text("Compresion:", 185, 322); 
       text(compresion+"<", 250, 322); 
       text("Mode:", 185, 334);  
       text(rgbmode+"<", 215, 334); 
       text("Depth:", 342, 322);
       text(depth+"<", 375, 322);
-    } else  if (valoption[file_format_id] == "JPEG") {
+    } else if (valoption[file_format_id].equals("JPEG")) {
       text("Quality:", 185, 322);   
       text(quality+"<", 230, 322); 
       text("Mode:", 185, 334);
       text(rgbmode+"<", 215, 334);
-    } else if (valoption[file_format_id] == "JPEG2000") {
+    } else if (valoption[file_format_id].equals("JPEG2000")) {
       text("Quality:", 185, 322);   
       text(quality+"<", 220, 322); 
       text("Mode:", 185, 334); 
@@ -757,7 +757,7 @@ void commandLineGenerator_Gui()
       if (jpg2cinema48 == "True") ellipse(328, 331, 5, 5);
       text("o YCC<", 250, 322);
       if (jpg2ycc == "True") ellipse(253, 319, 5, 5);
-    } else if (valoption[file_format_id] == "OPEN_EXR") {  
+    } else if (valoption[file_format_id].equals("OPEN_EXR")) {  
       text("Codec:", 185, 322);
       text(openexcompresion, 218, 322);
       text("Mode:", 185, 334);  
@@ -768,43 +768,43 @@ void commandLineGenerator_Gui()
       if (openexrzbuffer  == "True") ellipse(348, 331, 5, 5);
       text("o Preview<", 280, 334);
       if (openexrpreview == "True") ellipse(283, 331, 5, 5);
-    } else if (valoption[file_format_id] == "OPEN_EXR_MULTILAYER") {
+    } else if (valoption[file_format_id].equals("OPEN_EXR_MULTILAYER")) {
       text("Codec:", 185, 322);
       text(openexcompresion, 218, 322);  
       text("Mode", 185, 334);   
       text(rgbmode+"<", 215, 334); 
       text("Depth:", 342, 322);
       text(depth+"<", 375, 322);
-    } else  if (valoption[file_format_id] == "TARGA") {  
+    } else if (valoption[file_format_id].equals("TARGA")) {  
       text("Mode:", 185, 334);
       text(rgbmode+"<", 215, 334);
-    } else  if (valoption[file_format_id] == "TARGA_RAW") {  
+    } else if (valoption[file_format_id].equals("TARGA_RAW")) {  
       text("Mode:", 185, 334);
       text(rgbmode+"<", 215, 334);
-    } else  if (valoption[file_format_id] == "BMP") {  
+    } else if (valoption[file_format_id].equals("BMP")) {  
       text("Mode:", 185, 334);
       text(rgbmode+"<", 215, 334);
-    } else  if (valoption[file_format_id] == "IRIS") {  
+    } else if (valoption[file_format_id].equals("IRIS")) {  
       text("Mode:", 185, 334);
       text(rgbmode+"<", 215, 334);
-    } else  if (valoption[file_format_id] == "DPX") {  
+    } else if (valoption[file_format_id].equals("DPX")) {  
       text("Mode:", 185, 334);
       text(rgbmode+"<", 215, 334);
       text("Depth", 342, 322);
       text(depth+"<", 375, 322);
       text("o Log<", 300, 334);
       if (dpxlog== "True") ellipse(303, 331, 5, 5);
-    } else  if (valoption[file_format_id] == "HDR") {  
+    } else if (valoption[file_format_id].equals("HDR")) {  
       text("Mode:", 185, 334);
       text(rgbmode+"<", 215, 334);
-    } else  if (valoption[file_format_id] == "TIFF") {  
+    } else if (valoption[file_format_id].equals("TIFF")) {  
       text("Compresion:", 185, 322); 
       text(tiffcompresion+"<", 243, 322);  
       text("Mode:", 185, 334);
       text(rgbmode+"<", 215, 334); 
       text("Depth:", 342, 322);
       text(depth+"<", 375, 322);
-    } else  if (valoption[file_format_id] == "CINEON") {   
+    } else if (valoption[file_format_id].equals("CINEON")) {   
       text("Mode:", 185, 334);
       text(rgbmode+"<", 215, 334);
     }
