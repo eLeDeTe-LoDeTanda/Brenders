@@ -27,6 +27,7 @@
 
 int offsetmanager;
 int framemanager;
+int selectframe;
 int startframemanager;
 int endframemanager;
 
@@ -41,14 +42,13 @@ void renderManager_Gui()
   tint(250, 240, 240);
   image(bg2, 0, 0);
   menuBar();
- 
+
   String prepath;
-  
+
   for (int i = 0; i < 10; i++) {
     for (int x = 0; x < 15; x++) {
       fill(acolor, 20);
       rect(20 + x * 40, 32 + i * 30, 40, 22);
-
       if (multiblend_active) {
         if (multiblend_files > 0) {
           framemanager = ((i * 15 + x) + offsetmanager) + int(valoption[frame_start_id]);
@@ -59,7 +59,6 @@ void renderManager_Gui()
             text("Empty", 22 + x * 40, 50 + i * 30);
 
             prepath = proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(framemanager, 4)+".png";
-
             File img = new File(prepath);
             if (!img.exists()) renderpre = loadImage("Img"+File.separator+"Manager-none.png");
             else  renderpre = loadImage(prepath);
@@ -69,6 +68,14 @@ void renderManager_Gui()
             fill(acolor);
             textSize(8);
             text(nf(framemanager, 5), 26 + x * 40, 60 + i * 30);
+            if (loadJson(framemanager - 1).equals("good")) {
+              fill(ccolor);
+              text("Good", 23 + x * 40, 52 + i * 30);
+            }
+            if (loadJson(framemanager - 1).equals("bad")) {
+               fill(ecolor);
+              text("Bad", 23 + x * 40, 52 + i * 30);
+            }
           }
         }
       }
