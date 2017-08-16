@@ -1015,7 +1015,7 @@ void py_Save(String pypath)
     } else if (valoption[file_format_id] == "TARGA_RAW") {
       write.print("bpy.data.scenes[Scenename].render.image_settings.color_mode = ");
       write.println('"'+rgbmode+'"');
-    } else   if (valoption[file_format_id] == "TIFF") {
+    } else if (valoption[file_format_id] == "TIFF") {
       write.print("bpy.data.scenes[Scenename].render.image_settings.tiff_codec = ");
       write.println('"'+tiffcompresion+'"');
       write.print("bpy.data.scenes[Scenename].render.image_settings.color_mode = ");
@@ -1990,85 +1990,85 @@ void mouseEventsCommandLine ()
     }
     if (!fromblend[file_format_id]) {
       if (rgb_mode_()) { 
-        if (valoption[file_format_id] == "PNG") {
+        if (valoption[file_format_id].equals("PNG")) {
           val = val + 1;
           if (val > 2) val = 0;
           rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id] == "JPEG") {
+        } else if (valoption[file_format_id].equals("JPEG")) {
           val = val + 1;
           if (val > 1) val = 0;
           rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id] == "TARGA") {
+        } else if (valoption[file_format_id].equals("TARGA")) {
           val = val + 1;
           if (val > 2) val = 0;
           rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id] == "TARGA_RAW") {
+        } else if (valoption[file_format_id].equals("TARGA_RAW")) {
           val = val + 1;
           if (val > 2) val = 0;
           rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id] == "TIFF") {
+        } else if (valoption[file_format_id].equals("TIFF")) {
           val = val + 1;
           if (val > 2) val = 0;
           rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id] == "IRIS") {
+        } else if (valoption[file_format_id].equals("IRIS")) {
           val = val + 1;
           if (val > 2) val = 0;
           rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id] == "BMP") {
+        } else if (valoption[file_format_id].equals("BMP")) {
           val = val + 1;
           if (val > 1) val = 0;
           rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id] == "JPEG2000") {
+        } else if (valoption[file_format_id].equals("JPEG2000")) {
           val = val + 1;
           if (val > 2) val = 0;
           rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id] == "OPEN_EXR") {
+        } else if (valoption[file_format_id].equals("OPEN_EXR")) {
           val = val + 1;
           if (val > 2) val = 0;
           rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id] == "OPEN_EXR_MULTILAYER") {
+        } else if (valoption[file_format_id].equals("OPEN_EXR_MULTILAYER")) {
           val = val + 1;
           if (val > 2) val = 0;
           rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id] == "CINEON") {
+        } else if (valoption[file_format_id].equals("CINEON")) {
           val = val + 1;
           if (val > 1) val = 0;
           rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id] == "DPX") {
+        } else if (valoption[file_format_id].equals("DPX")) {
           val = val + 1;
           if (val > 2) val = 0;
           rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id] == "HDR") {
+        } else if (valoption[file_format_id].equals("HDR")) {
           val = val + 1;
           if (val > 2) val = 0;
           rgbmode = rgbmode_val[val];
         }
       }
       if (depth_()) { 
-        if (valoption[file_format_id] == "PNG") {
+        if (valoption[file_format_id].equals("PNG")) {
           val = val + 3;
           if (val > 3) val = 0;
           depth = depth_val[val];
-        } else if (valoption[file_format_id] == "TIFF") {
+        } else if (valoption[file_format_id].equals("TIFF")) {
           val = val + 3;
           if (val > 3) val = 0;
           depth = depth_val[val];
-        } else if (valoption[file_format_id] == "JPEG2000") {
+        } else if (valoption[file_format_id].equals("JPEG2000")) {
           val = val + 1;
           if (val == 1) val = 2;
           if (val > 3) val = 0;
           depth = depth_val[val];
-        } else if (valoption[file_format_id] == "OPEN_EXR") {
+        } else if (valoption[file_format_id].equals("OPEN_EXR")) {
           val = val + 1;
           if (val == 0 || val == 1 || val == 2) val = 3;
           if (val > 4) val = 3;
           depth = depth_val[val];
-        } else if (valoption[file_format_id] == "OPEN_EXR_MULTILAYER") {
+        } else if (valoption[file_format_id].equals("OPEN_EXR_MULTILAYER")) {
           val = val + 1;
           if (val == 0 || val == 1 || val == 2) val = 3;
           if (val > 4) val = 3;
           depth = depth_val[val];
-        } else if (valoption[file_format_id] == "DPX") {
+        } else if (valoption[file_format_id].equals("DPX")) {
           val = val + 1;
           if (val > 3) val = 0;
           depth = depth_val[val];
@@ -2076,62 +2076,62 @@ void mouseEventsCommandLine ()
       }
       if (compresion_()) {
         selectoption[compresion_id] = true;
-        if (valoption[file_format_id] == "PNG") {
+        if (valoption[file_format_id].equals("PNG")) {
           esc = compresion;
           compresion = "";
-        } else if (valoption[file_format_id] == "JPEG") {
-          esc = compresion;
-          compresion = "";
-        } else if (valoption[file_format_id] == "OPEN_EXR") {
+        } else if (valoption[file_format_id].equals("JPEG")) {
+          esc = quality;
+          quality = "";
+        } else if (valoption[file_format_id].equals("OPEN_EXR")) {
           val = val + 1;
           if (val > 7) val = 0;
           openexcompresion = openexrcodec[val];
-        } else if (valoption[file_format_id] == "OPEN_EXR_MULTILAYER") {
+        } else if (valoption[file_format_id].equals("OPEN_EXR_MULTILAYER")) {
           val = val + 1;
           if (val > 7) val = 0;
           openexcompresion = openexrcodec[val];
-        } else if (valoption[file_format_id] == "TIFF") {
+        } else if (valoption[file_format_id].equals("TIFF")) {
           val = val + 1;
           if (val > 3) val = 0;
           tiffcompresion = tiffcomp[val];
-        } else if (valoption[file_format_id] == "JPEG2000") {
+        } else if (valoption[file_format_id].equals("JPEG2000")) {
           esc = quality;
           quality = "";
         }
       }
       if (jpg2codec_()) {
-        if (valoption[file_format_id] == "JPEG2000") {
+        if (valoption[file_format_id].equals("JPEG2000")) {
           val = val + 1;
           if (val > 1) val = 0;
           jpg2codec = jpg2codec_val[val];
         }
-        if (valoption[file_format_id] == "OPEN_EXR") {
+        if (valoption[file_format_id].equals("OPEN_EXR")) {
           if (openexrpreview == "True") openexrpreview = "False";
           else openexrpreview = "True";
         }          
-        if (valoption[file_format_id] == "DPX") {
+        if (valoption[file_format_id].equals("DPX")) {
           if (dpxlog == "True") dpxlog = "False";
           else dpxlog = "True";
         }
       }
       if (jpg2cinema_()) {
-        if (valoption[file_format_id] == "JPEG2000") {
+        if (valoption[file_format_id].equals("JPEG2000")) {
           if (jpg2cinema == "True") jpg2cinema = "False";
           else jpg2cinema = "True";
         }
       }
       if (jpg2cinema48_()) {
-        if (valoption[file_format_id] == "JPEG2000") {
+        if (valoption[file_format_id].equals("JPEG2000")) {
           if (jpg2cinema48 == "True") jpg2cinema48 = "False";
           else jpg2cinema48 = "True";
         }
-        if (valoption[file_format_id] == "OPEN_EXR") {
+        if (valoption[file_format_id].equals("OPEN_EXR")) {
           if (openexrzbuffer == "True") openexrzbuffer = "False";
           else openexrzbuffer = "True";
         }
       }
       if (jpg2ycc_()) {
-        if (valoption[file_format_id] == "JPEG2000") {
+        if (valoption[file_format_id].equals("JPEG2000")) {
           if (jpg2ycc == "True") jpg2ycc = "False";
           else jpg2ycc = "True";
         }
