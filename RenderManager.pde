@@ -40,28 +40,33 @@ void mouseEventsManager()
         endframemanager = int(valoption[frame_end_id]);
       }
       if (manager_good()) {
-        rendersManager("good", framemanager);
+        for (int i = startframemanager; i <= endframemanager; i++) {
+          rendersManager("good", i);
+        }
       }
       if (manager_bad()) {
-        rendersManager("bad", framemanager);
+        for (int i = startframemanager; i <= endframemanager; i++) {
+          rendersManager("bad", i);
+        }
       }
       if (mouseX >= 20 && mouseX <= 625 && mouseY >= 30 && mouseY <=  325) {
         int X = floor(map(mouseX, 20, 620, 0, 15));
         int Y = floor(map(mouseY, 30, 325, 0, 10));
 
-        framemanager = ((Y * 15 + X) + offsetmanager) + int(valoption[frame_start_id]);
+        selectframe = ((Y * 15 + X) + offsetmanager) + int(valoption[frame_start_id]);
+
+        selectframe = constrain(selectframe, int(valoption[frame_start_id]), int(valoption[frame_end_id]));
 
         if (mouseButton == LEFT) {
-          startframemanager = framemanager;
-          endframemanager = framemanager;
+          startframemanager = selectframe;
+          endframemanager = selectframe;
         }
         if (mouseButton == RIGHT) {
-          endframemanager = framemanager;
+          endframemanager = selectframe;
         }
         if (mouseButton == CENTER) {
-          if (framemanager <= int(valoption[frame_end_id])) {
-            String prepath = outputpath+rendersname+nf(framemanager, 4)+extensionname(valoption[file_format_id]);
-            //print(prepath);
+          if (selectframe <= int(valoption[frame_end_id])) {
+            String prepath = outputpath+rendersname+nf(selectframe, 4)+extensionName(valoption[file_format_id]);
             if (os == "WINDOWS") {
               String cmd[] = {"rundll32.exe", "C:"+File.separator+"WINDOWS"+File.separator+"System32"+File.separator+"shimgvw.dll,ImageView_Fullscreen", prepath};
               exec(cmd);
@@ -70,7 +75,7 @@ void mouseEventsManager()
               exec(cmd);
             }
           }
-          framepreview(outputpath+rendersname+nf(framemanager, 4)+".png");
+          framepreview(outputpath+rendersname+nf(selectframe, 4)+extensionName(valoption[file_format_id]));
         }
       }
       if (manager_reloadallpre()) {
@@ -86,14 +91,39 @@ void mouseEventsManager()
 
 void rendersManager(String option, int frame)
 {
-  JSONObject rendermanager;
+  JSONArray values;
 
-  rendermanager = new JSONObject();
+  values = loadJSONArray(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
 
-  rendermanager.setInt("Frame", frame);
-  rendermanager.setString("Render", option);
+  for (int i = 0; i <= int(valoption[frame_end_id]) - int(valoption[frame_start_id]); i++) {
 
-  saveJSONObject(rendermanager, proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+    JSONObject rendermanager = values.getJSONObject(i); 
+    rendermanager.getInt("Frame");
+    rendermanager.getString("Multi");
+    rendermanager.getString("Status");
+    rendermanager.getString("Render");
+    if (newoutput) {
+      rendermanager.getString("Render path");
+      rendermanager.getString("Render name");
+    } else {
+      rendermanager.getString("Render path");
+      rendermanager.getString("Render name");
+    }
+    if (i + int(valoption[frame_start_id]) == int(frame)) rendermanager.setString("Status", option);
+  }
+
+  saveJSONArray(values, proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+}
+
+String loadJson(int frame)
+{
+  JSONArray values;
+
+  values = loadJSONArray(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+
+  JSONObject rendermanager = values.getJSONObject(frame); 
+  String status = rendermanager.getString("Status");
+  return status;
 }
 
 
@@ -103,17 +133,17 @@ void jsonManager()
 
   rendercontrol = new JSONArray();
 
-  for (int i = int(valoption[frame_start_id]); i <= int(valoption[frame_end_id]); i++) {
+  for (int i = 0; i <= int(valoption[frame_end_id]) - int(valoption[frame_start_id]); i++) {
 
     JSONObject rendermanager = new JSONObject();
 
-    rendermanager.setInt("Frame", i);
+    rendermanager.setInt("Frame", i + int(valoption[frame_start_id]));
     rendermanager.setString("Multi", settingsname);
     rendermanager.setString("Status", "Waiting");
     rendermanager.setString("Render", "None");
     if (newoutput) {
       rendermanager.setString("Render path", outputpath);
-      rendermanager.setString("Render path", rendersname);
+      rendermanager.setString("Render name", rendersname);
     } else {
       rendermanager.setString("Render path", "From .blend");
       rendermanager.setString("Render name", "From .blend");
@@ -134,7 +164,7 @@ void allpreviews()
     if (f.exists()) {
       img = loadImage(outputpath+rendersname+nf(i, 4)+".png");
       img.resize(40, 23);
-      img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+extensionname(valoption[file_format_id]));
+      img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
       System.gc(); 
       redraw();
     }
@@ -146,13 +176,13 @@ void newspreviews()
 {
   PImage img;
   for (int i = int(valoption[frame_start_id]); i <= int(valoption[frame_end_id]); i++) {
-    File fp = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+extensionname(valoption[file_format_id]));
+    File fp = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
     if (!fp.exists()) {
       File f = new File(outputpath+rendersname+nf(i, 4)+".png");
       if (f.exists()) {
         img = loadImage(outputpath+rendersname+nf(i, 4)+".png");
         img.resize(40, 23);
-        img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+extensionname(valoption[file_format_id]));
+        img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
 
         System.gc();
         redraw();
@@ -169,7 +199,7 @@ void framepreview(String frame)
   if (f.exists()) {
     img = loadImage(frame);
     img.resize(40, 23);
-    img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(framemanager, 4)+extensionname(valoption[file_format_id]));
+    img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(selectframe, 4)+".png");
     System.gc();
   }
   updating = false;
@@ -184,14 +214,11 @@ void loadfromblend()
       if (fromblend[output_path_id]) {
         if (lines[i+1].startsWith("//")) outputpath = blendpath+lines[i+1].substring(2);
         else outputpath = lines[i+1];
-        // println(outputpath);
       }
     } else if (lines[i].contains("[RenderName]")) {
-      if (fromblend[output_path_id]) {
-        if (!lines[i+1].contains("#")) rendersname = lines[i+1];
-        else rendersname = lines[i+1].substring(0, lines[i+1].indexOf("#"));
-        // println(rendersname);
-      }
+      if (fromblend[output_path_id]) rendersname = lines[i+1];
+    } else if (lines[i].contains("[FileFormat]")) {
+      if (fromblend[file_format_id]) valoption[file_format_id] = lines[i+1];
     } else if (lines[i].contains("[StartFrame]")) {
       if (fromblend[frame_start_id]) valoption[frame_start_id] = lines[i+1];
     } else if (lines[i].contains("[EndFrame]")) {
@@ -203,7 +230,7 @@ void loadfromblend()
 
 void fromblend(boolean forcetowrite)
 {
-  if (fromblend[output_path_id] || fromblend[frame_start_id] || fromblend[frame_end_id]) {
+  if (fromblend[output_path_id] || fromblend[file_format_id] || fromblend[frame_start_id] || fromblend[frame_end_id]) {
 
     File f = new File(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")) + ".txt");
     if (forcetowrite) f = new File("");
@@ -218,7 +245,7 @@ void fromblend(boolean forcetowrite)
       if (fromblend[scene_name_id]) write.println("bpy.context.scene.name");
       else write.println('"'+scenename+'"');
       write.println("file = open("+'"'+proyectpath+"Manager"+"/fromblend.txt"+'"'+", 'w', encoding='utf-8')");
-      write.println("file.write("+'"'+"%s"+'"'+" % (bpy.data.scenes[Scenename].render.filepath) + "+'"'+"***"+'"'+" + "+'"'+"%s"+'"'+" % (bpy.data.scenes[Scenename].frame_start) + "+'"'+"***"+'"'+" + "+'"'+"%s"+'"'+" % (bpy.data.scenes[Scenename].frame_end))");
+      write.println("file.write("+'"'+"%s"+'"'+" % (bpy.data.scenes[Scenename].render.filepath) + "+'"'+"***"+'"'+" + "+'"'+"%s"+'"'+" % (bpy.data.scenes[Scenename].render.image_settings.file_format) + "+'"'+"***"+'"'+" + "+'"'+"%s"+'"'+" % (bpy.data.scenes[Scenename].frame_start) + "+'"'+"***"+'"'+" + "+'"'+"%s"+'"'+" % (bpy.data.scenes[Scenename].frame_end))");
       write.println("file.close()");
 
       write.flush();
@@ -288,8 +315,11 @@ void fromblend(boolean forcetowrite)
       write.println("[RenderName]");
       write.println(line[0].substring(line[0].lastIndexOf(File.separator) +1, line[0].indexOf("***")));
       write.println();
+      write.println("[FileFormat]");
+      write.println(line[0].substring(line[0].indexOf("***") + 3, line[0].indexOf("***", line[0].indexOf("***") + 1)));
+      write.println();
       write.println("[StartFrame]");
-      write.println(line[0].substring(line[0].indexOf("***") + 3, line[0].lastIndexOf("***")));
+      write.println(line[0].substring(line[0].indexOf("***", line[0].indexOf("***") + 2) + 3, line[0].lastIndexOf("***")));
       write.println();
       write.println("[EndFrame]");
       write.println(line[0].substring(line[0].lastIndexOf("***") + 3));
@@ -312,35 +342,34 @@ void fromblend(boolean forcetowrite)
 }
 
 
-String extensionname(String ext)
+String extensionName(String ext)
 {
-  if (ext == "PNG") {
+  if (ext.equals("PNG")) {
     ext = ".png";
-  } else if (ext == "JPEG") {
+  } else if (ext.equals("JPEG")) {
     ext = ".jpg";
-  } else if (ext == "TARGA") {
+  } else if (ext.equals("TARGA")) {
     ext = ".tga";
-  } else if (ext == "TARGA_RAW") {
+  } else if (ext.equals("TARGA_RAW")) {
     ext = ".tga";
-  } else   if (ext == "TIFF") {
+  } else if (ext.equals("TIFF")) {
     ext = ".tif";
-  } else if (ext == "IRIS") {
+  } else if (ext.equals("IRIS")) {
     ext = ".rgb";
-  } else if (ext == "BMP") {
+  } else if (ext.equals("BMP")) {
     ext = ".bmp";
-  } else if (ext == "JPEG2000") {
+  } else if (ext.equals("JPEG2000")) {
     ext = ".jp2";
-  } else if (ext == "OPEN_EXR") {
+  } else if (ext.equals("OPEN_EXR")) {
     ext = ".exr";
-  } else if (ext == "OPEN_EXR_MULTILAYER") {
+  } else if (ext.equals("OPEN_EXR_MULTILAYER")) {
     ext = ".exr";
-  } else if (ext == "CINEON") {
+  } else if (ext.equals("CINEON")) {
     ext = ".cin";
-  } else if (ext == "DPX") {
+  } else if (ext.equals("DPX")) {
     ext = ".dpx";
-  } else if (ext == "HDR") {
+  } else if (ext.equals("HDR")) {
     ext = ".hdr";
   }
   return ext;
-
 }
