@@ -160,11 +160,11 @@ void allpreviews()
 {
   PImage img;
   for (int i = int(valoption[frame_start_id]); i <= int(valoption[frame_end_id]); i++) {
-    File f = new File(outputpath+rendersname+nf(i, 4)+".png");
+    File f = new File(outputpath+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
     if (f.exists()) {
-      img = loadImage(outputpath+rendersname+nf(i, 4)+".png");
+      img = loadImage(outputpath+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
       img.resize(40, 23);
-      img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
+      img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
       System.gc(); 
       redraw();
     }
@@ -176,14 +176,13 @@ void newspreviews()
 {
   PImage img;
   for (int i = int(valoption[frame_start_id]); i <= int(valoption[frame_end_id]); i++) {
-    File fp = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
+    File fp = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
     if (!fp.exists()) {
-      File f = new File(outputpath+rendersname+nf(i, 4)+".png");
+      File f = new File(outputpath+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
       if (f.exists()) {
-        img = loadImage(outputpath+rendersname+nf(i, 4)+".png");
+        img = loadImage(outputpath+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
         img.resize(40, 23);
-        img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
-
+        img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
         System.gc();
         redraw();
       }
