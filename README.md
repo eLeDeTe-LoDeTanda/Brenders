@@ -117,6 +117,8 @@ BRENDERSv1.0 TODO:
 
 *~Render only: bad --- Renderizar sólo: malo~ :heavy_check_mark:
 
+*Play renders --- reproducir renders
+
 **APROXIMATE RENDER TIME CALCULATOR**
 
 *~Aproximate render time --- tiempo de render aproximado~ :heavy_check_mark:
