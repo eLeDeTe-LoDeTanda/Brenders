@@ -1660,13 +1660,11 @@ void mouseEventsCommandLine ()
         error = true;
         info = "*Error in "+nameoption[frame_id];
       } else {
-        // settingsName();
         settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
         selectOutput("Settings to write to:", "settingsSave", settingsfolder);
       }
     } 
     if (rename_settings_()) {
-      //settingsName();
       settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
       selectOutput("Move and/or Rename: "+settingsname+" -Save changes-", "settingsRename", settingsfolder);
     }
