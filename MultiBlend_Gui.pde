@@ -33,7 +33,7 @@ int order = 0;
 
 String frameprev = "1";
 
-boolean multiblend_restart= true;
+boolean[] multiblend_renders= new boolean [] {true, false, false};
 
 String proyectname = "NO PROYECT OPEN";
 String[] multiblend_names = new String[24];
@@ -143,14 +143,18 @@ void multiBlend_Gui()
     fill(acolor);
     textSize(11);
     textAlign(LEFT);
-    text("o Restart", 400, 310);
-    text("o Rendering", 400, 330);
-    if (multiblend_restart) {
+    text("o All renders", 390, 310);
+    text("o Bad renders", 390, 330);
+    text("o Continue", 390, 350);
+    if (multiblend_renders[0]) {
       fill(ccolor);
-      ellipse(403, 307, 8, 8);
-    } else {
+      ellipse(393, 307, 8, 8);
+    } else if (multiblend_renders[1]) {
       fill(ccolor);
-      ellipse(403, 327, 8, 8);
+      ellipse(393, 327, 8, 8);
+    } else if (multiblend_renders[2]) {
+      fill(ccolor);
+      ellipse(393, 347, 8, 8);
     }
   } else {
     fill(ecolor);
@@ -198,13 +202,17 @@ boolean go_Multiblend_()
   return  (mouseX > 290 && mouseX < 345 && mouseY > 280 && mouseY < 330);
 }
 
-boolean overwrite_Multiblend_() 
+boolean all_Multiblend_() 
 {
-  return  (mouseX > 400 && mouseX < 470 && mouseY > 300 && mouseY < 310);
+  return  (mouseX > 390 && mouseX < 460 && mouseY > 300 && mouseY < 315);
+}
+boolean bad_Multiblend_() 
+{
+  return  (mouseX > 390 && mouseX < 460 && mouseY > 320 && mouseY < 335);
 }
 boolean continue_Multiblend_() 
 {
-  return  (mouseX > 400 && mouseX < 470 && mouseY > 320 && mouseY < 330);
+  return  (mouseX > 390 && mouseX < 460 && mouseY > 340 && mouseY < 355);
 }
 
 boolean orderL_Multiblend_() 
