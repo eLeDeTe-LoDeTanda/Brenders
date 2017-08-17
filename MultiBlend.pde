@@ -91,6 +91,7 @@ void keyEventsMultiblend(String keypress)
   }
 }
 
+
 void mouseEventsMultiblend() 
 {
   if (new_Proyect_Multiblend_()) {
@@ -164,11 +165,39 @@ void mouseEventsMultiblend()
           }
           multiblend_renders[0] = false;
           multiblend_renders[1] = false;
-          multiblend_renders[2] = true;
+          multiblend_renders[2] = false;
           info = "Rendering... You can close Brenders";
+        } else if (multiblend_renders[1]) {
+          loadMultiblend(false);
+          multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
+
+          if (os == "WINDOWS") {
+            String cmd[]= {terminalpath, "/c", "start", "/w", proyectpath+"Autorun"+File.separator+proyectname+"_bads.bat"};
+            exec(cmd);
+          } else {
+            String cmd[] = {terminalpath, "-e", proyectpath+"Autorun"+File.separator+proyectname+"_bads.sh"};
+            exec(cmd);
+          }
+          multiblend_renders[0] = false;
+          multiblend_renders[1] = false;
+          multiblend_renders[2] = false;
+        } else if (multiblend_renders[2]) {
+          loadMultiblend(false);
+          multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
+
+          if (os == "WINDOWS") {
+            String cmd[]= {terminalpath, "/c", "start", "/w", proyectpath+"Autorun"+File.separator+proyectname+"_continue.bat"};
+            exec(cmd);
+          } else {
+            String cmd[] = {terminalpath, "-e", proyectpath+"Autorun"+File.separator+proyectname+"_continue.sh"};
+            exec(cmd);
+          }
+          multiblend_renders[0] = false;
+          multiblend_renders[1] = false;
+          multiblend_renders[2] = false;
         } else {
           error = true;
-          info = "Rendering... 'Restart' for overwrite";
+          info = "Select 'All' 'Bad' or 'Continue'";
         }
       } else {
         error = true;
@@ -733,6 +762,7 @@ void precheck()
   if (!img.exists()) blendpre = loadImage("Img"+File.separator+"None.png");
   else  blendpre = loadImage(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
 }
+
 
 void addrecentproyect()
 {
