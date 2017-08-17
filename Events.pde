@@ -26,7 +26,13 @@
 
 void  mousePressed()
 {
-  //if (mouseButton == LEFT) {
+  if (menu_0()) gui = 0;
+  if (menu_1()) gui = 1;
+  if (menu_2()) gui = 3;
+  if (menu_3()) gui = 2;
+  if (menu_4()) gui = 4;
+  if (menu_5()) gui = 5;
+
   if (gui == 0) {
     if (commandlinegenerator_()) {
       gui = 1;
@@ -68,7 +74,6 @@ void  mousePressed()
   } else if (gui == 7) {
     mouseEventsPreferences();
   }
-  // }
   redraw();
 }
 
@@ -104,6 +109,6 @@ void keyPressed()
   if (keyCode == 27) key = 0;
 
   selectcolor = false;
- 
+
   redraw();
 }
