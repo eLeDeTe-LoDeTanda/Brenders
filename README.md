@@ -111,7 +111,7 @@ BRENDERSv1.0 TODO:
 
 *Select: preview or final --- Seleccionar: previsualización o final
 
-*Select: Good or Bad --- Seleccionar: Bueno o Malo
+*~Select: Good or Bad --- Seleccionar: Bueno o Malo~ :heavy_check_mark:
 
 *Render All --- Renderizar todos
 
