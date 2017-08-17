@@ -109,13 +109,13 @@ BRENDERSv1.0 TODO:
 
 *~Open render --- Abrir render~ :heavy_check_mark:
 
-*Select: preview or final --- Seleccionar: previsualización o final
+*Select: preview --- Seleccionar: previsualización
 
 *~Select: Good or Bad --- Seleccionar: Bueno o Malo~ :heavy_check_mark:
 
-*Render All --- Renderizar todos
+*~Render All --- Renderizar todos~ :heavy_check_mark:
 
-*Render only: preview, final, good or bad --- Renderizar sólo: preview, final, bueno o malo 
+*~Render only: bad --- Renderizar sólo: malo~ :heavy_check_mark:
 
 **APROXIMATE RENDER TIME CALCULATOR**
 
