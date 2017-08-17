@@ -151,7 +151,7 @@ void mouseEventsMultiblend()
     }
     if (go_Multiblend_()) {
       if (multiblend_files > 0) {
-        if (multiblend_restart) {
+        if (multiblend_renders[0]) {
           loadMultiblend(false);
           multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
 
@@ -162,7 +162,9 @@ void mouseEventsMultiblend()
             String cmd[] = {terminalpath, "-e", proyectpath+"Autorun"+File.separator+proyectname+".sh"};
             exec(cmd);
           }
-          multiblend_restart = false;
+          multiblend_renders[0] = false;
+          multiblend_renders[1] = false;
+          multiblend_renders[2] = true;
           info = "Rendering... You can close Brenders";
         } else {
           error = true;
@@ -207,11 +209,20 @@ void mouseEventsMultiblend()
         multiblend_delete();
         loadMultiblend(false);
       }
-      if (overwrite_Multiblend_()) {
-        multiblend_restart = true;
+      if (all_Multiblend_()) {
+        multiblend_renders[0] = true;
+        multiblend_renders[1] = false;
+        multiblend_renders[2] = false;
+      }
+      if (bad_Multiblend_()) {
+        multiblend_renders[0] = false;
+        multiblend_renders[1] = true;
+        multiblend_renders[2] = false;
       }
       if (continue_Multiblend_()) {
-        multiblend_restart = false;
+        multiblend_renders[0] = false;
+        multiblend_renders[1] = false;
+        multiblend_renders[2] = true;
       }
       if (openblend_Multiblend_()) {
         info = "*Opening "+blendname+" ...";
