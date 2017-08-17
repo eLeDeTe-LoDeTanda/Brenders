@@ -871,6 +871,7 @@ void py_Save_bads(String pypath)
 
   for (int i = 0; i <= int(valoption[frame_end_id]) - int(valoption[frame_start_id]); i++) {
     if (loadJson(i).equals("bad")) {
+      write.println();
       write.print("bpy.data.scenes[Scenename].frame_start = ");
       write.println(i + int(valoption[frame_start_id]));
       write.print("bpy.data.scenes[Scenename].frame_end = ");
@@ -884,10 +885,11 @@ void py_Save_bads(String pypath)
       write.println("# Render OpenGL");
       if (!oglrenders) write.print("#");
       write.println("bpy.ops.render.opengl(animation=True,view_context = False)");
-      if (!oglrenders) write.print("#");
-      write.println("bpy.ops.wm.quit_blender()");
     }
   }
+  if (!oglrenders) write.print("#");
+  write.println("bpy.ops.wm.quit_blender()");
+  write.println();
 
   write.println();
   write.print("####################################");
