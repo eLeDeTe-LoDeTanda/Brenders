@@ -68,12 +68,11 @@ void renderManager_Gui()
             fill(acolor);
             textSize(8);
             text(nf(framemanager, 5), 26 + x * 40, 60 + i * 30);
-            if (loadJson(framemanager - 1).equals("good")) {
+            if (loadJson(framemanager).equals("good")) {
               fill(ccolor);
               text("Good", 23 + x * 40, 52 + i * 30);
-            }
-            if (loadJson(framemanager - 1).equals("bad")) {
-               fill(ecolor);
+            } else if (loadJson(framemanager).equals("bad")) {
+              fill(ecolor);
               text("Bad", 23 + x * 40, 52 + i * 30);
             }
           }

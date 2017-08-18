@@ -29,7 +29,7 @@ void initvarMultiblend()
   if (os == "WINDOWS") {
     File f = new File(dataPath("Preferences"+File.separator+"recent_Windows.txt"));
     if (!f.exists()) {
-      write = createWriter(dataPath("Proyects"+File.separator+"recent_Windows.txt"));
+      write = createWriter(dataPath("Preferences"+File.separator+"recent_Windows.txt"));
       write.println("[Recent]");
       write.println("None");
       write.println("None");
@@ -41,7 +41,7 @@ void initvarMultiblend()
       write.flush();
       write.close();
     } 
-    String lines[] = loadStrings(dataPath("Proyects"+File.separator+"recent_Windows.txt"));
+    String lines[] = loadStrings(dataPath("Preferences"+File.separator+"recent_Windows.txt"));
     for (int i = 0; i < lines.length; i++) {
       if (lines[i].contains("[Recent]")) {
         recentproyect[0] = lines[i+1];
@@ -261,6 +261,7 @@ void mouseEventsMultiblend()
         exec(cmd);
       }
       if (blendpre_Multiblend_()) {
+        if (int(frameprev) <= 0) frameprev = "1";
         loadPy(proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend");
         multiblend_pre();
       }
@@ -268,10 +269,10 @@ void mouseEventsMultiblend()
         frameprev = "";
       } 
       if (framepreL_Multiblend_()) {
-        frameprev = str(constrain(int(frameprev) - 1, 0, 500000));
+        frameprev = str(constrain(int(frameprev) - 1, 1, 500000));
       }  
       if (framepreR_Multiblend_()) {
-        frameprev = str(constrain(int(frameprev) + 1, 0, 500000));
+        frameprev = str(constrain(int(frameprev) + 1, 1, 500000));
       }
       if (edit_Multiblend_()) {
         gui = 1;

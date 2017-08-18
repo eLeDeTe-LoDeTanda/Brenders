@@ -80,17 +80,19 @@ void selectColor()
   popStyle();
 }
 
+
+String fullDate ()
+{
+  String fulldate =  nf(month(), 2)+"-"+nf(day(), 2)+"-"+nf(year(), 2)+"_"+nf(hour(), 2)+":"+nf(minute(), 2)+":"+nf(second(), 2);
+  return fulldate;
+}
+
+
 void menuBar()
 {
   pushStyle();
 
   textAlign(CENTER, CENTER);
-  if  (mouseX > 0 && mouseX < 40 && mouseY > 0 && mouseY < 30) gui = 0;
-  if  (mouseX > 40 && mouseX < 70 && mouseY > 0 && mouseY < 30) gui = 1;
-  if  (mouseX > 70 && mouseX < 90 && mouseY > 0 && mouseY < 30) gui = 3;
-  if  (mouseX > 90 && mouseX < 120 && mouseY > 0 && mouseY < 30) gui = 2;
-  if  (mouseX > 120 && mouseX < 150 && mouseY > 0 && mouseY < 30) gui = 4;
-  if  (mouseX > 150 && mouseX < 180 && mouseY > 0 && mouseY < 30) gui = 5;
 
   textSize(7);
   fill(acolor, 100);
@@ -150,8 +152,27 @@ void menuBar()
   popStyle();
 }
 
-String fullDate ()
+boolean menu_0() 
 {
-  String fulldate =  nf(month(), 2)+"-"+nf(day(), 2)+"-"+nf(year(), 2)+"_"+nf(hour(), 2)+":"+nf(minute(), 2)+":"+nf(second(), 2);
-  return fulldate;
+  return (mouseX > 0 && mouseX < 40 && mouseY > 0 && mouseY < 30) ;
+}
+boolean menu_1() 
+{
+  return (mouseX > 40 && mouseX < 70 && mouseY > 0 && mouseY < 30) ;
+}
+boolean menu_2() 
+{
+  return (mouseX > 70 && mouseX < 90 && mouseY > 0 && mouseY < 30) ;
+}
+boolean menu_3() 
+{
+  return (mouseX > 90 && mouseX < 120 && mouseY > 0 && mouseY < 30) ;
+}
+boolean menu_4() 
+{
+  return (mouseX > 120 && mouseX < 150 && mouseY > 0 && mouseY < 30) ;
+}
+boolean menu_5() 
+{
+  return (mouseX > 150 && mouseX < 180 && mouseY > 0 && mouseY < 30) ;
 }

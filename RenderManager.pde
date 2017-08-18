@@ -96,7 +96,6 @@ void rendersManager(String option, int frame)
   values = loadJSONArray(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
 
   for (int i = 0; i <= int(valoption[frame_end_id]) - int(valoption[frame_start_id]); i++) {
-
     JSONObject rendermanager = values.getJSONObject(i); 
     rendermanager.getInt("Frame");
     rendermanager.getString("Multi");
@@ -114,6 +113,7 @@ void rendersManager(String option, int frame)
 
   saveJSONArray(values, proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
 }
+
 
 String loadJson(int frame)
 {
@@ -243,7 +243,11 @@ void fromblend(boolean forcetowrite)
       write.print("Scenename = ");
       if (fromblend[scene_name_id]) write.println("bpy.context.scene.name");
       else write.println('"'+scenename+'"');
-      write.println("file = open("+'"'+proyectpath+"Manager"+"/fromblend.txt"+'"'+", 'w', encoding='utf-8')");
+
+      String path = proyectpath+"Manager"+File.separator+"fromblend.txt";
+      if (os == "WINDOWS") path = path.replace("\\", "/");
+
+      write.println("file = open("+'"'+path+'"'+", 'w', encoding='utf-8')");
       write.println("file.write("+'"'+"%s"+'"'+" % (bpy.data.scenes[Scenename].render.filepath) + "+'"'+"***"+'"'+" + "+'"'+"%s"+'"'+" % (bpy.data.scenes[Scenename].render.image_settings.file_format) + "+'"'+"***"+'"'+" + "+'"'+"%s"+'"'+" % (bpy.data.scenes[Scenename].frame_start) + "+'"'+"***"+'"'+" + "+'"'+"%s"+'"'+" % (bpy.data.scenes[Scenename].frame_end))");
       write.println("file.close()");
 
@@ -305,7 +309,7 @@ void fromblend(boolean forcetowrite)
         }
       }
 
-      String line[] = loadStrings(proyectpath+"Manager"+"/fromblend.txt");
+      String line[] = loadStrings(proyectpath+"Manager"+File.separator+"fromblend.txt");
 
       write = createWriter(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")) + ".txt");
       write.println("[RendersOutput]");
@@ -334,7 +338,7 @@ void fromblend(boolean forcetowrite)
         File f_py = new File (dataPath("tmp")+File.separator+"fromblend.py");
         f_py.delete();
       }
-      File f_txt = new File (proyectpath+"Manager"+"/fromblend.txt");
+      File f_txt = new File (proyectpath+"Manager"+File.separator+"fromblend.txt");
       f_txt.delete();
     }
   }
