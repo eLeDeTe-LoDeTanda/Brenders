@@ -356,9 +356,9 @@ void savefromblend(boolean forcetowrite)
       } else {
         File f_sh = new File(dataPath("tmp")+File.separator+"fromblend.sh");
         f_sh.delete();
-        File f_py = new File (dataPath("tmp")+File.separator+"fromblend.py");
-        f_py.delete();
       }
+      File f_py = new File (dataPath("tmp")+File.separator+"fromblend.py");
+      f_py.delete();
       File f_txt = new File (proyectpath+"Manager"+File.separator+"fromblend.txt");
       f_txt.delete();
     }
