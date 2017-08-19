@@ -555,6 +555,7 @@ void multiblend_autorun(String path)
   if (os == "WINDOWS") {
     if (multiblend_renders[0]) write = createWriter(path+".bat");
     else if (multiblend_renders[1]) write = createWriter(path+"_bads.bat");
+    else if (multiblend_renders[2]) write = createWriter(path+"_continue.bat");
     write.println("@ECHO OFF");
     write.println("COLOR 8F");
     write.println();
@@ -565,8 +566,12 @@ void multiblend_autorun(String path)
     write.println("@ECHO -");
     write.println("@ECHO RENDERING...");
     write.println("@ECHO -");
+    write.println("@ECHO ---------- %date:~10,4%-%date:~4,2%-%date:~7,2% ---------- >> "+'"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"'); 
     for (int a = 0; a < order_name.length; a++) {
       loadPy(proyectpath+"Options"+File.separator+order_name[a]);
+      write.println("@ECHO %time:~0,2%:%time:~3,2%:%time:~6,2% Start: "+order_name[a]+">> "+'"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');
+      write.println("@ECHO Log: %date:~10,4%-%date:~4,2%-%date:~7,2%_%time:~0,2%:%time:~3,2%:%time:~6,2%_"+order_name[a].substring(0, order_name[a].lastIndexOf("."))+".log >> "+'"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');  
+      write.println();
       write.print("call ");
       write.print('"'+blenderpath+'"');
       if (!oglrenders) write.print(" -b ");
@@ -575,8 +580,13 @@ void multiblend_autorun(String path)
       write.print(" -P ");
       if (multiblend_renders[0]) write.print('"'+proyectpath+"Options"+File.separator+order_name[a]+'"');
       else if (multiblend_renders[1]) write.print('"'+proyectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_bads.multiblend"+'"');
+      else if (multiblend_renders[2]) write.print('"'+proyectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_continue.multiblend"+'"');
+      write.println(" > "+'"'+proyectpath+"Logs"+File.separator+"%date:~10,4%-%date:~4,2%-%date:~7,2%_%time:~0,2%:%time:~3,2%:%time:~6,2%_"+order_name[a].substring(0, order_name[a].lastIndexOf("."))+".log"+'"');
+      write.println();
+      write.println("@ECHO %time:~0,2%:%time:~3,2%:%time:~6,2% Finish: "+order_name[a]+" >> "+'"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');  
       write.println();
     }   
+    write.println("@ECHO ------------------------------- >> "+'"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"'); 
     write.println("@ECHO -");
     write.println("@ECHO FINISH!");
     write.println("@ECHO -");
