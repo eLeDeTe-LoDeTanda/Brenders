@@ -2347,12 +2347,12 @@ void endRendersToPlaySelect(File selection)
     if (os == "WINDOWS") {
       write = createWriter(dataPath("")+File.separator+"tmp"+File.separator+"playrenders.bat");
       write.print("call ");
-      write.print('"'+blenderpath+'"'+" -a -s "+'"'+startrender+'"'+" -e "+'"'+endrender+'"');
+      write.print('"'+blenderpath+'"'+" -a  -f 24 -s "+'"'+startrender+'"'+" -e "+'"'+endrender+'"');
       write.flush();
       write.close();
       exec(dataPath("")+File.separator+"tmp"+File.separator+"playrenders.bat");
     } else {
-      String cmd[] = {terminalpath, "-e", blenderpath+" -a -s "+startrender+" -e "+endrender};
+      String cmd[] = {terminalpath, "-e", blenderpath+" -a -f 24 -s "+startrender+" -e "+endrender};
       exec(cmd);
     }
   } else {
