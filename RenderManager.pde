@@ -41,12 +41,12 @@ void mouseEventsManager()
       }
       if (manager_good()) {
         for (int i = startframemanager; i <= endframemanager; i++) {
-          rendersManager("good", i);
+          addinJsonManager("good", i);
         }
       }
       if (manager_bad()) {
         for (int i = startframemanager; i <= endframemanager; i++) {
-          rendersManager("bad", i);
+          addinJsonManager("bad", i);
         }
       }
       if (mouseX >= 20 && mouseX <= 625 && mouseY >= 30 && mouseY <=  325) {
@@ -84,12 +84,15 @@ void mouseEventsManager()
       if (manager_reloadnewpre()) {
         thread("newspreviews");
       }
+      if (manager_playrender()) {
+        thread("RendersPlayManager");
+      }
     }
   }
 }
 
 
-void rendersManager(String option, int frame)
+void addinJsonManager(String option, int frame)
 {
   JSONArray values;
 
@@ -115,19 +118,37 @@ void rendersManager(String option, int frame)
 }
 
 
-String loadJson(int frame)
+String loadJsonManager(int frame)
 {
   JSONArray values;
 
   values = loadJSONArray(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+  String status = "";
+  if (frame < values.size()) {
+    JSONObject rendermanager = values.getJSONObject(frame); 
+    status = rendermanager.getString("Status");
+  } else {
+    JSONObject news = new JSONObject();
 
-  JSONObject rendermanager = values.getJSONObject(frame); 
-  String status = rendermanager.getString("Status");
+    news.setInt("Frame", frame);
+    news.setString("Multi", settingsname);
+    news.setString("Status", "Waiting");
+    news.setString("Render", "None");
+    if (newoutput) {
+      news.setString("Render path", outputpath);
+      news.setString("Render name", rendersname);
+    } else {
+      news.setString("Render path", "From .blend");
+      news.setString("Render name", "From .blend");
+    }
+    values.append(news);
+    saveJSONArray(values, proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+  }
   return status;
 }
 
 
-void jsonManager() 
+void newjsonManager() 
 {
   JSONArray rendercontrol;
 
@@ -227,7 +248,7 @@ void loadfromblend()
 }
 
 
-void fromblend(boolean forcetowrite)
+void savefromblend(boolean forcetowrite)
 {
   if (fromblend[output_path_id] || fromblend[file_format_id] || fromblend[frame_start_id] || fromblend[frame_end_id]) {
 
@@ -375,4 +396,20 @@ String extensionName(String ext)
     ext = ".hdr";
   }
   return ext;
+}
+
+void RendersPlayManager() 
+{
+  if (os == "WINDOWS") {
+    write = createWriter(dataPath("")+File.separator+"tmp"+File.separator+"playrenders.bat");
+    write.print("call ");
+    write.print('"'+blenderpath+'"'+" -a -f 24 -j 1 -s "+'"'+startframemanager+'"'+" -e "+'"'+endframemanager+'"');
+    write.flush();
+    write.close();
+    exec(dataPath("")+File.separator+"tmp"+File.separator+"playrenders.bat");
+  } else {
+    String cmd[] = {terminalpath, "-e", blenderpath+" -a -f 24 -j 1 -s "+outputpath+rendersname+nf(startframemanager, 4)+extensionName(valoption[file_format_id])+" -e "+outputpath+rendersname+nf(endframemanager, 4)+extensionName(valoption[file_format_id])};
+    exec(cmd);
+  }
+  redraw();
 }
