@@ -1259,7 +1259,10 @@ void multiblend_pre()
   write.println("bpy.ops.render.opengl(view_context = False)");
   write.println();
 
-  write.println("bpy.data.images['Render Result'].save_render("+'"'+proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png"+'"'+")");
+  String path = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png";
+  if (os == "WINDOWS") path = path.replace("\\", "/");
+
+  write.println("bpy.data.images['Render Result'].save_render("+'"'+path+'"'+")");
   write.println();
 
   write.println("bpy.ops.wm.quit_blender()");
