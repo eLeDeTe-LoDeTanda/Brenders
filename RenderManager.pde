@@ -85,7 +85,7 @@ void mouseEventsManager()
         thread("newspreviews");
       }
       if (manager_playrender()) {
-        thread("RendersPlayManager");
+        selectInput("Select START Render:", "startRendersToPlaySelect", playrendersfolder);
       }
     }
   }
@@ -396,20 +396,4 @@ String extensionName(String ext)
     ext = ".hdr";
   }
   return ext;
-}
-
-void RendersPlayManager() 
-{
-  if (os == "WINDOWS") {
-    write = createWriter(dataPath("")+File.separator+"tmp"+File.separator+"playrenders.bat");
-    write.print("call ");
-    write.print('"'+blenderpath+'"'+" -a -f 24 -j 1 -s "+'"'+startframemanager+'"'+" -e "+'"'+endframemanager+'"');
-    write.flush();
-    write.close();
-    exec(dataPath("")+File.separator+"tmp"+File.separator+"playrenders.bat");
-  } else {
-    String cmd[] = {terminalpath, "-e", blenderpath+" -a -f 24 -j 1 -s "+outputpath+rendersname+nf(startframemanager, 4)+extensionName(valoption[file_format_id])+" -e "+outputpath+rendersname+nf(endframemanager, 4)+extensionName(valoption[file_format_id])};
-    exec(cmd);
-  }
-  redraw();
 }
