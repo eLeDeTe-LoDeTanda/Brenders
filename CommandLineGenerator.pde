@@ -281,6 +281,10 @@ void mouseEventsCommandLine ()
         write.close();
 
         exec(dataPath("")+File.separator+"tmp"+File.separator+"cmd.bat");
+       
+        delay(100);
+        File f = new File (dataPath("")+File.separator+"tmp"+File.separator+"cmd.bat");
+        f.delete();
       } else exec(terminalpath);
     }
     if (text_editor_path_()) selectInput("Select Text editor executable:", "texteditorSelect", texteditorfolder);
