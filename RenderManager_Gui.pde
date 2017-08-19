@@ -68,10 +68,10 @@ void renderManager_Gui()
             fill(acolor);
             textSize(8);
             text(nf(framemanager, 5), 26 + x * 40, 60 + i * 30);
-            if (loadJson(framemanager).equals("good")) {
+            if (loadJsonManager(framemanager).equals("good")) {
               fill(ccolor);
               text("Good", 23 + x * 40, 52 + i * 30);
-            } else if (loadJson(framemanager).equals("bad")) {
+            } else if (loadJsonManager(framemanager).equals("bad")) {
               fill(ecolor);
               text("Bad", 23 + x * 40, 52 + i * 30);
             }
@@ -114,6 +114,13 @@ void renderManager_Gui()
     fill(bcolor);
   }
 
+  fill(bcolor);
+  ellipse(595, 345, 20, 20);
+  fill(icolor);
+  text(">", 596, 343);
+  fill(acolor);
+  text("Play", 620, 345);
+  
   popStyle();
 }
 
@@ -147,4 +154,9 @@ boolean manager_reloadallpre()
 boolean manager_reloadnewpre() 
 {
   return  (mouseX > 470 && mouseX < 520 && mouseY > 10 && mouseY < 30);
+}
+
+boolean manager_playrender() 
+{
+  return  (mouseX > 580 && mouseX < 630 && mouseY > 335 && mouseY < 360);
 }
