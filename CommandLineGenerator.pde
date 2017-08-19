@@ -2350,7 +2350,14 @@ void endRendersToPlaySelect(File selection)
       write.print('"'+blenderpath+'"'+" -a  -f 24 -s "+'"'+startrender+'"'+" -e "+'"'+endrender+'"');
       write.flush();
       write.close();
-      exec(dataPath("")+File.separator+"tmp"+File.separator+"playrenders.bat");
+      try {
+        String cmd[]= {dataPath("")+File.separator+"tmp"+File.separator+"playrenders.bat"};
+        Process proc = Runtime.getRuntime().exec(cmd);
+        proc.waitFor();
+      } 
+      catch(Exception e) {
+        e.printStackTrace();
+      }
     } else {
       String cmd[] = {terminalpath, "-e", blenderpath+" -a -f 24 -s "+startrender+" -e "+endrender};
       exec(cmd);
@@ -2362,11 +2369,22 @@ void endRendersToPlaySelect(File selection)
       write.print('"'+blenderpath+'"'+" -a "+'"'+startrender+'"');
       write.flush();
       write.close();
-      exec(dataPath("")+File.separator+"tmp"+File.separator+"playrenders.bat");
+      try {
+        String cmd[]= {dataPath("")+File.separator+"tmp"+File.separator+"playrenders.bat"};
+        Process proc = Runtime.getRuntime().exec(cmd);
+        proc.waitFor();
+      } 
+      catch(Exception e) {
+        e.printStackTrace();
+      }
     } else {
       String cmd[] = {terminalpath, "-e", blenderpath+" -a "+startrender};
       exec(cmd);
     }
+  }
+  if (os == "WINDOWS") {
+    File f_bat = new File (dataPath("tmp")+File.separator+"playrenders.bat");
+    f_bat.delete();
   }
   redraw();
 }
