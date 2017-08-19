@@ -267,6 +267,895 @@ void initVarCommandLine (String os)
 }
 
 
+void mouseEventsCommandLine ()
+{
+  if (!selectcolor) {
+    if (terminal_path_()) selectInput("Select Terminal executable:", "terminalSelect", terminalfolder);
+    if (terminal_open_()) {
+      info = "*Opening...";
+      if (os == "WINDOWS") {
+        write = createWriter(dataPath("")+File.separator+"tmp"+File.separator+"cmd.bat");
+        write.println("start ");
+        write.print(terminalpath);
+        write.flush();
+        write.close();
+
+        exec(dataPath("")+File.separator+"tmp"+File.separator+"cmd.bat");
+      } else exec(terminalpath);
+    }
+    if (text_editor_path_()) selectInput("Select Text editor executable:", "texteditorSelect", texteditorfolder);
+    if (text_editor_open_()) {
+      info = "*Opening...";
+      if (os == "WINDOWS") exec(texteditorpath);
+      else {
+        String cmd[] = {terminalpath, "-e", texteditorpath};
+        exec(cmd);
+      }
+    }
+    if (file_manager_path_()) selectInput("Select File Manager executable:", "managerSelect", explorerfolder);
+    if (file_manager_open_()) {
+      info = "*Opening...";
+      exec(managerpath);
+    }
+    if (settings_path_open_()) {
+      info = "*Opening...";
+      String cmd[] = {managerpath, settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)};
+      exec(cmd);
+    }
+    if (blender_path_()) selectInput("Select Blender executable:", "blenderSelect", blenderfolder);
+    if (blender_open_()) {
+      info = "*Opening Blender...";
+      exec(blenderpath);
+    }
+    if (blend_path_()) selectInput("Select your blend file:", "blendSelect", blendfolder);
+    if (blend_open_()) {
+      info = "*Opening "+blendname+" ...";
+      String cmd[] = {blenderpath, blendpath+blendname};
+      exec(cmd);
+    } 
+    if (blend_open_folder_()) {
+      info = "*Opening...";
+      String cmd[] = {managerpath, blendpath};
+      exec(cmd);
+    }
+    if (new_output_path_()) {
+      if (newoutput)  selectOutput("Select render path and image name:", "newOutputSelect", outputfolder);
+      else info = "*No 'New Output' selected.";
+    }
+    if (new_output_open_()) {
+      if (fromblend[output_path_id]) {
+        info = "*path from: '"+blendname;
+      } else {
+        info = "*Opening Renders Output...";
+        String cmd[] = {managerpath, outputpath};
+        exec(cmd);
+      }
+    }
+    if (output_play_()) {
+      selectInput("Select START Render:", "startRendersToPlaySelect", playrendersfolder);
+      info = "*Playing renders...";
+    }
+    if (add_to_multi_()) {
+      if (multiblend_active) {
+        add_tomulti = true;
+        selectOutput("Select a name for .multiblend:", "settingsSave", new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend"));
+      } else {
+        error = true;
+        info = "NO Multiblend proyect available";
+      }
+    }
+    if (save_settings_()) {
+      if  (!fromblend[frame_id] && generatepy && (valoption[frame_id].contains(".") || valoption[frame_id].contains(",") || valoption[frame_id].contains("+") || valoption[frame_id].contains("-") || valoption[frame_id] == "")) {
+        error = true;
+        info = "*Error in "+nameoption[frame_id];
+      } else {
+        settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
+        selectOutput("Settings to write to:", "settingsSave", settingsfolder);
+      }
+    } 
+    if (rename_settings_()) {
+      settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
+      selectOutput("Move and/or Rename: "+settingsname+" -Save changes-", "settingsRename", settingsfolder);
+    }
+
+    if (in_ogl_()) {
+      if (generatepy) {
+        valoption[renders_name_id] = "OGL"+valoption[renders_name_id];
+        if (valoption[engine_id] == "BLENDER_RENDER" || valoption[engine_id] == "CYCLES") oglrenders = !oglrenders;
+      }
+    }
+    if (go_()) {
+      startrenders = true;
+      settingsName();
+      settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
+      selectOutput("Settings to write to:", "settingsSave", settingsfolder);
+    }
+    if (settingsOpen_()) selectInput("Select your .py or commandline file", "settingsOpen", settingsfolder);
+    if (settingsReload_()) {
+      if (settingsname.endsWith(".py")) loadPy(settingspath);
+      else loadCommandline(settingspath);
+      info = "'"+settingsname+ "' Reloaded...";
+    }
+    if (settingsEdit_()) {
+      if (os == "WINDOWS") exec(texteditorpath, settingspath);
+      else {
+        String cmd[] = {terminalpath, "-e", texteditorpath, settingspath};
+        exec(cmd);
+      }
+    }
+
+    if (savelogs_()) savelogs = !savelogs;
+
+    if (generatepy) {
+      if (pxX_()) {
+        fromblend[pxX_id] = !fromblend[pxX_id];
+        if (!fromblend[pxX_id]) {
+          fromblend[pxY_id] = false;
+          fromblend[percentage_id] = false;
+        } else {
+          fromblend[pxY_id] = true;
+          fromblend[percentage_id] = true;
+        }
+      }
+      if (pxY_()) {
+        fromblend[pxY_id] = !fromblend[pxY_id];
+        if (!fromblend[pxY_id]) {
+          fromblend[pxX_id] = false;
+          fromblend[percentage_id] = false;
+        } else {
+          fromblend[pxX_id] = true;
+          fromblend[percentage_id] = true;
+        }
+      }
+      if (percentage_()) fromblend[percentage_id] = !fromblend[percentage_id];
+      if (valoption[engine_id] == "BLENDER_RENDER") {
+        if (anti_aliasing_())  fromblend[anti_aliasing_id] = !fromblend[anti_aliasing_id];
+      }
+      if (tile_x_()) fromblend[tile_x_id] = !fromblend[tile_x_id];
+      if (tile_y_()) fromblend[tile_y_id] = !fromblend[tile_y_id];
+
+      if (placeholder_()) fromblend[placeholder_id] = !fromblend[placeholder_id];
+      if (overwrite_renders_()) fromblend[overwrite_renders_id] = !fromblend[overwrite_renders_id];
+      if (render_cache_()) fromblend[render_cache_id] = !fromblend[render_cache_id];
+
+      if (stamp_()) {
+        fromblend[stamp_id] = !fromblend[stamp_id];
+        fromblend[use_stamp_textsize_id] = !fromblend[use_stamp_textsize_id];
+        fromblend[stamp_background_id] = !fromblend[stamp_background_id];
+        fromblend[stamp_foreground_id] = !fromblend[stamp_foreground_id];
+        fromblend[use_stamp_dlabels_id] = !fromblend[use_stamp_dlabels_id];
+        fromblend[use_stamp_time_id] = !fromblend[use_stamp_time_id];
+        fromblend[use_stamp_camera_id] = !fromblend[use_stamp_camera_id];
+        fromblend[use_stamp_memory_id] = !fromblend[use_stamp_memory_id];
+        fromblend[use_stamp_date_id] = !fromblend[use_stamp_date_id];
+        fromblend[use_stamp_lens_id] = !fromblend[use_stamp_lens_id];
+        fromblend[use_stamp_render_time_id] = !fromblend[use_stamp_render_time_id];
+        fromblend[use_stamp_filename_id] = !fromblend[use_stamp_filename_id];
+        fromblend[use_stamp_frame_id] = !fromblend[use_stamp_frame_id];
+        fromblend[use_stamp_marker_id] = !fromblend[use_stamp_marker_id];
+        fromblend[use_stamp_scene_id] = !fromblend[use_stamp_scene_id];
+        fromblend[use_stamp_sequencer_strip_id] = !fromblend[use_stamp_sequencer_strip_id];
+        fromblend[stamp_note_id] = !fromblend[stamp_note_id];
+        fromblend[stamp_note_text_id] = !fromblend[stamp_note_text_id];
+        fromblend[use_stamp_strip_meta_id] = !fromblend[use_stamp_strip_meta_id];
+      }
+      if (dither_()) {
+        fromblend[dither_id] = !fromblend[dither_id];
+      }
+      if (compositing_()) {
+        fromblend[compositing_id] = !fromblend[compositing_id];
+      }
+      if (compositing_val()) {
+        if (valoption[compositing_id] == "True") {
+          valoption[compositing_id] = "False";
+        } else valoption[compositing_id] = "True";
+      }
+      if (sequencer_()) {
+        fromblend[sequencer_id] = !fromblend[sequencer_id];
+      }
+      if (sequencer_val()) {
+        if (valoption[sequencer_id] == "True") {
+          valoption[sequencer_id] = "False";
+        } else valoption[sequencer_id] = "True";
+      }
+    }
+
+    if (threads_()) fromblend[threads_mode_id] = !fromblend[threads_mode_id];
+    if (engine_()) fromblend[engine_id] = !fromblend[engine_id];
+
+    if (scene_name_()) fromblend[scene_name_id] = !fromblend[scene_name_id];
+    if (add_extension_()) fromblend[add_extension_id] = !fromblend[add_extension_id];
+    if (file_format_()) fromblend[file_format_id] = !fromblend[file_format_id];
+
+    if (frame_start_()) {
+      fromblend[animation_id] = !fromblend[animation_id];
+      fromblend[frame_start_id] = !fromblend[frame_start_id];
+      fromblend[frame_end_id] = !fromblend[frame_end_id];
+      fromblend[frame_step_id] = !fromblend[frame_step_id];
+    }
+    if (frame_end_()) {
+      fromblend[animation_id] = !fromblend[animation_id];
+      fromblend[frame_start_id] = !fromblend[frame_start_id];
+      fromblend[frame_end_id] = !fromblend[frame_end_id];
+      fromblend[frame_step_id] = !fromblend[frame_step_id];
+    }
+    if (frame_step_()) {
+      fromblend[animation_id] = !fromblend[animation_id];
+      fromblend[frame_start_id] = !fromblend[frame_start_id];
+      fromblend[frame_end_id] = !fromblend[frame_end_id];
+      fromblend[frame_step_id] = !fromblend[frame_step_id];
+    }
+    if (animation_()) {
+      fromblend[animation_id] = !fromblend[animation_id];
+      fromblend[frame_start_id] = !fromblend[frame_start_id];
+      fromblend[frame_end_id] = !fromblend[frame_end_id];
+      fromblend[frame_step_id] = !fromblend[frame_step_id];
+      if (!fromblend[animation_id]) fromblend[frame_id] =  true;
+    }
+
+    if (frame_()) {
+      fromblend[frame_id] = !fromblend[frame_id];
+      if (!fromblend[frame_id]) {
+        fromblend[animation_id] = true;
+        fromblend[frame_start_id] = true;
+        fromblend[frame_end_id] = true;
+        fromblend[frame_step_id] = true;
+      }
+    }
+
+    if (generate_py_()) {
+      generatepy = !generatepy;
+      settingsName();
+      settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
+    }
+
+    if (new_output_()) {
+      rendersname = blendname.substring(0, blendname.lastIndexOf("."))+"_####";
+      newoutput = !newoutput;
+      if (newoutput) fromblend[output_path_id] = false;
+      else  fromblend[output_path_id] = true;
+    }
+
+    rangeFix();
+    for (int i = 0; i <  selectoption.length; i++) selectoption[i] = false;
+
+    if (pxX_val()) {
+      if (!fromblend[pxX_id]) {
+        esc = valoption[pxX_id];
+        selectoption[pxX_id] = true;
+        valoption[pxX_id] = "";
+      }
+    }
+    if (pxY_val()) {
+      if (!fromblend[pxY_id]) {
+        esc = valoption[pxY_id];
+        selectoption[pxY_id] = true;
+        valoption[pxY_id] = "";
+      }
+    } 
+    if (percentage_val()) {  
+      if (!fromblend[percentage_id]) {
+        esc = valoption[percentage_id];
+        selectoption[percentage_id] = true;
+        valoption[percentage_id] = "";
+      }
+    } 
+    if (valoption[engine_id] == "BLENDER_RENDER") {
+      if (use_anti_aliasing_()) {      
+        if (!fromblend[anti_aliasing_id]) {
+          esc = valoption[anti_aliasing_id];
+          selectoption[anti_aliasing_id] = true;
+          if (valoption[anti_aliasing_id] == "True") valoption[anti_aliasing_id] = "False";
+          else valoption[anti_aliasing_id] = "True";
+        }
+      }
+      if (anti_aliasing_val()) {      
+        if (!fromblend[anti_aliasing_id]) {
+          esc = valoption[anti_aliasing_samples_id];
+          selectoption[anti_aliasing_samples_id] = true;
+          valoption[anti_aliasing_samples_id] = "";
+        }
+      }
+      if (anti_aliasing_fullsample_val()) {      
+        if (!fromblend[anti_aliasing_id]) {
+          esc = valoption[anti_aliasing_fullsamples_id];
+          if (valoption[anti_aliasing_fullsamples_id] == "True") valoption[anti_aliasing_fullsamples_id] = "False";
+          else valoption[anti_aliasing_fullsamples_id] = "True";
+        }
+      }
+    }
+    if (tile_x_val()) {      
+      if (!fromblend[tile_x_id]) {
+        esc = valoption[tile_x_id];
+        selectoption[tile_x_id] = true;
+        valoption[tile_x_id] = "";
+      }
+    }
+    if (tile_y_val()) {      
+      if (!fromblend[tile_y_id]) {
+        esc = valoption[tile_y_id];
+        selectoption[tile_y_id] = true;
+        valoption[tile_y_id] = "";
+      }
+    }
+    if (threads_mode_()) {       
+      if (!fromblend[threads_mode_id]) {
+        esc = valoption[threads_mode_id];
+        selectoption[threads_mode_id] = true;
+        if (valoption[threads_mode_id] == "AUTO") {
+          valoption[threads_mode_id] = "FIXED";
+        } else {
+          valoption[threads_mode_id] = "AUTO";
+        }
+      }
+    }
+    if (threads_val()) {       
+      if (!fromblend[threads_mode_id]) {
+        if (valoption[threads_mode_id] == "FIXED") {
+          selectoption[threads_id] = true;
+          esc = valoption[threads_id];
+          valoption[threads_id] = "";
+        }
+      }
+    }
+    if (engine_val()) {      
+      if (!fromblend[engine_id]) {
+        esc = valoption[engine_id];
+        val = val + 1;
+        if (val > 3) val = 0;
+        valoption[engine_id] = engines[val];
+      }
+      if (valoption[engine_id] == "BLENDER_EEVEE" || valoption[engine_id] == "BLENDER_CLAY") {
+        oglrenders = true;
+        error = true;
+        info = "*Only Blender 2.80";
+      }
+    }
+    if (engine_cyclessamples_()) { 
+      if (!fromblend[engine_id]) {
+        esc = valoption[engine_cyclessamples_id];
+        if (valoption[engine_cyclessamples_id] == "True") valoption[engine_cyclessamples_id] = "False";
+        else valoption[engine_cyclessamples_id] = "True";
+      }
+    }
+    if (engine_cyclessamples_val()) { 
+      selectoption[engine_cyclessamples_val_id] = true;
+      if (!fromblend[engine_id]) {
+        if (valoption[engine_cyclessamples_id] == "True") {
+          esc = valoption[engine_cyclessamples_val_id];
+          valoption[engine_cyclessamples_val_id] = "";
+        }
+      }
+    }
+
+    if (scene_name_val()) {       
+      if (!fromblend[scene_name_id]) { 
+        esc = valoption[scene_name_id];
+        selectoption[scene_name_id] = true;
+      }
+    }
+    if (placeholder_val()) {      
+      if (!fromblend[placeholder_id]) {
+        esc = valoption[placeholder_id];
+        selectoption[placeholder_id] = true;
+        if (valoption[placeholder_id] == "True") valoption[placeholder_id] = "False";
+        else valoption[placeholder_id] = "True";
+      }
+    }
+    if (overwrite_renders_val()) {       
+      if (!fromblend[overwrite_renders_id]) {
+        esc = valoption[overwrite_renders_id];
+        selectoption[overwrite_renders_id] = true;
+        if (valoption[overwrite_renders_id] == "True") valoption[overwrite_renders_id] = "False";
+        else valoption[overwrite_renders_id] = "True";
+      }
+    }
+    if (render_cache_val()) {      
+      if (!fromblend[render_cache_id]) {
+        esc = valoption[render_cache_id];
+        selectoption[render_cache_id] = true;
+        if (valoption[render_cache_id] == "True") valoption[render_cache_id] = "False";
+        else valoption[render_cache_id] = "True";
+      }
+    }
+    if (add_extension_val()) {      
+      if (!fromblend[add_extension_id]) {
+        esc = valoption[add_extension_id];
+        selectoption[add_extension_id] = true;
+        if (valoption[add_extension_id] == "True") valoption[add_extension_id] = "False";
+        else valoption[add_extension_id] = "True";
+      }
+    }
+    if (file_format_val()) { 
+      if (!fromblend[file_format_id]) {
+        esc = valoption[file_format_id];
+        selectoption[file_format_id] = true;
+        val = val + 1;
+        if (val > 12) val = 0;
+        valoption[file_format_id] = fileformat[val];
+      }
+    }
+    if (!fromblend[file_format_id]) {
+      if (rgb_mode_()) { 
+        if (valoption[file_format_id].equals("PNG")) {
+          val = val + 1;
+          if (val > 2) val = 0;
+          rgbmode = rgbmode_val[val];
+        } else if (valoption[file_format_id].equals("JPEG")) {
+          val = val + 1;
+          if (val > 1) val = 0;
+          rgbmode = rgbmode_val[val];
+        } else if (valoption[file_format_id].equals("TARGA")) {
+          val = val + 1;
+          if (val > 2) val = 0;
+          rgbmode = rgbmode_val[val];
+        } else if (valoption[file_format_id].equals("TARGA_RAW")) {
+          val = val + 1;
+          if (val > 2) val = 0;
+          rgbmode = rgbmode_val[val];
+        } else if (valoption[file_format_id].equals("TIFF")) {
+          val = val + 1;
+          if (val > 2) val = 0;
+          rgbmode = rgbmode_val[val];
+        } else if (valoption[file_format_id].equals("IRIS")) {
+          val = val + 1;
+          if (val > 2) val = 0;
+          rgbmode = rgbmode_val[val];
+        } else if (valoption[file_format_id].equals("BMP")) {
+          val = val + 1;
+          if (val > 1) val = 0;
+          rgbmode = rgbmode_val[val];
+        } else if (valoption[file_format_id].equals("JPEG2000")) {
+          val = val + 1;
+          if (val > 2) val = 0;
+          rgbmode = rgbmode_val[val];
+        } else if (valoption[file_format_id].equals("OPEN_EXR")) {
+          val = val + 1;
+          if (val > 2) val = 0;
+          rgbmode = rgbmode_val[val];
+        } else if (valoption[file_format_id].equals("OPEN_EXR_MULTILAYER")) {
+          val = val + 1;
+          if (val > 2) val = 0;
+          rgbmode = rgbmode_val[val];
+        } else if (valoption[file_format_id].equals("CINEON")) {
+          val = val + 1;
+          if (val > 1) val = 0;
+          rgbmode = rgbmode_val[val];
+        } else if (valoption[file_format_id].equals("DPX")) {
+          val = val + 1;
+          if (val > 2) val = 0;
+          rgbmode = rgbmode_val[val];
+        } else if (valoption[file_format_id].equals("HDR")) {
+          val = val + 1;
+          if (val > 2) val = 0;
+          rgbmode = rgbmode_val[val];
+        }
+      }
+      if (depth_()) { 
+        if (valoption[file_format_id].equals("PNG")) {
+          val = val + 3;
+          if (val > 3) val = 0;
+          depth = depth_val[val];
+        } else if (valoption[file_format_id].equals("TIFF")) {
+          val = val + 3;
+          if (val > 3) val = 0;
+          depth = depth_val[val];
+        } else if (valoption[file_format_id].equals("JPEG2000")) {
+          val = val + 1;
+          if (val == 1) val = 2;
+          if (val > 3) val = 0;
+          depth = depth_val[val];
+        } else if (valoption[file_format_id].equals("OPEN_EXR")) {
+          val = val + 1;
+          if (val == 0 || val == 1 || val == 2) val = 3;
+          if (val > 4) val = 3;
+          depth = depth_val[val];
+        } else if (valoption[file_format_id].equals("OPEN_EXR_MULTILAYER")) {
+          val = val + 1;
+          if (val == 0 || val == 1 || val == 2) val = 3;
+          if (val > 4) val = 3;
+          depth = depth_val[val];
+        } else if (valoption[file_format_id].equals("DPX")) {
+          val = val + 1;
+          if (val > 3) val = 0;
+          depth = depth_val[val];
+        }
+      }
+      if (compresion_()) {
+        selectoption[compresion_id] = true;
+        if (valoption[file_format_id].equals("PNG")) {
+          esc = compresion;
+          compresion = "";
+        } else if (valoption[file_format_id].equals("JPEG")) {
+          esc = quality;
+          quality = "";
+        } else if (valoption[file_format_id].equals("OPEN_EXR")) {
+          val = val + 1;
+          if (val > 7) val = 0;
+          openexcompresion = openexrcodec[val];
+        } else if (valoption[file_format_id].equals("OPEN_EXR_MULTILAYER")) {
+          val = val + 1;
+          if (val > 7) val = 0;
+          openexcompresion = openexrcodec[val];
+        } else if (valoption[file_format_id].equals("TIFF")) {
+          val = val + 1;
+          if (val > 3) val = 0;
+          tiffcompresion = tiffcomp[val];
+        } else if (valoption[file_format_id].equals("JPEG2000")) {
+          esc = quality;
+          quality = "";
+        }
+      }
+      if (jpg2codec_()) {
+        if (valoption[file_format_id].equals("JPEG2000")) {
+          val = val + 1;
+          if (val > 1) val = 0;
+          jpg2codec = jpg2codec_val[val];
+        }
+        if (valoption[file_format_id].equals("OPEN_EXR")) {
+          if (openexrpreview == "True") openexrpreview = "False";
+          else openexrpreview = "True";
+        }          
+        if (valoption[file_format_id].equals("DPX")) {
+          if (dpxlog == "True") dpxlog = "False";
+          else dpxlog = "True";
+        }
+      }
+      if (jpg2cinema_()) {
+        if (valoption[file_format_id].equals("JPEG2000")) {
+          if (jpg2cinema == "True") jpg2cinema = "False";
+          else jpg2cinema = "True";
+        }
+      }
+      if (jpg2cinema48_()) {
+        if (valoption[file_format_id].equals("JPEG2000")) {
+          if (jpg2cinema48 == "True") jpg2cinema48 = "False";
+          else jpg2cinema48 = "True";
+        }
+        if (valoption[file_format_id].equals("OPEN_EXR")) {
+          if (openexrzbuffer == "True") openexrzbuffer = "False";
+          else openexrzbuffer = "True";
+        }
+      }
+      if (jpg2ycc_()) {
+        if (valoption[file_format_id].equals("JPEG2000")) {
+          if (jpg2ycc == "True") jpg2ycc = "False";
+          else jpg2ycc = "True";
+        }
+      }
+    }
+
+    if (stamp_var()) {       
+      if (!fromblend[stamp_id]) {
+        esc = valoption[stamp_id];
+        selectoption[stamp_id] = true;
+        if (valoption[stamp_id] == "True") valoption[stamp_id] = "False";
+        else valoption[stamp_id] = "True";
+      }
+    }
+    if (stamp_stripmeta_()) {       
+      if (!fromblend[use_stamp_strip_meta_id]) {
+        esc = valoption[use_stamp_strip_meta_id];
+        selectoption[use_stamp_strip_meta_id] = true;
+        if (valoption[use_stamp_strip_meta_id] == "True") valoption[use_stamp_strip_meta_id] = "False";
+        else valoption[use_stamp_strip_meta_id] = "True";
+      }
+    }
+    if (stamp_dlabels_()) {       
+      if (!fromblend[use_stamp_dlabels_id]) {
+        esc = valoption[use_stamp_dlabels_id];
+        selectoption[use_stamp_dlabels_id] = true;
+        if (valoption[use_stamp_dlabels_id] == "True") valoption[use_stamp_dlabels_id] = "False";
+        else valoption[use_stamp_dlabels_id] = "True";
+      }
+    }
+    if (stamp_time_()) {       
+      if (!fromblend[use_stamp_time_id]) {
+        esc = valoption[use_stamp_time_id];
+        selectoption[use_stamp_time_id] = true;
+        if (valoption[use_stamp_time_id] == "True") valoption[use_stamp_time_id] = "False";
+        else valoption[use_stamp_time_id] = "True";
+      }
+    }
+    if (stamp_camera_()) {       
+      if (!fromblend[use_stamp_camera_id]) {
+        esc = valoption[use_stamp_camera_id];
+        selectoption[use_stamp_camera_id] = true;
+        if (valoption[use_stamp_camera_id] == "True") valoption[use_stamp_camera_id] = "False";
+        else valoption[use_stamp_camera_id] = "True";
+      }
+    }
+    if (stamp_memory_()) {       
+      if (!fromblend[use_stamp_memory_id]) {
+        esc = valoption[use_stamp_memory_id];
+        selectoption[use_stamp_memory_id] = true;
+        if (valoption[use_stamp_memory_id] == "True") valoption[use_stamp_memory_id] = "False";
+        else valoption[use_stamp_memory_id] = "True";
+      }
+    }
+    if (stamp_date_()) {       
+      if (!fromblend[use_stamp_date_id]) {
+        esc = valoption[use_stamp_date_id];
+        selectoption[use_stamp_date_id] = true;
+        if (valoption[use_stamp_date_id] == "True") valoption[use_stamp_date_id] = "False";
+        else valoption[use_stamp_date_id] = "True";
+      }
+    }
+    if (stamp_lens_()) {       
+      if (!fromblend[use_stamp_lens_id]) {
+        esc = valoption[use_stamp_lens_id];
+        selectoption[use_stamp_lens_id] = true;
+        if (valoption[use_stamp_lens_id] == "True") valoption[use_stamp_lens_id] = "False";
+        else valoption[use_stamp_lens_id] = "True";
+      }
+    }
+    if (stamp_rendertime_()) {       
+      if (!fromblend[use_stamp_render_time_id]) {
+        esc = valoption[use_stamp_render_time_id];
+        selectoption[use_stamp_render_time_id] = true;
+        if (valoption[use_stamp_render_time_id] == "True") valoption[use_stamp_render_time_id] = "False";
+        else valoption[use_stamp_render_time_id] = "True";
+      }
+    }
+    if (stamp_filename_()) {       
+      if (!fromblend[use_stamp_filename_id]) {
+        esc = valoption[use_stamp_filename_id];
+        selectoption[use_stamp_filename_id] = true;
+        if (valoption[use_stamp_filename_id] == "True") valoption[use_stamp_filename_id] = "False";
+        else valoption[use_stamp_filename_id] = "True";
+      }
+    }
+    if (stamp_frame_()) {       
+      if (!fromblend[use_stamp_frame_id]) {
+        esc = valoption[use_stamp_frame_id];
+        selectoption[use_stamp_frame_id] = true;
+        if (valoption[use_stamp_frame_id] == "True") valoption[use_stamp_frame_id] = "False";
+        else valoption[use_stamp_frame_id] = "True";
+      }
+    }
+    if (stamp_marker_()) {       
+      if (!fromblend[use_stamp_marker_id]) {
+        esc = valoption[use_stamp_marker_id];
+        selectoption[use_stamp_marker_id] = true;
+        if (valoption[use_stamp_marker_id] == "True") valoption[use_stamp_marker_id] = "False";
+        else valoption[use_stamp_marker_id] = "True";
+      }
+    }
+    if (stamp_scene_()) {       
+      if (!fromblend[use_stamp_scene_id]) {
+        esc = valoption[use_stamp_scene_id];
+        selectoption[use_stamp_scene_id] = true;
+        if (valoption[use_stamp_scene_id] == "True") valoption[use_stamp_scene_id] = "False";
+        else valoption[use_stamp_scene_id] = "True";
+      }
+    }
+    if (stamp_seqstrip_()) {       
+      if (!fromblend[use_stamp_sequencer_strip_id]) {
+        esc = valoption[use_stamp_sequencer_strip_id];
+        selectoption[use_stamp_sequencer_strip_id] = true;
+        if (valoption[use_stamp_sequencer_strip_id] == "True") valoption[use_stamp_sequencer_strip_id] = "False";
+        else valoption[use_stamp_sequencer_strip_id] = "True";
+      }
+    }
+    if (stamp_stampnote_()) {       
+      if (!fromblend[stamp_note_id]) {
+        esc = valoption[stamp_note_id];
+        selectoption[stamp_note_id] = true;
+        if (valoption[stamp_note_id] == "True") valoption[stamp_note_id] = "False";
+        else valoption[stamp_note_id] = "True";
+      }
+    }
+    if (stamp_stampnote_val()) {       
+      if (!fromblend[stamp_note_id]) {
+        esc = valoption[stamp_note_text_id];
+        selectoption[stamp_note_text_id] = true;
+        valoption[stamp_note_text_id] = "";
+      }
+    }
+
+    if (frame_start_var()) {      
+      if (!fromblend[frame_start_id]) {
+        esc = valoption[frame_start_id];
+        selectoption[frame_start_id] = true;
+        valoption[frame_start_id] = "";
+      }
+    }
+    if (frame_end_var()) {        
+      if (!fromblend[frame_end_id]) {
+        esc = valoption[frame_end_id];
+        selectoption[frame_end_id] = true;
+        valoption[frame_end_id] = "";
+      }
+    }
+    if (frame_step_var()) {        
+      if (!fromblend[frame_step_id]) {
+        esc = valoption[frame_step_id];
+        selectoption[frame_step_id] = true;
+        valoption[frame_step_id] = "";
+      }
+    }
+    if (animation_()) { 
+      if (!fromblend[animation_id]) {
+        esc = valoption[animation_id];
+        selectoption[animation_id] = true;
+      }
+    }
+    if (frame_var()) {      
+      if (!fromblend[frame_id]) {
+        esc = valoption[frame_id];
+        selectoption[frame_id] = true;
+      }
+    }
+    if (renders_name_()) {  
+      if (newoutput)  selectOutput("Select a new name or path for renders:", "newOutputSelect", outputfolder);
+      else info = "*No 'New Output' selected.";
+    }
+    if (dither_val()) {
+      esc = valoption[dither_id];
+      selectoption[dither_id] = true;
+      valoption[dither_id] = "0";
+    }
+  }
+
+  if (selectcolor) {
+    if (select_color_val()) {
+      String r;
+      String g;
+      String b;
+      String a;
+      int col = constrain(floor(map(mouseY, 105, 145, 0, 4)), 0, 4);
+      int val = constrain(floor(map(mouseX, 50, 564, 0, 255)), 0, 255);
+      if (fgcolor) {
+        fgrgba[col] = val;
+        r = str(map(fgrgba[0], 0, 255, 0, 1));
+        g = str(map(fgrgba[1], 0, 255, 0, 1));
+        b = str(map(fgrgba[2], 0, 255, 0, 1));
+        a = str(map(fgrgba[3], 0, 255, 0, 1));
+        valoption[stamp_foreground_id] = "("+r+","+g+","+b+","+a+")";
+      } else if (bgcolor) {
+        bgrgba[col] = val;
+        r = str(map(bgrgba[0], 0, 255, 0, 1));
+        g = str(map(bgrgba[1], 0, 255, 0, 1));
+        b = str(map(bgrgba[2], 0, 255, 0, 1));
+        a = str(map(bgrgba[3], 0, 255, 0, 1));
+        valoption[stamp_background_id] = "("+r+","+g+","+b+","+a+")";
+      }
+    }
+    if (!select_color_()) {
+      selectcolor = false;
+      fgcolor = false;
+      bgcolor = false;
+    }
+  }
+  if (stamp_fg_()) {      
+    if (!fromblend[stamp_id]) {
+      selectcolor = true;
+      fgcolor = true;
+      selectoption[stamp_foreground_id] = true;
+    }
+  }
+  if (stamp_bg_()) {      
+    if (!fromblend[stamp_id]) {
+      selectcolor = true;
+      bgcolor = true;
+      selectoption[stamp_background_id] = true;
+    }
+  }
+  if (ssh_()) ssh = !ssh;
+  if (ssh_user_()) {
+    selectoption[sshuser_id] = true;
+    sshuser = "";
+  }
+  if (ssh_ip_()) {
+    selectoption[sship_id] = true;
+    sship = "";
+  }
+}
+
+
+void keyEventsCommandLine (String keypress)
+{
+  if (keypress == "number") {
+    if (selectoption[pxX_id]) if (valoption[pxX_id].length() < 5) valoption[pxX_id] += key;
+    if (selectoption[pxY_id]) if (valoption[pxY_id].length() < 5) valoption[pxY_id] += key;
+    if (selectoption[percentage_id]) if (valoption[percentage_id].length() < 3) valoption[percentage_id] += key;
+    if (selectoption[anti_aliasing_samples_id] && valoption[anti_aliasing_id] == "True") if (valoption[anti_aliasing_samples_id].length() < 2) valoption[anti_aliasing_samples_id] += key;
+    if (selectoption[tile_x_id]) if (valoption[tile_x_id].length() < 5) valoption[tile_x_id] += key;
+    if (selectoption[tile_y_id]) if (valoption[tile_y_id].length() < 5) valoption[tile_y_id] += key;
+    if (selectoption[threads_id]) if (valoption[threads_id].length() < 2) valoption[threads_id] += key;
+    if (selectoption[engine_cyclessamples_val_id]) if (valoption[engine_cyclessamples_val_id].length() < 9) valoption[engine_cyclessamples_val_id] += key;
+
+    if (selectoption[compresion_id]) {
+      if (valoption[file_format_id] == "PNG") {
+        if (compresion.length() < 3) compresion += key;
+      } else if (valoption[file_format_id] == "JPEG") {
+        if (quality.length() < 3) quality += key;
+      } else if (valoption[file_format_id] == "JPEG2000") {
+        if (quality.length() < 3) quality += key;
+      }
+    }
+
+    if (selectoption[dither_id]) if (valoption[dither_id].length() < 5) valoption[dither_id] += key;
+
+    if (selectoption[frame_start_id]) if (valoption[frame_start_id].length() < 6) valoption[frame_start_id] += key;
+    if (selectoption[frame_end_id]) if (valoption[frame_end_id].length() < 6) valoption[frame_end_id] += key;
+    if (selectoption[frame_step_id]) if (valoption[frame_step_id].length() < 3) valoption[frame_step_id] += key;
+
+    if (selectoption[frame_id]) {
+      if (valoption[frame_id].length() < 100) valoption[frame_id] += key;
+    }
+  } else if (keypress == "BACKSPACE") {
+    if (selectoption[pxX_id]) if (valoption[pxX_id].length() > 0) valoption[pxX_id] = valoption[pxX_id].substring(0, valoption[pxX_id].length() - 1);
+    if (selectoption[pxY_id]) if (valoption[pxY_id].length() > 0) valoption[pxY_id] = valoption[pxY_id].substring(0, valoption[pxY_id].length() - 1);
+    if (selectoption[percentage_id]) if (valoption[percentage_id].length() > 0) valoption[percentage_id] = valoption[percentage_id].substring(0, valoption[percentage_id].length() - 1);
+    if (selectoption[anti_aliasing_samples_id]) if (valoption[anti_aliasing_samples_id].length() > 0) valoption[anti_aliasing_samples_id] = valoption[anti_aliasing_samples_id].substring(0, valoption[anti_aliasing_samples_id].length() - 1);
+    if (selectoption[tile_x_id]) if (valoption[tile_x_id].length() > 0) valoption[tile_x_id] = valoption[tile_x_id].substring(0, valoption[tile_x_id].length() - 1);
+    if (selectoption[tile_y_id]) if (valoption[tile_y_id].length() > 0) valoption[tile_y_id] = valoption[tile_y_id].substring(0, valoption[tile_y_id].length() - 1);
+    if (selectoption[threads_id]) if (valoption[threads_id].length() > 0) valoption[threads_id] = valoption[threads_id].substring(0, valoption[threads_id].length() - 1);
+    if (selectoption[engine_cyclessamples_val_id]) if (valoption[engine_cyclessamples_val_id].length() > 0) valoption[engine_cyclessamples_val_id] = valoption[engine_cyclessamples_val_id].substring(0, valoption[engine_cyclessamples_val_id].length() - 1);
+
+    if (selectoption[file_format_id]) {
+      if (valoption[file_format_id] == "PNG") {
+        if (compresion.length() > 0) compresion = compresion.substring(0, compresion.length() - 1);
+      } else if (valoption[file_format_id] == "JPEG") {
+        if (quality.length() > 0) quality = quality.substring(0, quality.length() - 1);
+      } else if (valoption[file_format_id] == "JPEG2000") {
+        if (quality.length() > 0) quality = quality.substring(0, quality.length() - 1);
+      }
+    }
+
+    if (selectoption[dither_id]) if (valoption[dither_id].length() > 0) valoption[dither_id] = valoption[dither_id].substring(0, valoption[dither_id].length() - 1);
+
+    if (selectoption[scene_name_id]) if (scenename.length() > 0) scenename = scenename.substring(0, scenename.length() - 1);
+
+    if (selectoption[stamp_note_text_id]) if (valoption[stamp_note_text_id].length() > 0) valoption[stamp_note_text_id] = valoption[stamp_note_text_id].substring(0, valoption[stamp_note_text_id].length() - 1);
+
+    if (selectoption[frame_start_id]) if (valoption[frame_start_id].length() > 0) valoption[frame_start_id] = valoption[frame_start_id].substring(0, valoption[frame_start_id].length() - 1);
+    if (selectoption[frame_end_id]) if (valoption[frame_end_id].length() > 0) valoption[frame_end_id] = valoption[frame_end_id].substring(0, valoption[frame_end_id].length() - 1);
+    if (selectoption[frame_step_id]) if (valoption[frame_step_id].length() > 0) valoption[frame_step_id] = valoption[frame_step_id].substring(0, valoption[frame_step_id].length() - 1);
+
+    if (selectoption[frame_id]) {
+      if (valoption[frame_id].length() > 0) valoption[frame_id] = valoption[frame_id].substring(0, valoption[frame_id].length() - 1);
+      if (valoption[frame_id].length() == 0) valoption[frame_id] = "0";
+    }
+    if (selectoption[sshuser_id]) if (sshuser.length() > 0) sshuser = sshuser.substring(0, sshuser.length() - 1);
+    if (selectoption[sship_id]) if (sship.length() > 0) sship = sship.substring(0, sship.length() - 1);
+  } else if (keypress == "ENTER") {
+    for (int i = 0; i < selectoption.length; i++) selectoption[i] = false;
+  } else if (keypress == "27") {
+    if (selectoption[renders_name_id]) rendersname = esc;
+    for (int i = 0; i < selectoption.length; i++) {
+      if (selectoption[i]) valoption[i] = esc;
+    }
+    for (int i = 0; i < selectoption.length; i++) selectoption[i] = false;
+  } else if (keypress == "CODED") {
+
+    if (selectoption[scene_name_id]) scenename += key;
+
+    if (selectoption[stamp_note_text_id]) valoption[stamp_note_text_id] += key;
+
+    if (selectoption[dither_id]) {
+      if (key==46) valoption[dither_id] += ".";
+    }
+
+    if (selectoption[frame_id] && !generatepy) {
+      if (key==32) valoption[frame_id] += ",";
+
+      if (key==44) valoption[frame_id] += ",";
+
+      if (key==46) valoption[frame_id] += ".";
+
+      if (keyCode==107) valoption[frame_id] += "+";
+
+      if (keyCode==109) valoption[frame_id] += "-";
+    }
+
+    if (selectoption[sshuser_id]) if (sshuser.length() < 10) sshuser += key;
+    if (selectoption[sship_id]) if (sship.length() < 10) sship += key;
+  }
+}
+
+
 void settingsOpen(File selection) 
 {
   if (selection != null) {
@@ -1440,7 +2329,6 @@ void newOutputSelect(File selection)
   redraw();
 }
 
-
 void startRendersToPlaySelect(File selection) 
 {
   if (selection != null) {
@@ -1575,893 +2463,4 @@ void changeforblend()
   }
   if (allfromblend) write.println("- All render options from "+blendname);
   else  write.println("- Others from "+blendname);
-}
-
-
-void mouseEventsCommandLine ()
-{
-  if (!selectcolor) {
-    if (terminal_path_()) selectInput("Select Terminal executable:", "terminalSelect", terminalfolder);
-    if (terminal_open_()) {
-      info = "*Opening...";
-      if (os == "WINDOWS") {
-        write = createWriter(dataPath("")+File.separator+"tmp"+File.separator+"cmd.bat");
-        write.println("start ");
-        write.print(terminalpath);
-        write.flush();
-        write.close();
-
-        exec(dataPath("")+File.separator+"tmp"+File.separator+"cmd.bat");
-      } else exec(terminalpath);
-    }
-    if (text_editor_path_()) selectInput("Select Text editor executable:", "texteditorSelect", texteditorfolder);
-    if (text_editor_open_()) {
-      info = "*Opening...";
-      if (os == "WINDOWS") exec(texteditorpath);
-      else {
-        String cmd[] = {terminalpath, "-e", texteditorpath};
-        exec(cmd);
-      }
-    }
-    if (file_manager_path_()) selectInput("Select File Manager executable:", "managerSelect", explorerfolder);
-    if (file_manager_open_()) {
-      info = "*Opening...";
-      exec(managerpath);
-    }
-    if (settings_path_open_()) {
-      info = "*Opening...";
-      String cmd[] = {managerpath, settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)};
-      exec(cmd);
-    }
-    if (blender_path_()) selectInput("Select Blender executable:", "blenderSelect", blenderfolder);
-    if (blender_open_()) {
-      info = "*Opening Blender...";
-      exec(blenderpath);
-    }
-    if (blend_path_()) selectInput("Select your blend file:", "blendSelect", blendfolder);
-    if (blend_open_()) {
-      info = "*Opening "+blendname+" ...";
-      String cmd[] = {blenderpath, blendpath+blendname};
-      exec(cmd);
-    } 
-    if (blend_open_folder_()) {
-      info = "*Opening...";
-      String cmd[] = {managerpath, blendpath};
-      exec(cmd);
-    }
-    if (new_output_path_()) {
-      if (newoutput)  selectOutput("Select render path and image name:", "newOutputSelect", outputfolder);
-      else info = "*No 'New Output' selected.";
-    }
-    if (new_output_open_()) {
-      if (fromblend[output_path_id]) {
-        info = "*path from: '"+blendname;
-      } else {
-        info = "*Opening Renders Output...";
-        String cmd[] = {managerpath, outputpath};
-        exec(cmd);
-      }
-    }
-    if (output_play_()) {
-      selectInput("Select START Render:", "startRendersToPlaySelect", playrendersfolder);
-      info = "*Playing renders...";
-    }
-    if (add_to_multi_()) {
-      if (multiblend_active) {
-        add_tomulti = true;
-        selectOutput("Select a name for .multiblend:", "settingsSave", new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend"));
-      } else {
-        error = true;
-        info = "NO Multiblend proyect available";
-      }
-    }
-    if (save_settings_()) {
-      if  (!fromblend[frame_id] && generatepy && (valoption[frame_id].contains(".") || valoption[frame_id].contains(",") || valoption[frame_id].contains("+") || valoption[frame_id].contains("-") || valoption[frame_id] == "")) {
-        error = true;
-        info = "*Error in "+nameoption[frame_id];
-      } else {
-        settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
-        selectOutput("Settings to write to:", "settingsSave", settingsfolder);
-      }
-    } 
-    if (rename_settings_()) {
-      settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
-      selectOutput("Move and/or Rename: "+settingsname+" -Save changes-", "settingsRename", settingsfolder);
-    }
-
-    if (in_ogl_()) {
-      if (generatepy) {
-        valoption[renders_name_id] = "OGL"+valoption[renders_name_id];
-        if (valoption[engine_id] == "BLENDER_RENDER" || valoption[engine_id] == "CYCLES") oglrenders = !oglrenders;
-      }
-    }
-    if (go_()) {
-      startrenders = true;
-      settingsName();
-      settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
-      selectOutput("Settings to write to:", "settingsSave", settingsfolder);
-    }
-    if (settingsOpen_()) selectInput("Select your .py or commandline file", "settingsOpen", settingsfolder);
-    if (settingsReload_()) {
-      if (settingsname.endsWith(".py")) loadPy(settingspath);
-      else loadCommandline(settingspath);
-      info = "'"+settingsname+ "' Reloaded...";
-    }
-    if (settingsEdit_()) {
-      if (os == "WINDOWS") exec(texteditorpath, settingspath);
-      else {
-        String cmd[] = {terminalpath, "-e", texteditorpath, settingspath};
-        exec(cmd);
-      }
-    }
-
-    if (savelogs_()) savelogs = !savelogs;
-
-    if (generatepy) {
-      if (pxX_()) {
-        fromblend[pxX_id] = !fromblend[pxX_id];
-        if (!fromblend[pxX_id]) {
-          fromblend[pxY_id] = false;
-          fromblend[percentage_id] = false;
-        } else {
-          fromblend[pxY_id] = true;
-          fromblend[percentage_id] = true;
-        }
-      }
-      if (pxY_()) {
-        fromblend[pxY_id] = !fromblend[pxY_id];
-        if (!fromblend[pxY_id]) {
-          fromblend[pxX_id] = false;
-          fromblend[percentage_id] = false;
-        } else {
-          fromblend[pxX_id] = true;
-          fromblend[percentage_id] = true;
-        }
-      }
-      if (percentage_()) fromblend[percentage_id] = !fromblend[percentage_id];
-      if (valoption[engine_id] == "BLENDER_RENDER") {
-        if (anti_aliasing_())  fromblend[anti_aliasing_id] = !fromblend[anti_aliasing_id];
-      }
-      if (tile_x_()) fromblend[tile_x_id] = !fromblend[tile_x_id];
-      if (tile_y_()) fromblend[tile_y_id] = !fromblend[tile_y_id];
-
-      if (placeholder_()) fromblend[placeholder_id] = !fromblend[placeholder_id];
-      if (overwrite_renders_()) fromblend[overwrite_renders_id] = !fromblend[overwrite_renders_id];
-      if (render_cache_()) fromblend[render_cache_id] = !fromblend[render_cache_id];
-
-      if (stamp_()) {
-        fromblend[stamp_id] = !fromblend[stamp_id];
-        fromblend[use_stamp_textsize_id] = !fromblend[use_stamp_textsize_id];
-        fromblend[stamp_background_id] = !fromblend[stamp_background_id];
-        fromblend[stamp_foreground_id] = !fromblend[stamp_foreground_id];
-        fromblend[use_stamp_dlabels_id] = !fromblend[use_stamp_dlabels_id];
-        fromblend[use_stamp_time_id] = !fromblend[use_stamp_time_id];
-        fromblend[use_stamp_camera_id] = !fromblend[use_stamp_camera_id];
-        fromblend[use_stamp_memory_id] = !fromblend[use_stamp_memory_id];
-        fromblend[use_stamp_date_id] = !fromblend[use_stamp_date_id];
-        fromblend[use_stamp_lens_id] = !fromblend[use_stamp_lens_id];
-        fromblend[use_stamp_render_time_id] = !fromblend[use_stamp_render_time_id];
-        fromblend[use_stamp_filename_id] = !fromblend[use_stamp_filename_id];
-        fromblend[use_stamp_frame_id] = !fromblend[use_stamp_frame_id];
-        fromblend[use_stamp_marker_id] = !fromblend[use_stamp_marker_id];
-        fromblend[use_stamp_scene_id] = !fromblend[use_stamp_scene_id];
-        fromblend[use_stamp_sequencer_strip_id] = !fromblend[use_stamp_sequencer_strip_id];
-        fromblend[stamp_note_id] = !fromblend[stamp_note_id];
-        fromblend[stamp_note_text_id] = !fromblend[stamp_note_text_id];
-        fromblend[use_stamp_strip_meta_id] = !fromblend[use_stamp_strip_meta_id];
-      }
-      if (dither_()) {
-        fromblend[dither_id] = !fromblend[dither_id];
-      }
-      if (compositing_()) {
-        fromblend[compositing_id] = !fromblend[compositing_id];
-      }
-      if (compositing_val()) {
-        if (valoption[compositing_id] == "True") {
-          valoption[compositing_id] = "False";
-        } else valoption[compositing_id] = "True";
-      }
-      if (sequencer_()) {
-        fromblend[sequencer_id] = !fromblend[sequencer_id];
-      }
-      if (sequencer_val()) {
-        if (valoption[sequencer_id] == "True") {
-          valoption[sequencer_id] = "False";
-        } else valoption[sequencer_id] = "True";
-      }
-    }
-
-    if (threads_()) fromblend[threads_mode_id] = !fromblend[threads_mode_id];
-    if (engine_()) fromblend[engine_id] = !fromblend[engine_id];
-
-    if (scene_name_()) fromblend[scene_name_id] = !fromblend[scene_name_id];
-    if (add_extension_()) fromblend[add_extension_id] = !fromblend[add_extension_id];
-    if (file_format_()) fromblend[file_format_id] = !fromblend[file_format_id];
-
-    if (frame_start_()) {
-      fromblend[animation_id] = !fromblend[animation_id];
-      fromblend[frame_start_id] = !fromblend[frame_start_id];
-      fromblend[frame_end_id] = !fromblend[frame_end_id];
-      fromblend[frame_step_id] = !fromblend[frame_step_id];
-    }
-    if (frame_end_()) {
-      fromblend[animation_id] = !fromblend[animation_id];
-      fromblend[frame_start_id] = !fromblend[frame_start_id];
-      fromblend[frame_end_id] = !fromblend[frame_end_id];
-      fromblend[frame_step_id] = !fromblend[frame_step_id];
-    }
-    if (frame_step_()) {
-      fromblend[animation_id] = !fromblend[animation_id];
-      fromblend[frame_start_id] = !fromblend[frame_start_id];
-      fromblend[frame_end_id] = !fromblend[frame_end_id];
-      fromblend[frame_step_id] = !fromblend[frame_step_id];
-    }
-    if (animation_()) {
-      fromblend[animation_id] = !fromblend[animation_id];
-      fromblend[frame_start_id] = !fromblend[frame_start_id];
-      fromblend[frame_end_id] = !fromblend[frame_end_id];
-      fromblend[frame_step_id] = !fromblend[frame_step_id];
-      if (!fromblend[animation_id]) fromblend[frame_id] =  true;
-    }
-
-    if (frame_()) {
-      fromblend[frame_id] = !fromblend[frame_id];
-      if (!fromblend[frame_id]) {
-        fromblend[animation_id] = true;
-        fromblend[frame_start_id] = true;
-        fromblend[frame_end_id] = true;
-        fromblend[frame_step_id] = true;
-      }
-    }
-
-    if (generate_py_()) {
-      generatepy = !generatepy;
-      settingsName();
-      settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
-    }
-
-    if (new_output_()) {
-      rendersname = blendname.substring(0, blendname.lastIndexOf("."))+"_####";
-      newoutput = !newoutput;
-      if (newoutput) fromblend[output_path_id] = false;
-      else  fromblend[output_path_id] = true;
-    }
-
-    rangeFix();
-    for (int i = 0; i <  selectoption.length; i++) selectoption[i] = false;
-
-    if (pxX_val()) {
-      if (!fromblend[pxX_id]) {
-        esc = valoption[pxX_id];
-        selectoption[pxX_id] = true;
-        valoption[pxX_id] = "";
-      }
-    }
-    if (pxY_val()) {
-      if (!fromblend[pxY_id]) {
-        esc = valoption[pxY_id];
-        selectoption[pxY_id] = true;
-        valoption[pxY_id] = "";
-      }
-    } 
-    if (percentage_val()) {  
-      if (!fromblend[percentage_id]) {
-        esc = valoption[percentage_id];
-        selectoption[percentage_id] = true;
-        valoption[percentage_id] = "";
-      }
-    } 
-    if (valoption[engine_id] == "BLENDER_RENDER") {
-      if (use_anti_aliasing_()) {      
-        if (!fromblend[anti_aliasing_id]) {
-          esc = valoption[anti_aliasing_id];
-          selectoption[anti_aliasing_id] = true;
-          if (valoption[anti_aliasing_id] == "True") valoption[anti_aliasing_id] = "False";
-          else valoption[anti_aliasing_id] = "True";
-        }
-      }
-      if (anti_aliasing_val()) {      
-        if (!fromblend[anti_aliasing_id]) {
-          esc = valoption[anti_aliasing_samples_id];
-          selectoption[anti_aliasing_samples_id] = true;
-          valoption[anti_aliasing_samples_id] = "";
-        }
-      }
-      if (anti_aliasing_fullsample_val()) {      
-        if (!fromblend[anti_aliasing_id]) {
-          esc = valoption[anti_aliasing_fullsamples_id];
-          if (valoption[anti_aliasing_fullsamples_id] == "True") valoption[anti_aliasing_fullsamples_id] = "False";
-          else valoption[anti_aliasing_fullsamples_id] = "True";
-        }
-      }
-    }
-    if (tile_x_val()) {      
-      if (!fromblend[tile_x_id]) {
-        esc = valoption[tile_x_id];
-        selectoption[tile_x_id] = true;
-        valoption[tile_x_id] = "";
-      }
-    }
-    if (tile_y_val()) {      
-      if (!fromblend[tile_y_id]) {
-        esc = valoption[tile_y_id];
-        selectoption[tile_y_id] = true;
-        valoption[tile_y_id] = "";
-      }
-    }
-    if (threads_mode_()) {       
-      if (!fromblend[threads_mode_id]) {
-        esc = valoption[threads_mode_id];
-        selectoption[threads_mode_id] = true;
-        if (valoption[threads_mode_id] == "AUTO") {
-          valoption[threads_mode_id] = "FIXED";
-        } else {
-          valoption[threads_mode_id] = "AUTO";
-        }
-      }
-    }
-    if (threads_val()) {       
-      if (!fromblend[threads_mode_id]) {
-        if (valoption[threads_mode_id] == "FIXED") {
-          selectoption[threads_id] = true;
-          esc = valoption[threads_id];
-          valoption[threads_id] = "";
-        }
-      }
-    }
-    if (engine_val()) {      
-      if (!fromblend[engine_id]) {
-        esc = valoption[engine_id];
-        val = val + 1;
-        if (val > 3) val = 0;
-        valoption[engine_id] = engines[val];
-      }
-      if (valoption[engine_id] == "BLENDER_EEVEE" || valoption[engine_id] == "BLENDER_CLAY") {
-        oglrenders = true;
-        error = true;
-        info = "*Only Blender 2.80";
-      }
-    }
-    if (engine_cyclessamples_()) { 
-      if (!fromblend[engine_id]) {
-        esc = valoption[engine_cyclessamples_id];
-        if (valoption[engine_cyclessamples_id] == "True") valoption[engine_cyclessamples_id] = "False";
-        else valoption[engine_cyclessamples_id] = "True";
-      }
-    }
-    if (engine_cyclessamples_val()) { 
-      selectoption[engine_cyclessamples_val_id] = true;
-      if (!fromblend[engine_id]) {
-        if (valoption[engine_cyclessamples_id] == "True") {
-          esc = valoption[engine_cyclessamples_val_id];
-          valoption[engine_cyclessamples_val_id] = "";
-        }
-      }
-    }
-
-    if (scene_name_val()) {       
-      if (!fromblend[scene_name_id]) { 
-        esc = valoption[scene_name_id];
-        selectoption[scene_name_id] = true;
-      }
-    }
-    if (placeholder_val()) {      
-      if (!fromblend[placeholder_id]) {
-        esc = valoption[placeholder_id];
-        selectoption[placeholder_id] = true;
-        if (valoption[placeholder_id] == "True") valoption[placeholder_id] = "False";
-        else valoption[placeholder_id] = "True";
-      }
-    }
-    if (overwrite_renders_val()) {       
-      if (!fromblend[overwrite_renders_id]) {
-        esc = valoption[overwrite_renders_id];
-        selectoption[overwrite_renders_id] = true;
-        if (valoption[overwrite_renders_id] == "True") valoption[overwrite_renders_id] = "False";
-        else valoption[overwrite_renders_id] = "True";
-      }
-    }
-    if (render_cache_val()) {      
-      if (!fromblend[render_cache_id]) {
-        esc = valoption[render_cache_id];
-        selectoption[render_cache_id] = true;
-        if (valoption[render_cache_id] == "True") valoption[render_cache_id] = "False";
-        else valoption[render_cache_id] = "True";
-      }
-    }
-    if (add_extension_val()) {      
-      if (!fromblend[add_extension_id]) {
-        esc = valoption[add_extension_id];
-        selectoption[add_extension_id] = true;
-        if (valoption[add_extension_id] == "True") valoption[add_extension_id] = "False";
-        else valoption[add_extension_id] = "True";
-      }
-    }
-    if (file_format_val()) { 
-      if (!fromblend[file_format_id]) {
-        esc = valoption[file_format_id];
-        selectoption[file_format_id] = true;
-        val = val + 1;
-        if (val > 12) val = 0;
-        valoption[file_format_id] = fileformat[val];
-      }
-    }
-    if (!fromblend[file_format_id]) {
-      if (rgb_mode_()) { 
-        if (valoption[file_format_id].equals("PNG")) {
-          val = val + 1;
-          if (val > 2) val = 0;
-          rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id].equals("JPEG")) {
-          val = val + 1;
-          if (val > 1) val = 0;
-          rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id].equals("TARGA")) {
-          val = val + 1;
-          if (val > 2) val = 0;
-          rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id].equals("TARGA_RAW")) {
-          val = val + 1;
-          if (val > 2) val = 0;
-          rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id].equals("TIFF")) {
-          val = val + 1;
-          if (val > 2) val = 0;
-          rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id].equals("IRIS")) {
-          val = val + 1;
-          if (val > 2) val = 0;
-          rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id].equals("BMP")) {
-          val = val + 1;
-          if (val > 1) val = 0;
-          rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id].equals("JPEG2000")) {
-          val = val + 1;
-          if (val > 2) val = 0;
-          rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id].equals("OPEN_EXR")) {
-          val = val + 1;
-          if (val > 2) val = 0;
-          rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id].equals("OPEN_EXR_MULTILAYER")) {
-          val = val + 1;
-          if (val > 2) val = 0;
-          rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id].equals("CINEON")) {
-          val = val + 1;
-          if (val > 1) val = 0;
-          rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id].equals("DPX")) {
-          val = val + 1;
-          if (val > 2) val = 0;
-          rgbmode = rgbmode_val[val];
-        } else if (valoption[file_format_id].equals("HDR")) {
-          val = val + 1;
-          if (val > 2) val = 0;
-          rgbmode = rgbmode_val[val];
-        }
-      }
-      if (depth_()) { 
-        if (valoption[file_format_id].equals("PNG")) {
-          val = val + 3;
-          if (val > 3) val = 0;
-          depth = depth_val[val];
-        } else if (valoption[file_format_id].equals("TIFF")) {
-          val = val + 3;
-          if (val > 3) val = 0;
-          depth = depth_val[val];
-        } else if (valoption[file_format_id].equals("JPEG2000")) {
-          val = val + 1;
-          if (val == 1) val = 2;
-          if (val > 3) val = 0;
-          depth = depth_val[val];
-        } else if (valoption[file_format_id].equals("OPEN_EXR")) {
-          val = val + 1;
-          if (val == 0 || val == 1 || val == 2) val = 3;
-          if (val > 4) val = 3;
-          depth = depth_val[val];
-        } else if (valoption[file_format_id].equals("OPEN_EXR_MULTILAYER")) {
-          val = val + 1;
-          if (val == 0 || val == 1 || val == 2) val = 3;
-          if (val > 4) val = 3;
-          depth = depth_val[val];
-        } else if (valoption[file_format_id].equals("DPX")) {
-          val = val + 1;
-          if (val > 3) val = 0;
-          depth = depth_val[val];
-        }
-      }
-      if (compresion_()) {
-        selectoption[compresion_id] = true;
-        if (valoption[file_format_id].equals("PNG")) {
-          esc = compresion;
-          compresion = "";
-        } else if (valoption[file_format_id].equals("JPEG")) {
-          esc = quality;
-          quality = "";
-        } else if (valoption[file_format_id].equals("OPEN_EXR")) {
-          val = val + 1;
-          if (val > 7) val = 0;
-          openexcompresion = openexrcodec[val];
-        } else if (valoption[file_format_id].equals("OPEN_EXR_MULTILAYER")) {
-          val = val + 1;
-          if (val > 7) val = 0;
-          openexcompresion = openexrcodec[val];
-        } else if (valoption[file_format_id].equals("TIFF")) {
-          val = val + 1;
-          if (val > 3) val = 0;
-          tiffcompresion = tiffcomp[val];
-        } else if (valoption[file_format_id].equals("JPEG2000")) {
-          esc = quality;
-          quality = "";
-        }
-      }
-      if (jpg2codec_()) {
-        if (valoption[file_format_id].equals("JPEG2000")) {
-          val = val + 1;
-          if (val > 1) val = 0;
-          jpg2codec = jpg2codec_val[val];
-        }
-        if (valoption[file_format_id].equals("OPEN_EXR")) {
-          if (openexrpreview == "True") openexrpreview = "False";
-          else openexrpreview = "True";
-        }          
-        if (valoption[file_format_id].equals("DPX")) {
-          if (dpxlog == "True") dpxlog = "False";
-          else dpxlog = "True";
-        }
-      }
-      if (jpg2cinema_()) {
-        if (valoption[file_format_id].equals("JPEG2000")) {
-          if (jpg2cinema == "True") jpg2cinema = "False";
-          else jpg2cinema = "True";
-        }
-      }
-      if (jpg2cinema48_()) {
-        if (valoption[file_format_id].equals("JPEG2000")) {
-          if (jpg2cinema48 == "True") jpg2cinema48 = "False";
-          else jpg2cinema48 = "True";
-        }
-        if (valoption[file_format_id].equals("OPEN_EXR")) {
-          if (openexrzbuffer == "True") openexrzbuffer = "False";
-          else openexrzbuffer = "True";
-        }
-      }
-      if (jpg2ycc_()) {
-        if (valoption[file_format_id].equals("JPEG2000")) {
-          if (jpg2ycc == "True") jpg2ycc = "False";
-          else jpg2ycc = "True";
-        }
-      }
-    }
-
-    if (stamp_var()) {       
-      if (!fromblend[stamp_id]) {
-        esc = valoption[stamp_id];
-        selectoption[stamp_id] = true;
-        if (valoption[stamp_id] == "True") valoption[stamp_id] = "False";
-        else valoption[stamp_id] = "True";
-      }
-    }
-    if (stamp_stripmeta_()) {       
-      if (!fromblend[use_stamp_strip_meta_id]) {
-        esc = valoption[use_stamp_strip_meta_id];
-        selectoption[use_stamp_strip_meta_id] = true;
-        if (valoption[use_stamp_strip_meta_id] == "True") valoption[use_stamp_strip_meta_id] = "False";
-        else valoption[use_stamp_strip_meta_id] = "True";
-      }
-    }
-    if (stamp_dlabels_()) {       
-      if (!fromblend[use_stamp_dlabels_id]) {
-        esc = valoption[use_stamp_dlabels_id];
-        selectoption[use_stamp_dlabels_id] = true;
-        if (valoption[use_stamp_dlabels_id] == "True") valoption[use_stamp_dlabels_id] = "False";
-        else valoption[use_stamp_dlabels_id] = "True";
-      }
-    }
-    if (stamp_time_()) {       
-      if (!fromblend[use_stamp_time_id]) {
-        esc = valoption[use_stamp_time_id];
-        selectoption[use_stamp_time_id] = true;
-        if (valoption[use_stamp_time_id] == "True") valoption[use_stamp_time_id] = "False";
-        else valoption[use_stamp_time_id] = "True";
-      }
-    }
-    if (stamp_camera_()) {       
-      if (!fromblend[use_stamp_camera_id]) {
-        esc = valoption[use_stamp_camera_id];
-        selectoption[use_stamp_camera_id] = true;
-        if (valoption[use_stamp_camera_id] == "True") valoption[use_stamp_camera_id] = "False";
-        else valoption[use_stamp_camera_id] = "True";
-      }
-    }
-    if (stamp_memory_()) {       
-      if (!fromblend[use_stamp_memory_id]) {
-        esc = valoption[use_stamp_memory_id];
-        selectoption[use_stamp_memory_id] = true;
-        if (valoption[use_stamp_memory_id] == "True") valoption[use_stamp_memory_id] = "False";
-        else valoption[use_stamp_memory_id] = "True";
-      }
-    }
-    if (stamp_date_()) {       
-      if (!fromblend[use_stamp_date_id]) {
-        esc = valoption[use_stamp_date_id];
-        selectoption[use_stamp_date_id] = true;
-        if (valoption[use_stamp_date_id] == "True") valoption[use_stamp_date_id] = "False";
-        else valoption[use_stamp_date_id] = "True";
-      }
-    }
-    if (stamp_lens_()) {       
-      if (!fromblend[use_stamp_lens_id]) {
-        esc = valoption[use_stamp_lens_id];
-        selectoption[use_stamp_lens_id] = true;
-        if (valoption[use_stamp_lens_id] == "True") valoption[use_stamp_lens_id] = "False";
-        else valoption[use_stamp_lens_id] = "True";
-      }
-    }
-    if (stamp_rendertime_()) {       
-      if (!fromblend[use_stamp_render_time_id]) {
-        esc = valoption[use_stamp_render_time_id];
-        selectoption[use_stamp_render_time_id] = true;
-        if (valoption[use_stamp_render_time_id] == "True") valoption[use_stamp_render_time_id] = "False";
-        else valoption[use_stamp_render_time_id] = "True";
-      }
-    }
-    if (stamp_filename_()) {       
-      if (!fromblend[use_stamp_filename_id]) {
-        esc = valoption[use_stamp_filename_id];
-        selectoption[use_stamp_filename_id] = true;
-        if (valoption[use_stamp_filename_id] == "True") valoption[use_stamp_filename_id] = "False";
-        else valoption[use_stamp_filename_id] = "True";
-      }
-    }
-    if (stamp_frame_()) {       
-      if (!fromblend[use_stamp_frame_id]) {
-        esc = valoption[use_stamp_frame_id];
-        selectoption[use_stamp_frame_id] = true;
-        if (valoption[use_stamp_frame_id] == "True") valoption[use_stamp_frame_id] = "False";
-        else valoption[use_stamp_frame_id] = "True";
-      }
-    }
-    if (stamp_marker_()) {       
-      if (!fromblend[use_stamp_marker_id]) {
-        esc = valoption[use_stamp_marker_id];
-        selectoption[use_stamp_marker_id] = true;
-        if (valoption[use_stamp_marker_id] == "True") valoption[use_stamp_marker_id] = "False";
-        else valoption[use_stamp_marker_id] = "True";
-      }
-    }
-    if (stamp_scene_()) {       
-      if (!fromblend[use_stamp_scene_id]) {
-        esc = valoption[use_stamp_scene_id];
-        selectoption[use_stamp_scene_id] = true;
-        if (valoption[use_stamp_scene_id] == "True") valoption[use_stamp_scene_id] = "False";
-        else valoption[use_stamp_scene_id] = "True";
-      }
-    }
-    if (stamp_seqstrip_()) {       
-      if (!fromblend[use_stamp_sequencer_strip_id]) {
-        esc = valoption[use_stamp_sequencer_strip_id];
-        selectoption[use_stamp_sequencer_strip_id] = true;
-        if (valoption[use_stamp_sequencer_strip_id] == "True") valoption[use_stamp_sequencer_strip_id] = "False";
-        else valoption[use_stamp_sequencer_strip_id] = "True";
-      }
-    }
-    if (stamp_stampnote_()) {       
-      if (!fromblend[stamp_note_id]) {
-        esc = valoption[stamp_note_id];
-        selectoption[stamp_note_id] = true;
-        if (valoption[stamp_note_id] == "True") valoption[stamp_note_id] = "False";
-        else valoption[stamp_note_id] = "True";
-      }
-    }
-    if (stamp_stampnote_val()) {       
-      if (!fromblend[stamp_note_id]) {
-        esc = valoption[stamp_note_text_id];
-        selectoption[stamp_note_text_id] = true;
-        valoption[stamp_note_text_id] = "";
-      }
-    }
-
-    if (frame_start_var()) {      
-      if (!fromblend[frame_start_id]) {
-        esc = valoption[frame_start_id];
-        selectoption[frame_start_id] = true;
-        valoption[frame_start_id] = "";
-      }
-    }
-    if (frame_end_var()) {        
-      if (!fromblend[frame_end_id]) {
-        esc = valoption[frame_end_id];
-        selectoption[frame_end_id] = true;
-        valoption[frame_end_id] = "";
-      }
-    }
-    if (frame_step_var()) {        
-      if (!fromblend[frame_step_id]) {
-        esc = valoption[frame_step_id];
-        selectoption[frame_step_id] = true;
-        valoption[frame_step_id] = "";
-      }
-    }
-    if (animation_()) { 
-      if (!fromblend[animation_id]) {
-        esc = valoption[animation_id];
-        selectoption[animation_id] = true;
-      }
-    }
-    if (frame_var()) {      
-      if (!fromblend[frame_id]) {
-        esc = valoption[frame_id];
-        selectoption[frame_id] = true;
-      }
-    }
-    if (renders_name_()) {  
-      if (newoutput)  selectOutput("Select a new name or path for renders:", "newOutputSelect", outputfolder);
-      else info = "*No 'New Output' selected.";
-    }
-    if (dither_val()) {
-      esc = valoption[dither_id];
-      selectoption[dither_id] = true;
-      valoption[dither_id] = "0";
-    }
-  }
-
-  if (selectcolor) {
-    if (select_color_val()) {
-      String r;
-      String g;
-      String b;
-      String a;
-      int col = constrain(floor(map(mouseY, 105, 145, 0, 4)), 0, 4);
-      int val = constrain(floor(map(mouseX, 50, 564, 0, 255)), 0, 255);
-      if (fgcolor) {
-        fgrgba[col] = val;
-        r = str(map(fgrgba[0], 0, 255, 0, 1));
-        g = str(map(fgrgba[1], 0, 255, 0, 1));
-        b = str(map(fgrgba[2], 0, 255, 0, 1));
-        a = str(map(fgrgba[3], 0, 255, 0, 1));
-        valoption[stamp_foreground_id] = "("+r+","+g+","+b+","+a+")";
-      } else if (bgcolor) {
-        bgrgba[col] = val;
-        r = str(map(bgrgba[0], 0, 255, 0, 1));
-        g = str(map(bgrgba[1], 0, 255, 0, 1));
-        b = str(map(bgrgba[2], 0, 255, 0, 1));
-        a = str(map(bgrgba[3], 0, 255, 0, 1));
-        valoption[stamp_background_id] = "("+r+","+g+","+b+","+a+")";
-      }
-    }
-    if (!select_color_()) {
-      selectcolor = false;
-      fgcolor = false;
-      bgcolor = false;
-    }
-  }
-  if (stamp_fg_()) {      
-    if (!fromblend[stamp_id]) {
-      selectcolor = true;
-      fgcolor = true;
-      selectoption[stamp_foreground_id] = true;
-    }
-  }
-  if (stamp_bg_()) {      
-    if (!fromblend[stamp_id]) {
-      selectcolor = true;
-      bgcolor = true;
-      selectoption[stamp_background_id] = true;
-    }
-  }
-  if (ssh_()) ssh = !ssh;
-  if (ssh_user_()) {
-    selectoption[sshuser_id] = true;
-    sshuser = "";
-  }
-  if (ssh_ip_()) {
-    selectoption[sship_id] = true;
-    sship = "";
-  }
-}
-
-
-void keyEventsCommandLine (String keypress)
-{
-  if (keypress == "number") {
-    if (selectoption[pxX_id]) if (valoption[pxX_id].length() < 5) valoption[pxX_id] += key;
-    if (selectoption[pxY_id]) if (valoption[pxY_id].length() < 5) valoption[pxY_id] += key;
-    if (selectoption[percentage_id]) if (valoption[percentage_id].length() < 3) valoption[percentage_id] += key;
-    if (selectoption[anti_aliasing_samples_id] && valoption[anti_aliasing_id] == "True") if (valoption[anti_aliasing_samples_id].length() < 2) valoption[anti_aliasing_samples_id] += key;
-    if (selectoption[tile_x_id]) if (valoption[tile_x_id].length() < 5) valoption[tile_x_id] += key;
-    if (selectoption[tile_y_id]) if (valoption[tile_y_id].length() < 5) valoption[tile_y_id] += key;
-    if (selectoption[threads_id]) if (valoption[threads_id].length() < 2) valoption[threads_id] += key;
-    if (selectoption[engine_cyclessamples_val_id]) if (valoption[engine_cyclessamples_val_id].length() < 9) valoption[engine_cyclessamples_val_id] += key;
-
-    if (selectoption[compresion_id]) {
-      if (valoption[file_format_id] == "PNG") {
-        if (compresion.length() < 3) compresion += key;
-      } else if (valoption[file_format_id] == "JPEG") {
-        if (quality.length() < 3) quality += key;
-      } else if (valoption[file_format_id] == "JPEG2000") {
-        if (quality.length() < 3) quality += key;
-      }
-    }
-
-    if (selectoption[dither_id]) if (valoption[dither_id].length() < 5) valoption[dither_id] += key;
-
-    if (selectoption[frame_start_id]) if (valoption[frame_start_id].length() < 6) valoption[frame_start_id] += key;
-    if (selectoption[frame_end_id]) if (valoption[frame_end_id].length() < 6) valoption[frame_end_id] += key;
-    if (selectoption[frame_step_id]) if (valoption[frame_step_id].length() < 3) valoption[frame_step_id] += key;
-
-    if (selectoption[frame_id]) {
-      if (valoption[frame_id].length() < 100) valoption[frame_id] += key;
-    }
-  } else if (keypress == "BACKSPACE") {
-    if (selectoption[pxX_id]) if (valoption[pxX_id].length() > 0) valoption[pxX_id] = valoption[pxX_id].substring(0, valoption[pxX_id].length() - 1);
-    if (selectoption[pxY_id]) if (valoption[pxY_id].length() > 0) valoption[pxY_id] = valoption[pxY_id].substring(0, valoption[pxY_id].length() - 1);
-    if (selectoption[percentage_id]) if (valoption[percentage_id].length() > 0) valoption[percentage_id] = valoption[percentage_id].substring(0, valoption[percentage_id].length() - 1);
-    if (selectoption[anti_aliasing_samples_id]) if (valoption[anti_aliasing_samples_id].length() > 0) valoption[anti_aliasing_samples_id] = valoption[anti_aliasing_samples_id].substring(0, valoption[anti_aliasing_samples_id].length() - 1);
-    if (selectoption[tile_x_id]) if (valoption[tile_x_id].length() > 0) valoption[tile_x_id] = valoption[tile_x_id].substring(0, valoption[tile_x_id].length() - 1);
-    if (selectoption[tile_y_id]) if (valoption[tile_y_id].length() > 0) valoption[tile_y_id] = valoption[tile_y_id].substring(0, valoption[tile_y_id].length() - 1);
-    if (selectoption[threads_id]) if (valoption[threads_id].length() > 0) valoption[threads_id] = valoption[threads_id].substring(0, valoption[threads_id].length() - 1);
-    if (selectoption[engine_cyclessamples_val_id]) if (valoption[engine_cyclessamples_val_id].length() > 0) valoption[engine_cyclessamples_val_id] = valoption[engine_cyclessamples_val_id].substring(0, valoption[engine_cyclessamples_val_id].length() - 1);
-
-    if (selectoption[file_format_id]) {
-      if (valoption[file_format_id] == "PNG") {
-        if (compresion.length() > 0) compresion = compresion.substring(0, compresion.length() - 1);
-      } else if (valoption[file_format_id] == "JPEG") {
-        if (quality.length() > 0) quality = quality.substring(0, quality.length() - 1);
-      } else if (valoption[file_format_id] == "JPEG2000") {
-        if (quality.length() > 0) quality = quality.substring(0, quality.length() - 1);
-      }
-    }
-
-    if (selectoption[dither_id]) if (valoption[dither_id].length() > 0) valoption[dither_id] = valoption[dither_id].substring(0, valoption[dither_id].length() - 1);
-
-    if (selectoption[scene_name_id]) if (scenename.length() > 0) scenename = scenename.substring(0, scenename.length() - 1);
-
-    if (selectoption[stamp_note_text_id]) if (valoption[stamp_note_text_id].length() > 0) valoption[stamp_note_text_id] = valoption[stamp_note_text_id].substring(0, valoption[stamp_note_text_id].length() - 1);
-
-    if (selectoption[frame_start_id]) if (valoption[frame_start_id].length() > 0) valoption[frame_start_id] = valoption[frame_start_id].substring(0, valoption[frame_start_id].length() - 1);
-    if (selectoption[frame_end_id]) if (valoption[frame_end_id].length() > 0) valoption[frame_end_id] = valoption[frame_end_id].substring(0, valoption[frame_end_id].length() - 1);
-    if (selectoption[frame_step_id]) if (valoption[frame_step_id].length() > 0) valoption[frame_step_id] = valoption[frame_step_id].substring(0, valoption[frame_step_id].length() - 1);
-
-    if (selectoption[frame_id]) {
-      if (valoption[frame_id].length() > 0) valoption[frame_id] = valoption[frame_id].substring(0, valoption[frame_id].length() - 1);
-      if (valoption[frame_id].length() == 0) valoption[frame_id] = "0";
-    }
-    if (selectoption[sshuser_id]) if (sshuser.length() > 0) sshuser = sshuser.substring(0, sshuser.length() - 1);
-    if (selectoption[sship_id]) if (sship.length() > 0) sship = sship.substring(0, sship.length() - 1);
-  } else if (keypress == "ENTER") {
-    for (int i = 0; i < selectoption.length; i++) selectoption[i] = false;
-  } else if (keypress == "27") {
-    if (selectoption[renders_name_id]) rendersname = esc;
-    for (int i = 0; i < selectoption.length; i++) {
-      if (selectoption[i]) valoption[i] = esc;
-    }
-    for (int i = 0; i < selectoption.length; i++) selectoption[i] = false;
-  } else if (keypress == "CODED") {
-
-    if (selectoption[scene_name_id]) scenename += key;
-
-    if (selectoption[stamp_note_text_id]) valoption[stamp_note_text_id] += key;
-
-    if (selectoption[dither_id]) {
-      if (key==46) valoption[dither_id] += ".";
-    }
-
-    if (selectoption[frame_id] && !generatepy) {
-      if (key==32) valoption[frame_id] += ",";
-
-      if (key==44) valoption[frame_id] += ",";
-
-      if (key==46) valoption[frame_id] += ".";
-
-      if (keyCode==107) valoption[frame_id] += "+";
-
-      if (keyCode==109) valoption[frame_id] += "-";
-    }
-
-    if (selectoption[sshuser_id]) if (sshuser.length() < 10) sshuser += key;
-    if (selectoption[sship_id]) if (sship.length() < 10) sship += key;
-  }
 }
