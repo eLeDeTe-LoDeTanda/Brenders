@@ -12,7 +12,7 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 
 ![CommandLineGenerator](https://github.com/eLeDeTe-LoDeTanda/Brenders/blob/master/data/Screenshots/BRENDERSv1.0_CommandLineGenerator.png)
 
-**APROXIMATE RENDER TIME CALCULATOR**
+**APPROXIMATE RENDER TIME CALCULATOR**
 
 ![ART](https://github.com/eLeDeTe-LoDeTanda/Brenders/blob/master/data/Screenshots/BRENDERSv1.0_AproximateRenderTimeCalculator.png)
 
@@ -22,7 +22,7 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 
 # [Development version](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build) 
 
-(COMMAND LINE GENERATOR, APROXIMATE RENDER TIME CALCULATOR, PREFERENCES and BATCH PROCESSING)
+(COMMAND LINE GENERATOR, APPROXIMATE RENDER TIME CALCULATOR, PREFERENCES and BATCH PROCESSING)
 
 # [versión de desarrollo](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build)
 
@@ -98,9 +98,15 @@ BRENDERSv1.0 TODO:
 
 *~Autorun renders file (.sh in Linux .bat in Windows) --- Archivo autoejecutable de renders (.sh en Linux .bat en Windows)~ :heavy_check_mark:
 
-*Update to last render finished --- Actualizar al último render finalizado 
-
 *~Generate image preview from blend --- Generar imagen de previsualización del blend~ :heavy_check_mark:
+
+*~Render All --- Renderizar todo~ :heavy_check_mark:
+
+*~Render only bad renders --- Renderizar sólo renders malos~ :heavy_check_mark:
+
+*~Continue to last render --- Continuar desde el último render~ :heavy_check_mark:
+
+*Make preview render --- Hacer renders de prueba
 
 
 **RENDER MANAGER**
@@ -109,19 +115,13 @@ BRENDERSv1.0 TODO:
 
 *~Open render --- Abrir render~ :heavy_check_mark:
 
-*Select: preview --- Seleccionar: previsualización
-
 *~Select: Good or Bad --- Seleccionar: Bueno o Malo~ :heavy_check_mark:
 
-*~Render All --- Renderizar todos~ :heavy_check_mark:
+*~Play renders --- reproducir renders~ :heavy_check_mark:
 
-*~Render only: bad --- Renderizar sólo: malo~ :heavy_check_mark:
+**APPROXIMATE RENDER TIME CALCULATOR**
 
-*Play renders --- reproducir renders
-
-**APROXIMATE RENDER TIME CALCULATOR**
-
-*~Aproximate render time --- tiempo de render aproximado~ :heavy_check_mark:
+*~Approximate render time --- tiempo de render aproximado~ :heavy_check_mark:
 
 *~Animation duration --- Duración de la animación~ :heavy_check_mark:
 
