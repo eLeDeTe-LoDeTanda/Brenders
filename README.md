@@ -22,11 +22,12 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 
 **ONLY for testing**
 
-**SÓLO para probar**
-
 # [Development version](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build) 
 
 (COMMAND LINE GENERATOR, APPROXIMATE RENDER TIME CALCULATOR, PREFERENCES and BATCH PROCESSING)
+
+
+**SÓLO para probar**
 
 # [versión de desarrollo](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build)
 
