@@ -20,6 +20,10 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 
 ![BatchProcessing](https://github.com/eLeDeTe-LoDeTanda/Brenders/blob/master/data/Screenshots/BRENDERSv1.0_BatchProcessing.png)
 
+**ONLY for testing**
+
+**SÓLO para probar**
+
 # [Development version](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build) 
 
 (COMMAND LINE GENERATOR, APPROXIMATE RENDER TIME CALCULATOR, PREFERENCES and BATCH PROCESSING)
