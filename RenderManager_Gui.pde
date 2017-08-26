@@ -68,10 +68,14 @@ void renderManager_Gui()
             fill(acolor);
             textSize(8);
             text(nf(framemanager, 5), 26 + x * 40, 60 + i * 30);
-            if (loadJsonManager(framemanager).equals("good")) {
+            String jsonpath = "";
+            if (finalrenders) jsonpath = proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager";
+            else jsonpath = proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.Manager";
+
+            if (loadJsonManager(framemanager, jsonpath).equals("good")) {
               fill(ccolor);
               text("Good", 23 + x * 40, 52 + i * 30);
-            } else if (loadJsonManager(framemanager).equals("bad")) {
+            } else if (loadJsonManager(framemanager, jsonpath).equals("bad")) {
               fill(ecolor);
               text("Bad", 23 + x * 40, 52 + i * 30);
             }
@@ -120,7 +124,7 @@ void renderManager_Gui()
   text(">", 596, 343);
   fill(acolor);
   text("Play", 620, 345);
-  
+
   popStyle();
 }
 
