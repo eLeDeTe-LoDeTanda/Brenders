@@ -28,8 +28,13 @@
 boolean multiblend_active = false;
 boolean add_tomulti= false;
 
+boolean finalrenders = true;
+boolean editoptions = false;
+
 int multiblend_files = 0;
 int order = 0;
+
+int renderorder = 0;
 
 String frameprev = "1";
 
@@ -93,9 +98,24 @@ void multiBlend_Gui()
     textSize(10);
     text("IMPORT", width / 2, 215);
 
-    textSize(14);
     if (multiblend_files > 0) {
+      textAlign(LEFT);
+      textSize(12);
+      fill(bcolor);
+      text("o Final renders", 42, 220);
+      if (finalrenders) {
+        fill(ccolor);
+        ellipse(45, 216, 8, 8);
+      }
+      fill(bcolor);
+      text("o Preview renders", 42, 245);
+      if (!finalrenders) {
+        fill(ccolor);
+        ellipse(45, 241, 8, 8);
+      }
       fill(acolor);
+      textSize(10);
+      textAlign(CENTER);
       String name = multiblend_names[order]+".multiblend";
       if (multiblend_names[order].length() > 18) name = multiblend_names[order].substring(0, 9)+"..."+multiblend_names[order].substring(multiblend_names[order].length() - 9);
       text("-"+name+"-", width / 2, 185);
@@ -113,6 +133,7 @@ void multiBlend_Gui()
       rect(width / 2 - 25, 235, 50, 12);
       rect(width / 2 - 25, 250, 50, 12);
       rect(width / 2 - 25, 265, 50, 12);
+      if (!finalrenders) rect(50, 255, 80, 12);
       fill(icolor);
       textSize(10);
       text("IMPORT", width / 2, 215);
@@ -120,6 +141,7 @@ void multiBlend_Gui()
       text("EDIT", width / 2, 245);
       text("RENAME", width / 2, 260);
       text("DELETE", width / 2, 275);
+      if (!finalrenders) text("EDIT OPTIONS", 92, 265);
 
       fill(ccolor);
 
@@ -269,4 +291,17 @@ boolean delete_Multiblend_()
 boolean recent_Multiblend_()
 {
   return  (mouseX > 200 && mouseX < 460 && mouseY > 215 && mouseY < 340);
+}
+
+boolean final_Multiblend_()
+{
+  return  (mouseX > 40 && mouseX < 150 && mouseY > 210 && mouseY < 225);
+}
+boolean preview_Multiblend_()
+{
+  return  (mouseX > 40 && mouseX < 150 && mouseY > 230 && mouseY < 250);
+}
+boolean editpreview_Multiblend_()
+{
+  return  (mouseX > 40 && mouseX < 150 && mouseY > 255 && mouseY < 275);
 }
