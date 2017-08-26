@@ -198,7 +198,7 @@ String pathname;
 void commandLineGenerator_Gui()
 {
   pushStyle();
-  
+
   pathname = blendname;
   if (blendname.length() > 20) pathname = blendname.substring(0, 10)+"..."+blendname.substring(blendname.length() - 10);
   surface.setTitle("ComandLineGenerator -"+pathname+"- "+version);
