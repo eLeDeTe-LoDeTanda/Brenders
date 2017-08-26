@@ -6,19 +6,19 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 --------------------------
 **BRENDERS Screenshots**
 
-![Brenders](https://github.com/eLeDeTe-LoDeTanda/Brenders/blob/master/data/Screenshots/BRENDERSv1.0.png)
+![Brenders](https://raw.githubusercontent.com/eLeDeTe-LoDeTanda/Brenders/master/data/Screenshots/BRENDERSv1.0.png)
 
 **COMMAND LINE GENERATOR**
 
-![CommandLineGenerator](https://github.com/eLeDeTe-LoDeTanda/Brenders/blob/master/data/Screenshots/BRENDERSv1.0_CommandLineGenerator.png)
+![CommandLineGenerator](https://raw.githubusercontent.com/eLeDeTe-LoDeTanda/Brenders/master/data/Screenshots/BRENDERSv1.0_CommandLineGenerator.png)
 
 **APPROXIMATE RENDER TIME CALCULATOR**
 
-![ART](https://github.com/eLeDeTe-LoDeTanda/Brenders/blob/master/data/Screenshots/BRENDERSv1.0_AproximateRenderTimeCalculator.png)
+![ART](https://raw.githubusercontent.com/eLeDeTe-LoDeTanda/Brenders/master/data/Screenshots/BRENDERSv1.0_AproximateRenderTimeCalculator.png)
 
 **BATCH PROCESSING**
 
-![BatchProcessing](https://github.com/eLeDeTe-LoDeTanda/Brenders/blob/master/data/Screenshots/BRENDERSv1.0_BatchProcessing.png)
+![BatchProcessing](https://raw.githubusercontent.com/eLeDeTe-LoDeTanda/Brenders/master/data/Screenshots/BRENDERSv1.0_BatchProcessing.png)
 
 **MULTIBLEND**
 
