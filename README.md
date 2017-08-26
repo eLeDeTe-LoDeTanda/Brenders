@@ -20,13 +20,14 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 
 ![BatchProcessing](https://raw.githubusercontent.com/eLeDeTe-LoDeTanda/Brenders/master/data/Screenshots/BRENDERSv1.0_BatchProcessing.png)
 
-**MULTIBLEND**
+**RENDER MULTIBLEND**
 
 ![Render Multiblend](https://raw.githubusercontent.com/eLeDeTe-LoDeTanda/Brenders/master/data/Screenshots/BRENDERSv1.0_Multiblend.png)
 
 **RENDER MANAGER**
 
 ![Render Manager](https://raw.githubusercontent.com/eLeDeTe-LoDeTanda/Brenders/master/data/Screenshots/BRENDERSv1.0_RenderManager.png)
+
 
 
 **ONLY for testing**
@@ -119,7 +120,7 @@ BRENDERSv1.0 TODO:
 
 *~Continue to last render --- Continuar desde el último render~ :heavy_check_mark:
 
-*Make preview render --- Hacer renders de prueba
+*~Make preview render --- Hacer renders de prueba~ :heavy_check_mark:
 
 
 **RENDER MANAGER**
