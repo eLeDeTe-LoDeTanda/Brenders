@@ -2172,11 +2172,11 @@ void settingsSave(File selection)
     settingspath = selection.getAbsolutePath();
     settingsname = selection.getName();
     if (gui == 3) { 
-      multiblend_save(path);
+      multiblend_import(path);
     } else {
       if (add_tomulti) {
         if (settingspath.endsWith(".multiblend")) { 
-          multiblend_addtomulti();
+          settings_addtomulti();
         } else {
           error = true;
           info = "*Warning No '.multiblend' selected";
@@ -2232,6 +2232,7 @@ void settingsSave(File selection)
       }
     }
   }
+  if (editoptions) gui = 3;
   redraw();
 }
 
@@ -2274,6 +2275,24 @@ void settingsRename(File selection)
     }
   }
   redraw();
+}
+
+
+void settings_addtomulti()
+{
+  String multiblendpath = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend";
+  commandLineOptions();
+  py_Save(multiblendpath);
+  add_tomulti = false;
+
+  order = multiblend_files;
+
+  loadNames_Multiblend(true);
+
+  newjsonManager(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+
+  multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
+  info = "Saved: "+settingsname.substring(0, settingsname.lastIndexOf("."));
 }
 
 
