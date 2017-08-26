@@ -24,12 +24,16 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 
 ![Render Multiblend](https://raw.githubusercontent.com/eLeDeTe-LoDeTanda/Brenders/master/data/Screenshots/BRENDERSv1.0_Multiblend.png)
 
+**RENDER MANAGER**
+
+![Render Manager](https://raw.githubusercontent.com/eLeDeTe-LoDeTanda/Brenders/master/data/Screenshots/BRENDERSv1.0_RenderManager.png)
+
+
 **ONLY for testing**
 
 # [Development version](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build) 
 
 (COMMAND LINE GENERATOR, APPROXIMATE RENDER TIME CALCULATOR, PREFERENCES and BATCH PROCESSING)
-
 
 **SÓLO para probar**
 
