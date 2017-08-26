@@ -118,7 +118,7 @@ void addinJsonManager(String option, int frame)
 }
 
 
-String loadJsonManager(int frame)
+String loadJsonManager(int frame, String path)
 {
   JSONArray values;
 
@@ -142,13 +142,13 @@ String loadJsonManager(int frame)
       news.setString("Render name", "From .blend");
     }
     values.append(news);
-    saveJSONArray(values, proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+    saveJSONArray(values, path);
   }
   return status;
 }
 
 
-void newjsonManager() 
+void newjsonManager(String path) 
 {
   JSONArray rendercontrol;
 
@@ -173,7 +173,7 @@ void newjsonManager()
     rendercontrol.setJSONObject(i, rendermanager);
   }
 
-  saveJSONArray(rendercontrol, proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+  saveJSONArray(rendercontrol, path);
 }
 
 
@@ -236,7 +236,10 @@ void loadfromblend()
         else outputpath = lines[i+1];
       }
     } else if (lines[i].contains("[RenderName]")) {
-      if (fromblend[output_path_id]) rendersname = lines[i+1];
+      if (fromblend[output_path_id]) {
+        if (!lines[i+1].contains("#")) rendersname = lines[i+1];
+        else rendersname = lines[i+1].substring(0, lines[i+1].indexOf("#"));
+      }
     } else if (lines[i].contains("[FileFormat]")) {
       if (fromblend[file_format_id]) valoption[file_format_id] = lines[i+1];
     } else if (lines[i].contains("[StartFrame]")) {
