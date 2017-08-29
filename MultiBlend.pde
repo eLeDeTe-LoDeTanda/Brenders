@@ -139,12 +139,12 @@ void mouseEventsMultiblend()
           loadfromblend();
         }
       }
-    }
-    if (reload_Multiblend_()) {
-      loadNames_Multiblend(false);
-      savefromblend(true);
-      loadfromblend();
-      precheck();
+      if (reload_Multiblend_()) {
+        loadNames_Multiblend(false);
+        savefromblend(true);
+        loadfromblend();
+        precheck();
+      }
     }
     if (import_Multiblend_()) {
       selectInput("Select your .py or commandline file", "settingsOpen", settingsfolder);
@@ -565,8 +565,30 @@ void multiblend_delete()
 {
   File f = new File(settingspath);
   f.delete();
-  File f_pre = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
-  f_pre.delete();
+  f = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
+  f.delete();
+  f = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.multiblend");
+  f.delete();
+  f = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_continue.multiblend");
+  f.delete();
+  f = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_bads.multiblend");
+  f.delete();
+  f = new File(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+  f.delete();
+  f = new File(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.Manager");
+  f.delete();
+  f = new File(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".txt");
+  f.delete();
+
+  File dir = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")));
+  String[] files = dir.list();
+  for (int x = 0; x < files.length; x++) {
+    print (files[x]);
+    f = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+files[x]);
+    f.delete();
+  }
+  f = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")));
+  f.delete();
 
   String path = proyectpath+proyectname+".brenders";
   String lines[] = loadStrings(path);
@@ -1283,14 +1305,14 @@ void multiblend_pre()
   }
   blendpre = loadImage(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
 
-  File f_bat = new File (dataPath("tmp")+File.separator+"blend_prev.bat");
-  f_bat.delete();
+  File f = new File (dataPath("tmp")+File.separator+"blend_prev.bat");
+  f.delete();
 
-  File f_sh = new File(dataPath("tmp")+File.separator+"blend_prev.sh");
-  f_sh.delete();
+  f = new File(dataPath("tmp")+File.separator+"blend_prev.sh");
+  f.delete();
 
-  File f_py = new File (dataPath("tmp")+File.separator+"blend_prev.py");
-  f_py.delete();
+  f = new File (dataPath("tmp")+File.separator+"blend_prev.py");
+  f.delete();
 }
 
 
