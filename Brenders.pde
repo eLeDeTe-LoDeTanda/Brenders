@@ -74,7 +74,9 @@ void setup () {
 
   path_batch = dataPath("Test");
   initVarCommandLine(os);
+  initvarMultiblend();
 }
+
 
 void draw() {
 
@@ -92,8 +94,8 @@ void draw() {
     commandLineGenerator_Gui();
     break;
   case 2:
-    //renderManager_Gui();
-    inDev_Gui();
+    renderManager_Gui();
+   // inDev_Gui();
     break;
   case 3:
     multiBlend_Gui();
