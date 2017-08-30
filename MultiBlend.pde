@@ -162,9 +162,8 @@ void mouseEventsMultiblend()
         if (multiblend_renders[0]) {
           loadNames_Multiblend(false);
           if (os == "WINDOWS") {
+            multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
             if (finalrenders) {
-              multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
-
               String cmd[]= {terminalpath, "/c", "start", "/w", proyectpath+"Autorun"+File.separator+proyectname+".bat"};
               exec(cmd);
             } else {
@@ -176,9 +175,8 @@ void mouseEventsMultiblend()
               exec(cmd);
             }
           } else {
+            multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
             if (finalrenders) {
-              multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
-
               String cmd[] = {terminalpath, "-e", proyectpath+"Autorun"+File.separator+proyectname+".sh"};
               exec(cmd);
             } else {
@@ -299,12 +297,26 @@ void mouseEventsMultiblend()
         info = "'RELOADED' new order";
       }
       if (rename_Multiblend_()) {
+        String multiblendpath = proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
+        loadPy(multiblendpath);
+        settingspath = multiblendpath;
+        settingsfolder = new File(multiblendpath);
+        settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
+        editoptions = false;
+
         settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
         selectOutput("New name: "+settingsname, "settingsRename", settingsfolder);
       }
       if (delete_Multiblend_()) {
+        String multiblendpath = proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
+        loadPy(multiblendpath);
+        settingspath = multiblendpath;
+        settingsfolder = new File(multiblendpath);
+        settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
+        finalrenders = true;
+        editoptions = false;
+
         multiblend_delete();
-        loadNames_Multiblend(false);
       }
       if (all_Multiblend_()) {
         multiblend_renders[0] = true;
