@@ -575,6 +575,7 @@ void multiblend_rename()
 
 void multiblend_delete()
 {
+
   File f = new File(settingspath);
   f.delete();
   f = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
@@ -593,15 +594,15 @@ void multiblend_delete()
   f.delete();
 
   File dir = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")));
-  String[] files = dir.list();
-  for (int x = 0; x < files.length; x++) {
-    print (files[x]);
-    f = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+files[x]);
-    f.delete();
+  if (dir.exists()) {
+    String[] files = dir.list();
+    for (int x = 0; x < files.length; x++) {
+      f = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+files[x]);
+      if (f.exists()) f.delete();
+    }
+    f = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")));
+    if (f.exists()) f.delete();
   }
-  f = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")));
-  f.delete();
-
   String path = proyectpath+proyectname+".brenders";
   String lines[] = loadStrings(path);
   write = createWriter(path);
