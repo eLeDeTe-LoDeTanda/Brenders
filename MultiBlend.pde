@@ -119,6 +119,9 @@ void mouseEventsMultiblend()
           savefromblend(false);
           loadfromblend();
         }
+        String name = settingsname;
+        if (projectname.length() > 20) name = projectname.substring(0, 10)+"..."+projectname.substring(projectname.length() - 10);
+        info = name;
       }
       if (orderR_Multiblend_() ) {
         order = constrain(order + 1, 0, multiblend_files - 1);
@@ -138,6 +141,9 @@ void mouseEventsMultiblend()
           savefromblend(false);
           loadfromblend();
         }
+        String name = settingsname;
+        if (projectname.length() > 20) name = projectname.substring(0, 10)+"..."+projectname.substring(projectname.length() - 10);
+        info = name;
       }
       if (reload_Multiblend_()) {
         loadNames_Multiblend(false);
@@ -153,6 +159,9 @@ void mouseEventsMultiblend()
       info = "*Opening...";
       String cmd[] = {managerpath, projectpath};
       exec(cmd);
+    }
+    if (open_recent_Multiblend_()) {
+      multiblend_active = false;
     }
     if (rendermanager_Multiblend_()) {
       gui = 2;
@@ -322,16 +331,19 @@ void mouseEventsMultiblend()
         multiblend_renders[0] = true;
         multiblend_renders[1] = false;
         multiblend_renders[2] = false;
+        info = "Rendering All frames";
       }
       if (bad_Multiblend_()) {
         multiblend_renders[0] = false;
         multiblend_renders[1] = true;
         multiblend_renders[2] = false;
+        info = "Rendering only bads frames";
       }
       if (continue_Multiblend_()) {
         multiblend_renders[0] = false;
         multiblend_renders[1] = false;
         multiblend_renders[2] = true;
+        info = "Continue rendering from last frame";
       }
       if (openblend_Multiblend_()) {
         info = "*Opening "+blendname+" ...";
@@ -363,6 +375,7 @@ void mouseEventsMultiblend()
         settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
         finalrenders = true;
         editoptions = false;
+        info = "Final renders";
       }
       if (preview_Multiblend_()) {
         finalrenders = false;
@@ -382,6 +395,7 @@ void mouseEventsMultiblend()
         settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
         editoptions = true;
         multiblend_autorun(projectpath+"Autorun"+File.separator+projectname);
+        info = "Preview mode";
       }
       if (editpreview_Multiblend_()) {
         if (!finalrenders) {

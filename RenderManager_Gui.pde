@@ -37,7 +37,7 @@ void renderManager_Gui()
 {
   pushStyle();
 
-  surface.setTitle("Render Manager -"+proyectname+"- "+version);
+  surface.setTitle("Render Manager -"+projectname+"- "+version);
   background(backgroundcolor);
   tint(250, 240, 240);
   image(bg2, 0, 0);
@@ -58,7 +58,7 @@ void renderManager_Gui()
             textSize(10);
             text("Empty", 22 + x * 40, 50 + i * 30);
 
-            prepath = proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(framemanager, 4)+".png";
+            prepath = projectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(framemanager, 4)+".png";
             File img = new File(prepath);
             if (!img.exists()) renderpre = loadImage("Img"+File.separator+"Manager-none.png");
             else  renderpre = loadImage(prepath);
@@ -69,8 +69,8 @@ void renderManager_Gui()
             textSize(8);
             text(nf(framemanager, 5), 26 + x * 40, 60 + i * 30);
             String jsonpath = "";
-            if (finalrenders) jsonpath = proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager";
-            else jsonpath = proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.Manager";
+            if (finalrenders) jsonpath = projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager";
+            else jsonpath = projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.Manager";
 
             if (loadJsonManager(framemanager, jsonpath).equals("good")) {
               fill(ccolor);
@@ -104,7 +104,7 @@ void renderManager_Gui()
   fill(bcolor);
   if (multiblend_active) {
     if (multiblend_files <= 0) {
-      text("-EMPTY proyect-", 550, 345);
+      text("-EMPTY project-", 550, 345);
     } else {
       text("Update previews: >ALL<  >NEWS<", width / 2 + 100, 22);
       text("WAITING...", 550, 345);
@@ -113,7 +113,7 @@ void renderManager_Gui()
     textSize(16);
     rect(240, 167, 160, 20);
     fill(ecolor);
-    text("NO PROYECT OPEN", 320, 175);
+    text("NO PROJECT OPEN", 320, 175);
     textSize(12);
     fill(bcolor);
   }

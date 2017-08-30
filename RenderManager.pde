@@ -96,7 +96,7 @@ void addinJsonManager(String option, int frame)
 {
   JSONArray values;
 
-  values = loadJSONArray(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+  values = loadJSONArray(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
 
   for (int i = 0; i <= int(valoption[frame_end_id]) - int(valoption[frame_start_id]); i++) {
     JSONObject rendermanager = values.getJSONObject(i); 
@@ -114,7 +114,7 @@ void addinJsonManager(String option, int frame)
     if (i + int(valoption[frame_start_id]) == int(frame)) rendermanager.setString("Status", option);
   }
 
-  saveJSONArray(values, proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+  saveJSONArray(values, projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
 }
 
 
@@ -122,7 +122,7 @@ String loadJsonManager(int frame, String path)
 {
   JSONArray values;
 
-  values = loadJSONArray(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+  values = loadJSONArray(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
   String status = "";
   if (frame < values.size()) {
     JSONObject rendermanager = values.getJSONObject(frame); 
@@ -185,7 +185,7 @@ void allpreviews()
     if (f.exists()) {
       img = loadImage(outputpath+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
       img.resize(40, 23);
-      img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
+      img.save(projectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
       System.gc(); 
       redraw();
     }
@@ -197,13 +197,13 @@ void newspreviews()
 {
   PImage img;
   for (int i = int(valoption[frame_start_id]); i <= int(valoption[frame_end_id]); i++) {
-    File fp = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
+    File fp = new File(projectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
     if (!fp.exists()) {
       File f = new File(outputpath+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
       if (f.exists()) {
         img = loadImage(outputpath+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
         img.resize(40, 23);
-        img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
+        img.save(projectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
         System.gc();
         redraw();
       }
@@ -219,7 +219,7 @@ void framepreview(String frame)
   if (f.exists()) {
     img = loadImage(frame);
     img.resize(40, 23);
-    img.save(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(selectframe, 4)+".png");
+    img.save(projectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(selectframe, 4)+".png");
     System.gc();
   }
   updating = false;
@@ -228,7 +228,7 @@ void framepreview(String frame)
 
 void loadfromblend()
 {
-  String lines[] = loadStrings(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")) + ".txt");
+  String lines[] = loadStrings(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")) + ".txt");
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].contains("[RendersOutput]")) {
       if (fromblend[output_path_id]) {
@@ -255,7 +255,7 @@ void savefromblend(boolean forcetowrite)
 {
   if (fromblend[output_path_id] || fromblend[file_format_id] || fromblend[frame_start_id] || fromblend[frame_end_id]) {
 
-    File f = new File(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")) + ".txt");
+    File f = new File(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")) + ".txt");
     if (forcetowrite) f = new File("");
 
     if (!f.exists()) {
@@ -268,7 +268,7 @@ void savefromblend(boolean forcetowrite)
       if (fromblend[scene_name_id]) write.println("bpy.context.scene.name");
       else write.println('"'+scenename+'"');
 
-      String path = proyectpath+"Manager"+File.separator+"fromblend.txt";
+      String path = projectpath+"Manager"+File.separator+"fromblend.txt";
       if (os == "WINDOWS") path = path.replace("\\", "/");
 
       write.println("file = open("+'"'+path+'"'+", 'w', encoding='utf-8')");
@@ -333,9 +333,9 @@ void savefromblend(boolean forcetowrite)
         }
       }
 
-      String line[] = loadStrings(proyectpath+"Manager"+File.separator+"fromblend.txt");
+      String line[] = loadStrings(projectpath+"Manager"+File.separator+"fromblend.txt");
 
-      write = createWriter(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")) + ".txt");
+      write = createWriter(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")) + ".txt");
       write.println("[RendersOutput]");
       write.println(line[0].substring(0, line[0].lastIndexOf(File.separator) + 1));
       write.println();
@@ -362,7 +362,7 @@ void savefromblend(boolean forcetowrite)
       }
       File f_py = new File (dataPath("tmp")+File.separator+"fromblend.py");
       f_py.delete();
-      File f_txt = new File (proyectpath+"Manager"+File.separator+"fromblend.txt");
+      File f_txt = new File (projectpath+"Manager"+File.separator+"fromblend.txt");
       f_txt.delete();
     }
   }

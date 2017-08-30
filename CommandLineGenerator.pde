@@ -93,7 +93,7 @@ void initVarCommandLine (String os)
   imageviewerfolder = new File (imageviewerpath);
   explorerfolder = new File (managerpath);
   blenderfolder = new File(blenderpath);
-  proyectfolder = new File(dataPath("Proyects")+File.separator+"newProyect");
+  projectfolder = new File(dataPath("Projects")+File.separator+"newProject");
 
   blendpath = dataPath("Test")+File.separator;
   blendname = "BrendersTest.blend";
@@ -342,10 +342,10 @@ void mouseEventsCommandLine ()
     if (add_to_multi_()) {
       if (multiblend_active) {
         add_tomulti = true;
-        selectOutput("Select a name for .multiblend:", "settingsSave", new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend"));
+        selectOutput("Select a name for .multiblend:", "settingsSave", new File(projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend"));
       } else {
         error = true;
-        info = "NO Multiblend proyect available";
+        info = "NO Multiblend project available";
       }
     }
     if (save_settings_()) {
@@ -1174,7 +1174,7 @@ void settingsOpen(File selection)
       settingsfolder = new File(path);
       settingsname = selection.getName();
 
-      if (gui == 3) selectOutput("Select a name for .multiblend:", "settingsSave", new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend"));
+      if (gui == 3) selectOutput("Select a name for .multiblend:", "settingsSave", new File(projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend"));
 
       info = "'"+settingsname+ "' Loaded...";
     } else {
@@ -2245,14 +2245,14 @@ void settingsRename(File selection)
     File originalname = new File(settingspath);
     File newname = new File(newFile);
 
-    String nameold = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."));
+    String nameold = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."));
 
     settingsfolder = newname;
     settingspath = newFile;
     settingsname = selection.getName();
     originalname.renameTo(newname);
 
-    String namenew = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."));   
+    String namenew = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."));   
 
     if (gui == 3) {
       File prename = new File(nameold+".png");
@@ -2309,7 +2309,7 @@ void settingsRename(File selection)
 
 void settings_addtomulti()
 {
-  String multiblendpath = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend";
+  String multiblendpath = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend";
   commandLineOptions();
   py_Save(multiblendpath);
   add_tomulti = false;
@@ -2318,9 +2318,9 @@ void settings_addtomulti()
 
   loadNames_Multiblend(true);
 
-  newjsonManager(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+  newjsonManager(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
 
-  multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
+  multiblend_autorun(projectpath+"Autorun"+File.separator+projectname);
   info = "Saved: "+settingsname.substring(0, settingsname.lastIndexOf("."));
 }
 

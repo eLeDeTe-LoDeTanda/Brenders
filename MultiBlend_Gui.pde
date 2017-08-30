@@ -40,20 +40,20 @@ String frameprev = "1";
 
 boolean[] multiblend_renders= new boolean [] {true, false, false};
 
-String proyectname = "NO PROYECT OPEN";
+String projectname = "NO PROJECT OPEN";
 String[] multiblend_names = new String[24];
-String[] recentproyect = new String[6];
+String[] recentproject = new String[6];
 
-String proyectpath;
+String projectpath;
 
-File proyectfolder;
+File projectfolder;
 
 void multiBlend_Gui()
 {
   pushStyle();
 
-  pathname = proyectname;
-  if (proyectname.length() > 20) pathname = proyectname.substring(0, 10)+"..."+proyectname.substring(proyectname.length() - 10);
+  pathname = projectname;
+  if (projectname.length() > 20) pathname = projectname.substring(0, 10)+"..."+projectname.substring(projectname.length() - 10);
   surface.setTitle("MultiBlend -"+pathname+"- "+version);
   background(backgroundcolor);
   tint(230, 250, 230);
@@ -69,8 +69,8 @@ void multiBlend_Gui()
   rect(390, 34, 190, 25);
   fill(ccolor);
   textSize(16);
-  text(">>NEW PROYECT<<", 80, 53);
-  text(">>OPEN PROYECT<<", 400, 53);
+  text(">>NEW PROJECT<<", 80, 53);
+  text(">>OPEN PROJECT<<", 400, 53);
 
   textSize(14);
   text(">>RELOAD<<", 274, 49);
@@ -86,11 +86,12 @@ void multiBlend_Gui()
 
   if (multiblend_active) {
     fill(bcolor);
-    pathname = proyectname;
-    if (proyectname.length() > 20) pathname = proyectname.substring(0, 10)+"..."+proyectname.substring(proyectname.length() - 10);
+    pathname = projectname;
+    if (projectname.length() > 20) pathname = projectname.substring(0, 10)+"..."+projectname.substring(projectname.length() - 10);
     text(pathname, width / 2, 13);
-    text(">>OPEN Proyect Folder<<", width / 2, 95);
-    text(">>RENDER MANAGER<<", width / 2, 115);
+    text(">>OPEN Project Folder<<", width / 2, 95);
+    text(">>OPEN Recent projects<<", width / 2, 115);
+    text(">>RENDER MANAGER<<", width / 2, 135);
 
     fill(bcolor);
     rect(width / 2 - 25, 205, 50, 12);
@@ -181,27 +182,27 @@ void multiBlend_Gui()
   } else {
     fill(ecolor);
     textSize(16);
-    text("No Proyect Open", width / 2, 105);
+    text("No Project Open", width / 2, 105);
     fill(acolor);
     text("Recent:", width / 2, 200);
     fill(bcolor);
-    text(recentproyect[0].substring(recentproyect[0].lastIndexOf(File.separator) + 1), width / 2, 230);
-    text(recentproyect[1].substring(recentproyect[1].lastIndexOf(File.separator) + 1), width / 2, 250);
-    text(recentproyect[2].substring(recentproyect[2].lastIndexOf(File.separator) + 1), width / 2, 270);
-    text(recentproyect[3].substring(recentproyect[3].lastIndexOf(File.separator) + 1), width / 2, 290);
-    text(recentproyect[4].substring(recentproyect[4].lastIndexOf(File.separator) + 1), width / 2, 310);
-    text(recentproyect[5].substring(recentproyect[5].lastIndexOf(File.separator) + 1), width / 2, 330);
+    text(recentproject[0].substring(recentproject[0].lastIndexOf(File.separator) + 1), width / 2, 230);
+    text(recentproject[1].substring(recentproject[1].lastIndexOf(File.separator) + 1), width / 2, 250);
+    text(recentproject[2].substring(recentproject[2].lastIndexOf(File.separator) + 1), width / 2, 270);
+    text(recentproject[3].substring(recentproject[3].lastIndexOf(File.separator) + 1), width / 2, 290);
+    text(recentproject[4].substring(recentproject[4].lastIndexOf(File.separator) + 1), width / 2, 310);
+    text(recentproject[5].substring(recentproject[5].lastIndexOf(File.separator) + 1), width / 2, 330);
   } 
 
   popStyle();
 }
 
 
-boolean new_Proyect_Multiblend_() 
+boolean new_Project_Multiblend_() 
 {
   return  (mouseX > 65 && mouseX < 245 && mouseY > 35 && mouseY < 60);
 }
-boolean open_Proyect_Multiblend_() 
+boolean open_Project_Multiblend_() 
 {
   return  (mouseX > 390 && mouseX < 570 && mouseY > 35 && mouseY < 60);
 }
@@ -214,9 +215,13 @@ boolean open_folder_Multiblend_()
 {
   return  (mouseX > 270 && mouseX < 370 && mouseY > 80 && mouseY < 100);
 }
-boolean rendermanager_Multiblend_() 
+boolean open_recent_Multiblend_() 
 {
   return  (mouseX > 270 && mouseX < 370 && mouseY > 100 && mouseY < 120);
+}
+boolean rendermanager_Multiblend_() 
+{
+  return  (mouseX > 270 && mouseX < 370 && mouseY > 120 && mouseY < 140);
 }
 
 boolean go_Multiblend_() 
