@@ -44,12 +44,12 @@ void initvarMultiblend()
     String lines[] = loadStrings(dataPath("Preferences"+File.separator+"recent_Windows.txt"));
     for (int i = 0; i < lines.length; i++) {
       if (lines[i].contains("[Recent]")) {
-        recentproyect[0] = lines[i+1];
-        recentproyect[1] = lines[i+2];
-        recentproyect[2] = lines[i+3];
-        recentproyect[3] = lines[i+4];
-        recentproyect[4] = lines[i+5];
-        recentproyect[5] = lines[i+6];  
+        recentproject[0] = lines[i+1];
+        recentproject[1] = lines[i+2];
+        recentproject[2] = lines[i+3];
+        recentproject[3] = lines[i+4];
+        recentproject[4] = lines[i+5];
+        recentproject[5] = lines[i+6];  
         break;
       }
     }
@@ -71,12 +71,12 @@ void initvarMultiblend()
     String lines[] = loadStrings(dataPath("Preferences"+File.separator+"recent_Linux.txt"));
     for (int i = 0; i < lines.length; i++) {
       if (lines[i].contains("[Recent]")) {
-        recentproyect[0] = lines[i+1];
-        recentproyect[1] = lines[i+2];
-        recentproyect[2] = lines[i+3];
-        recentproyect[3] = lines[i+4];
-        recentproyect[4] = lines[i+5];
-        recentproyect[5] = lines[i+6];  
+        recentproject[0] = lines[i+1];
+        recentproject[1] = lines[i+2];
+        recentproject[2] = lines[i+3];
+        recentproject[3] = lines[i+4];
+        recentproject[4] = lines[i+5];
+        recentproject[5] = lines[i+6];  
         break;
       }
     }
@@ -94,19 +94,19 @@ void keyEventsMultiblend(String keypress)
 
 void mouseEventsMultiblend() 
 {
-  if (new_Proyect_Multiblend_()) {
-    selectOutput("Select path and proyect name:", "newProyect", proyectfolder);
+  if (new_Project_Multiblend_()) {
+    selectOutput("Select path and project name:", "newProject", projectfolder);
   }
-  if (open_Proyect_Multiblend_()) {
-    selectInput("Select proyect:", "openProyect", proyectfolder);
+  if (open_Project_Multiblend_()) {
+    selectInput("Select project:", "openProject", projectfolder);
   }
   if (multiblend_active) {
     if (multiblend_files > 0) {
       if (orderL_Multiblend_() ) {
         order = constrain(order - 1, 0, multiblend_files - 1);
         String path;
-        if (finalrenders) path = proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
-        else path = proyectpath+"Options"+File.separator+multiblend_names[order]+"_preview.multiblend";
+        if (finalrenders) path = projectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
+        else path = projectpath+"Options"+File.separator+multiblend_names[order]+"_preview.multiblend";
 
         loadPy(path);
 
@@ -123,8 +123,8 @@ void mouseEventsMultiblend()
       if (orderR_Multiblend_() ) {
         order = constrain(order + 1, 0, multiblend_files - 1);
         String path = "";
-        if (finalrenders) path = proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
-        else path = proyectpath+"Options"+File.separator+multiblend_names[order]+"_preview.multiblend";
+        if (finalrenders) path = projectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
+        else path = projectpath+"Options"+File.separator+multiblend_names[order]+"_preview.multiblend";
 
         loadPy(path);
 
@@ -151,7 +151,7 @@ void mouseEventsMultiblend()
     }
     if (open_folder_Multiblend_()) {
       info = "*Opening...";
-      String cmd[] = {managerpath, proyectpath};
+      String cmd[] = {managerpath, projectpath};
       exec(cmd);
     }
     if (rendermanager_Multiblend_()) {
@@ -162,27 +162,27 @@ void mouseEventsMultiblend()
         if (multiblend_renders[0]) {
           loadNames_Multiblend(false);
           if (os == "WINDOWS") {
-            multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
+            multiblend_autorun(projectpath+"Autorun"+File.separator+projectname);
             if (finalrenders) {
-              String cmd[]= {terminalpath, "/c", "start", "/w", proyectpath+"Autorun"+File.separator+proyectname+".bat"};
+              String cmd[]= {terminalpath, "/c", "start", "/w", projectpath+"Autorun"+File.separator+projectname+".bat"};
               exec(cmd);
             } else {
               editoptions = false;
               py_Save_multiblend();
-              multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
+              multiblend_autorun(projectpath+"Autorun"+File.separator+projectname);
 
-              String cmd[]= {terminalpath, "/c", "start", "/w", proyectpath+"Autorun"+File.separator+proyectname+"_preview.bat"};
+              String cmd[]= {terminalpath, "/c", "start", "/w", projectpath+"Autorun"+File.separator+projectname+"_preview.bat"};
               exec(cmd);
             }
           } else {
-            multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
+            multiblend_autorun(projectpath+"Autorun"+File.separator+projectname);
             if (finalrenders) {
-              String cmd[] = {terminalpath, "-e", proyectpath+"Autorun"+File.separator+proyectname+".sh"};
+              String cmd[] = {terminalpath, "-e", projectpath+"Autorun"+File.separator+projectname+".sh"};
               exec(cmd);
             } else {
               editoptions = false;
 
-              String cmd[] = {terminalpath, "-e", proyectpath+"Autorun"+File.separator+proyectname+"_preview.sh"};
+              String cmd[] = {terminalpath, "-e", projectpath+"Autorun"+File.separator+projectname+"_preview.sh"};
               exec(cmd);
             }
           }
@@ -195,30 +195,30 @@ void mouseEventsMultiblend()
           String order_name[] = new String[multiblend_files];
           for (int x = 0; x < order_name.length; x++) {
             String path = "";
-            if (finalrenders) path = proyectpath+"Options"+File.separator+multiblend_names[x]+".multiblend";
-            else  path = proyectpath+"Options"+File.separator+multiblend_names[x]+"_preview.multiblend";
+            if (finalrenders) path = projectpath+"Options"+File.separator+multiblend_names[x]+".multiblend";
+            else  path = projectpath+"Options"+File.separator+multiblend_names[x]+"_preview.multiblend";
             loadPy(path);
             settingsname = path.substring(path.lastIndexOf(File.separator) + 1);
             py_Save_multiblend();
           }
-          multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
+          multiblend_autorun(projectpath+"Autorun"+File.separator+projectname);
 
           if (os == "WINDOWS") {
             if (finalrenders) {
-              String cmd[]= {terminalpath, "/c", "start", "/w", proyectpath+"Autorun"+File.separator+proyectname+"_bads.bat"};
+              String cmd[]= {terminalpath, "/c", "start", "/w", projectpath+"Autorun"+File.separator+projectname+"_bads.bat"};
               exec(cmd);
             } else {
               editoptions = false;
-              String cmd[]= {terminalpath, "/c", "start", "/w", proyectpath+"Autorun"+File.separator+proyectname+"_bads-preview.bat"};
+              String cmd[]= {terminalpath, "/c", "start", "/w", projectpath+"Autorun"+File.separator+projectname+"_bads-preview.bat"};
               exec(cmd);
             }
           } else {
             if (finalrenders) {
-              String cmd[] = {terminalpath, "-e", proyectpath+"Autorun"+File.separator+proyectname+"_bads.sh"};
+              String cmd[] = {terminalpath, "-e", projectpath+"Autorun"+File.separator+projectname+"_bads.sh"};
               exec(cmd);
             } else {
               editoptions = false;
-              String cmd[]= {terminalpath, "-e", proyectpath+"Autorun"+File.separator+proyectname+"_bads-preview.sh"};
+              String cmd[]= {terminalpath, "-e", projectpath+"Autorun"+File.separator+projectname+"_bads-preview.sh"};
               exec(cmd);
             }
           }
@@ -231,30 +231,30 @@ void mouseEventsMultiblend()
           for (int x = 0; x < order_name.length; x++) {
             renderorder = x;
             String path = "";
-            if (finalrenders) path = proyectpath+"Options"+File.separator+multiblend_names[x]+".multiblend";
-            else  path = proyectpath+"Options"+File.separator+multiblend_names[x]+"_preview.multiblend";
+            if (finalrenders) path = projectpath+"Options"+File.separator+multiblend_names[x]+".multiblend";
+            else  path = projectpath+"Options"+File.separator+multiblend_names[x]+"_preview.multiblend";
             loadPy(path);
             settingsname = path.substring(path.lastIndexOf(File.separator) + 1);
             py_Save_multiblend();
           }
-          multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
+          multiblend_autorun(projectpath+"Autorun"+File.separator+projectname);
 
           if (os == "WINDOWS") {
             if (finalrenders) {
-              String cmd[]= {terminalpath, "/c", "start", "/w", proyectpath+"Autorun"+File.separator+proyectname+"_continue.bat"};
+              String cmd[]= {terminalpath, "/c", "start", "/w", projectpath+"Autorun"+File.separator+projectname+"_continue.bat"};
               exec(cmd);
             } else {
               editoptions = false;
-              String cmd[]= {terminalpath, "/c", "start", "/w", proyectpath+"Autorun"+File.separator+proyectname+"_continue-preview.bat"};
+              String cmd[]= {terminalpath, "/c", "start", "/w", projectpath+"Autorun"+File.separator+projectname+"_continue-preview.bat"};
               exec(cmd);
             }
           } else {
             if (finalrenders) {
-              String cmd[] = {terminalpath, "-e", proyectpath+"Autorun"+File.separator+proyectname+"_continue.sh"};
+              String cmd[] = {terminalpath, "-e", projectpath+"Autorun"+File.separator+projectname+"_continue.sh"};
               exec(cmd);
             } else {
               editoptions = false;
-              String cmd[] = {terminalpath, "-e", proyectpath+"Autorun"+File.separator+proyectname+"_continue-preview.sh"};
+              String cmd[] = {terminalpath, "-e", projectpath+"Autorun"+File.separator+projectname+"_continue-preview.sh"};
               exec(cmd);
             }
           }
@@ -267,7 +267,7 @@ void mouseEventsMultiblend()
         }
       } else {
         error = true;
-        info = "Proyect empty";
+        info = "Project empty";
       }
     }
     if (multiblend_files > 0) {
@@ -275,7 +275,7 @@ void mouseEventsMultiblend()
         multiblend_selectinorder();
         if (os == "WINDOWS") {
           try {
-            String cmd[] = {texteditorpath, proyectpath+proyectname+".brenders"};
+            String cmd[] = {texteditorpath, projectpath+projectname+".brenders"};
             Process proc = Runtime.getRuntime().exec(cmd);
             proc.waitFor();
           } 
@@ -284,7 +284,7 @@ void mouseEventsMultiblend()
           }
         } else {
           try {
-            String cmd[] = {terminalpath, "-e", texteditorpath, proyectpath+proyectname+".brenders"};
+            String cmd[] = {terminalpath, "-e", texteditorpath, projectpath+projectname+".brenders"};
             Process proc = Runtime.getRuntime().exec(cmd);
             proc.waitFor();
           } 
@@ -297,7 +297,7 @@ void mouseEventsMultiblend()
         info = "'RELOADED' new order";
       }
       if (rename_Multiblend_()) {
-        String multiblendpath = proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
+        String multiblendpath = projectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
         loadPy(multiblendpath);
         settingspath = multiblendpath;
         settingsfolder = new File(multiblendpath);
@@ -308,7 +308,7 @@ void mouseEventsMultiblend()
         selectOutput("New name: "+settingsname, "settingsRename", settingsfolder);
       }
       if (delete_Multiblend_()) {
-        String multiblendpath = proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
+        String multiblendpath = projectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
         loadPy(multiblendpath);
         settingspath = multiblendpath;
         settingsfolder = new File(multiblendpath);
@@ -340,7 +340,7 @@ void mouseEventsMultiblend()
       }
       if (blendpre_Multiblend_()) {
         if (int(frameprev) <= 0) frameprev = "1";
-        loadPy(proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend");
+        loadPy(projectpath+"Options"+File.separator+multiblend_names[order]+".multiblend");
         multiblend_pre();
       }
       if (framepre_Multiblend_()) {
@@ -356,7 +356,7 @@ void mouseEventsMultiblend()
         gui = 1;
       }
       if (final_Multiblend_()) {
-        String multiblendpath = proyectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
+        String multiblendpath = projectpath+"Options"+File.separator+multiblend_names[order]+".multiblend";
         loadPy(multiblendpath);
         settingspath = multiblendpath;
         settingsfolder = new File(multiblendpath);
@@ -369,19 +369,19 @@ void mouseEventsMultiblend()
         loadNames_Multiblend(false);
         String order_name[] = new String[multiblend_files];
         for (int x = 0; x < order_name.length; x++) {
-          String path = proyectpath+"Options"+File.separator+multiblend_names[x]+".multiblend";
+          String path = projectpath+"Options"+File.separator+multiblend_names[x]+".multiblend";
           loadPy(path);
           settingsname = path.substring(path.lastIndexOf(File.separator) + 1);
           py_Save_multiblend();
         }
 
-        String multiblendpath = proyectpath+"Options"+File.separator+multiblend_names[order]+"_preview.multiblend";
+        String multiblendpath = projectpath+"Options"+File.separator+multiblend_names[order]+"_preview.multiblend";
         loadPy(multiblendpath);
         settingspath = multiblendpath;
         settingsfolder = new File(multiblendpath);
         settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
         editoptions = true;
-        multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
+        multiblend_autorun(projectpath+"Autorun"+File.separator+projectname);
       }
       if (editpreview_Multiblend_()) {
         if (!finalrenders) {
@@ -394,50 +394,56 @@ void mouseEventsMultiblend()
   } else if (recent_Multiblend_()) {
     int Y = floor(map(mouseY, 215, 320, 0, 5));
 
-    String path = recentproyect[Y]; 
-    if (path.endsWith(".brenders")) {
-      proyectpath = path; 
-      proyectname = path.substring(path.lastIndexOf(File.separator) + 1, path.lastIndexOf("."));
-      proyectpath = proyectpath.substring(0, proyectpath.lastIndexOf(File.separator) + 1);
-      loadNames_Multiblend(false);
+    String path = recentproject[Y]; 
+    File f = new File(path);
+    if (f.exists()) {
+      if (path.endsWith(".brenders")) {
+        projectpath = path; 
+        projectname = path.substring(path.lastIndexOf(File.separator) + 1, path.lastIndexOf("."));
+        projectpath = projectpath.substring(0, projectpath.lastIndexOf(File.separator) + 1);
+        loadNames_Multiblend(false);
 
-      String multiblendpath;
-      for (int i = 0; i < multiblend_files; i++) {
-        multiblendpath = proyectpath+"Options"+File.separator+multiblend_names[i]+".multiblend";
+        String multiblendpath;
+        for (int i = 0; i < multiblend_files; i++) {
+          multiblendpath = projectpath+"Options"+File.separator+multiblend_names[i]+".multiblend";
 
-        loadPy(multiblendpath);
-        settingspath = multiblendpath;
-        settingsfolder = new File(multiblendpath);
-        settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
-        savefromblend(true);
-        loadfromblend();
+          loadPy(multiblendpath);
+          settingspath = multiblendpath;
+          settingsfolder = new File(multiblendpath);
+          settingsname = multiblendpath.substring(multiblendpath.lastIndexOf(File.separator) + 1);
+          savefromblend(true);
+          loadfromblend();
+        }
+        precheck();
       }
-      precheck();
+    } else {
+      error = true;
+      info = "Project not available!";
     }
   }
 }
 
 
-void newProyect(File selection) 
+void newProject(File selection) 
 {
   if (selection != null) {
-    proyectpath = selection.getAbsolutePath()+File.separator;
-    proyectname = selection.getName();
+    projectpath = selection.getAbsolutePath()+File.separator;
+    projectname = selection.getName();
 
-    File folder = new File(proyectpath);
+    File folder = new File(projectpath);
     folder.mkdir();
-    folder = new File(proyectpath+"Options");
+    folder = new File(projectpath+"Options");
     folder.mkdir();
-    folder = new File(proyectpath+"Autorun");
+    folder = new File(projectpath+"Autorun");
     folder.mkdir();
-    folder = new File(proyectpath+"Manager");
+    folder = new File(projectpath+"Manager");
     folder.mkdir();
-    folder = new File(proyectpath+"Logs");
+    folder = new File(projectpath+"Logs");
     folder.mkdir();
 
-    write = createWriter(proyectpath+proyectname+".brenders");
-    write.println("[Proyect Name]");
-    write.println(proyectname);
+    write = createWriter(projectpath+projectname+".brenders");
+    write.println("[Project Name]");
+    write.println(projectname);
     write.println();
     write.println("[Order]");
 
@@ -447,29 +453,29 @@ void newProyect(File selection)
     multiblend_files = 0;
     multiblend_active = true;
 
-    info = "New proyect created!";
+    info = "New project created!";
 
-    addrecentproyect();
+    addrecentproject();
   }
   redraw();
 }
 
 
-void openProyect(File selection) 
+void openProject(File selection) 
 {
   if (selection != null) {
     String path = selection.getAbsolutePath(); 
     if (path.endsWith(".brenders")) { 
-      proyectpath = selection.getAbsolutePath(); 
-      proyectname = selection.getName();
-      proyectname = proyectname.substring(0, proyectname.lastIndexOf("."));
-      proyectpath = proyectpath.substring(0, proyectpath.lastIndexOf(File.separator)+1);
+      projectpath = selection.getAbsolutePath(); 
+      projectname = selection.getName();
+      projectname = projectname.substring(0, projectname.lastIndexOf("."));
+      projectpath = projectpath.substring(0, projectpath.lastIndexOf(File.separator)+1);
 
       loadNames_Multiblend(false);
 
       String multiblendpath;
       for (int i = 0; i < multiblend_files; i++) {
-        multiblendpath = proyectpath+"Options"+File.separator+multiblend_names[i]+".multiblend";
+        multiblendpath = projectpath+"Options"+File.separator+multiblend_names[i]+".multiblend";
 
         loadPy(multiblendpath);
         settingspath = multiblendpath;
@@ -479,7 +485,7 @@ void openProyect(File selection)
         loadfromblend();
       }
       precheck();
-      addrecentproyect();
+      addrecentproject();
     } else {
       error = true;
       info = "*Warning No '.brenders' selected";
@@ -495,7 +501,7 @@ void loadNames_Multiblend(boolean addmulti)
   multiblend_active = true;
   multiblend_files = 0;
 
-  String lines[] = loadStrings(proyectpath+proyectname+".brenders");
+  String lines[] = loadStrings(projectpath+projectname+".brenders");
   int x = 0;
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].contains(".multiblend")) {
@@ -505,13 +511,13 @@ void loadNames_Multiblend(boolean addmulti)
       x = x + 1;
     }
   }
-  info = proyectname;
+  info = projectname;
 }
 
 
 void multiblend_import(String path)
 {
-  String multiblendpath = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend";
+  String multiblendpath = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend";
   File f = new File(multiblendpath);
 
   if (path.endsWith(".txt")) {
@@ -541,10 +547,10 @@ void multiblend_import(String path)
   savefromblend(false);
   loadfromblend();
 
-  newjsonManager(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
-  newjsonManager(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.Manager");
+  newjsonManager(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+  newjsonManager(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.Manager");
 
-  multiblend_autorun(proyectpath+"Autorun"+File.separator+proyectname);
+  multiblend_autorun(projectpath+"Autorun"+File.separator+projectname);
 
   precheck();
 }
@@ -552,7 +558,7 @@ void multiblend_import(String path)
 
 void multiblend_rename()
 {
-  String path = proyectpath+proyectname+".brenders";
+  String path = projectpath+projectname+".brenders";
   String lines[] = loadStrings(path);
   write = createWriter(path);
   int x = 0;
@@ -578,32 +584,33 @@ void multiblend_delete()
 
   File f = new File(settingspath);
   f.delete();
-  f = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
+  f = new File(projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
   f.delete();
-  f = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.multiblend");
+  f = new File(projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.multiblend");
   f.delete();
-  f = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_continue.multiblend");
+  f = new File(projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_continue.multiblend");
   f.delete();
-  f = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_bads.multiblend");
+  f = new File(projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_bads.multiblend");
   f.delete();
-  f = new File(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+  f = new File(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
   f.delete();
-  f = new File(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.Manager");
+  f = new File(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.Manager");
   f.delete();
-  f = new File(proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".txt");
+  f = new File(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".txt");
   f.delete();
 
-  File dir = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")));
+  File dir = new File(projectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")));
   if (dir.exists()) {
     String[] files = dir.list();
     for (int x = 0; x < files.length; x++) {
-      f = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+files[x]);
+      f = new File(projectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+files[x]);
       if (f.exists()) f.delete();
     }
-    f = new File(proyectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")));
+    f = new File(projectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")));
     if (f.exists()) f.delete();
   }
-  String path = proyectpath+proyectname+".brenders";
+
+  String path = projectpath+projectname+".brenders";
   String lines[] = loadStrings(path);
   write = createWriter(path);
   int x = 0;
@@ -626,7 +633,7 @@ void multiblend_delete()
 
 void multiblend_addinorder(boolean add)
 {
-  String path = proyectpath+proyectname+".brenders";
+  String path = projectpath+projectname+".brenders";
   String[] lines = loadStrings(path);
 
   write = createWriter(path);
@@ -639,7 +646,7 @@ void multiblend_addinorder(boolean add)
     if (lines[i].contains(".multiblend")) {
       String multipath = trim(lines[i].substring(0, lines[i].lastIndexOf(".multiblend") + 11));
 
-      File f = new File(proyectpath+"Options"+File.separator+multipath);
+      File f = new File(projectpath+"Options"+File.separator+multipath);
 
       if (f.exists()) write.println(multipath);
     }
@@ -655,7 +662,7 @@ void multiblend_selectinorder()
 {
   loadNames_Multiblend(false);
 
-  String path = proyectpath+proyectname+".brenders";
+  String path = projectpath+projectname+".brenders";
   String lines[] = loadStrings(path);
   write = createWriter(path);
   int x = 0;
@@ -676,7 +683,7 @@ void multiblend_selectinorder()
 
 void multiblend_autorun(String path)
 {   
-  String lines[] = loadStrings(proyectpath+proyectname+".brenders");
+  String lines[] = loadStrings(projectpath+projectname+".brenders");
   String order_name[] = new String[multiblend_files];
   int x = 0;
   for (int i = 0; i < lines.length; i++) {
@@ -708,13 +715,13 @@ void multiblend_autorun(String path)
     write.println("@ECHO -");
     write.println("@ECHO RENDERING...");
     write.println("@ECHO -");
-    write.println("@ECHO ---------- %date:~10,4%-%date:~4,2%-%date:~7,2% ---------- >> "+'"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"'); 
+    write.println("@ECHO ---------- %date:~10,4%-%date:~4,2%-%date:~7,2% ---------- >> "+'"'+projectpath+"Manager"+File.separator+"RenderStatus.log"+'"'); 
     for (int a = 0; a < order_name.length; a++) {
-      if (finalrenders) loadPy(proyectpath+"Options"+File.separator+order_name[a]);
-      else loadPy(proyectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_preview.multiblend");
-      write.println("@ECHO %time:~0,2%:%time:~3,2%:%time:~6,2% Start: "+order_name[a]+">> "+'"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');
+      if (finalrenders) loadPy(projectpath+"Options"+File.separator+order_name[a]);
+      else loadPy(projectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_preview.multiblend");
+      write.println("@ECHO %time:~0,2%:%time:~3,2%:%time:~6,2% Start: "+order_name[a]+">> "+'"'+projectpath+"Manager"+File.separator+"RenderStatus.log"+'"');
 
-      write.println("@ECHO Log: %date:~10,4%-%date:~4,2%-%date:~7,2%_%time:~0,2%:%time:~3,2%:%time:~6,2%_"+order_name[a].substring(0, order_name[a].lastIndexOf("."))+".log >> "+'"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');  
+      write.println("@ECHO Log: %date:~10,4%-%date:~4,2%-%date:~7,2%_%time:~0,2%:%time:~3,2%:%time:~6,2%_"+order_name[a].substring(0, order_name[a].lastIndexOf("."))+".log >> "+'"'+projectpath+"Manager"+File.separator+"RenderStatus.log"+'"');  
       write.println();
       write.print("call ");
       write.print('"'+blenderpath+'"');
@@ -724,23 +731,23 @@ void multiblend_autorun(String path)
       write.print(" -P ");
       if (multiblend_renders[0]) {
         if (finalrenders) {
-          write.print('"'+proyectpath+"Options"+File.separator+order_name[a]+'"');
+          write.print('"'+projectpath+"Options"+File.separator+order_name[a]+'"');
         } else {
-          write.print('"'+proyectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_preview.multiblend"+'"');
+          write.print('"'+projectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_preview.multiblend"+'"');
         }
       } else if (multiblend_renders[1]) {
-        if (finalrenders) write.print('"'+proyectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_bads.multiblend"+'"');
-        else write.print('"'+proyectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_bads-preview.multiblend"+'"');
+        if (finalrenders) write.print('"'+projectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_bads.multiblend"+'"');
+        else write.print('"'+projectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_bads-preview.multiblend"+'"');
       } else if (multiblend_renders[2]) {
-        if (finalrenders)  write.print('"'+proyectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_continue.multiblend"+'"');
-        else write.print('"'+proyectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_continue-preview.multiblend"+'"');
+        if (finalrenders)  write.print('"'+projectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_continue.multiblend"+'"');
+        else write.print('"'+projectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_continue-preview.multiblend"+'"');
       }
-      write.println(" > "+'"'+proyectpath+"Logs"+File.separator+"%date:~10,4%-%date:~4,2%-%date:~7,2%_%time:~0,2%:%time:~3,2%:%time:~6,2%_"+order_name[a].substring(0, order_name[a].lastIndexOf("."))+".log"+'"');
+      write.println(" > "+'"'+projectpath+"Logs"+File.separator+"%date:~10,4%-%date:~4,2%-%date:~7,2%_%time:~0,2%:%time:~3,2%:%time:~6,2%_"+order_name[a].substring(0, order_name[a].lastIndexOf("."))+".log"+'"');
       write.println();
-      write.println("@ECHO %time:~0,2%:%time:~3,2%:%time:~6,2% Finish: "+order_name[a]+" >> "+'"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');  
+      write.println("@ECHO %time:~0,2%:%time:~3,2%:%time:~6,2% Finish: "+order_name[a]+" >> "+'"'+projectpath+"Manager"+File.separator+"RenderStatus.log"+'"');  
       write.println();
     }   
-    write.println("@ECHO ------------------------------- >> "+'"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"'); 
+    write.println("@ECHO ------------------------------- >> "+'"'+projectpath+"Manager"+File.separator+"RenderStatus.log"+'"'); 
     write.println("@ECHO -");
     write.println("@ECHO FINISH!");
     write.println("@ECHO -");
@@ -767,16 +774,16 @@ void multiblend_autorun(String path)
     write.println("# Command Line:");
     write.println();
     write.print("echo ---------- $(date +'%Y-%m-%d') ---------- 2>&1 | tee -a ");
-    write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
+    write.println('"'+projectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
 
     for (int a = 0; a < order_name.length; a++) {
-      if (finalrenders) loadPy(proyectpath+"Options"+File.separator+order_name[a]);
-      else loadPy(proyectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_preview.multiblend");
+      if (finalrenders) loadPy(projectpath+"Options"+File.separator+order_name[a]);
+      else loadPy(projectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_preview.multiblend");
 
       write.print("echo $(date +'%H:%M:%S') Start: "+order_name[a]+" 2>&1 | tee -a ");
-      write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');    
+      write.println('"'+projectpath+"Manager"+File.separator+"RenderStatus.log"+'"');    
       write.print("echo Log: $(date +'%Y-%m-%d_%H:%M:%S_')"+order_name[a].substring(0, order_name[a].lastIndexOf("."))+".log"+" 2>&1 | tee -a ");
-      write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');  
+      write.println('"'+projectpath+"Manager"+File.separator+"RenderStatus.log"+'"');  
       write.println();
       write.print('"'+blenderpath+'"');
       if (!oglrenders) write.print(" -b ");
@@ -785,26 +792,26 @@ void multiblend_autorun(String path)
       write.print(" -P ");
       if (multiblend_renders[0]) {
         if (finalrenders) {
-          write.print('"'+proyectpath+"Options"+File.separator+order_name[a]+'"');
+          write.print('"'+projectpath+"Options"+File.separator+order_name[a]+'"');
         } else {
-          write.print('"'+proyectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_preview.multiblend"+'"');
+          write.print('"'+projectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_preview.multiblend"+'"');
         }
       } else if (multiblend_renders[1]) {
-        if (finalrenders) write.print('"'+proyectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_bads.multiblend"+'"');
-        else write.print('"'+proyectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_bads-preview.multiblend"+'"');
+        if (finalrenders) write.print('"'+projectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_bads.multiblend"+'"');
+        else write.print('"'+projectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_bads-preview.multiblend"+'"');
       } else if (multiblend_renders[2]) {
-        if (finalrenders)  write.print('"'+proyectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_continue.multiblend"+'"');
-        else write.print('"'+proyectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_continue-preview.multiblend"+'"');
+        if (finalrenders)  write.print('"'+projectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_continue.multiblend"+'"');
+        else write.print('"'+projectpath+"Options"+File.separator+order_name[a].substring(0, order_name[a].lastIndexOf("."))+"_continue-preview.multiblend"+'"');
       }
       write.print(" 2>&1 | tee ");
-      write.println('"'+proyectpath+"Logs"+File.separator+"$(date +'%Y-%m-%d_%H:%M:%S_')"+order_name[a].substring(0, order_name[a].lastIndexOf("."))+".log"+'"');
+      write.println('"'+projectpath+"Logs"+File.separator+"$(date +'%Y-%m-%d_%H:%M:%S_')"+order_name[a].substring(0, order_name[a].lastIndexOf("."))+".log"+'"');
       write.println();
       write.print("echo $(date +'%H:%M:%S') Finish: "+order_name[a]+" 2>&1 | tee -a ");
-      write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
+      write.println('"'+projectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
       write.println();
     }
     write.print("echo ------------------------------- 2>&1 | tee -a ");
-    write.println('"'+proyectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
+    write.println('"'+projectpath+"Manager"+File.separator+"RenderStatus.log"+'"');   
 
     write.flush();
     write.close();
@@ -841,22 +848,22 @@ void multiblend_autorun(String path)
 void py_Save_multiblend()
 {
   String path = "";
-  if (finalrenders) path = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend";
+  if (finalrenders) path = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend";
   else {
-    if (settingsname.substring(0, settingsname.lastIndexOf(".")).contains("_preview")) path = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("_"))+"_preview.multiblend";
-    else path = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.multiblend";
+    if (settingsname.substring(0, settingsname.lastIndexOf(".")).contains("_preview")) path = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("_"))+"_preview.multiblend";
+    else path = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.multiblend";
   }
   if (multiblend_renders[1]) {
-    if (finalrenders) path = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_bads.multiblend";
+    if (finalrenders) path = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_bads.multiblend";
     else {
-      if (settingsname.substring(0, settingsname.lastIndexOf(".")).contains("_preview")) path = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("_"))+"_bads-preview.multiblend";
-      else path = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_bads-preview.multiblend";
+      if (settingsname.substring(0, settingsname.lastIndexOf(".")).contains("_preview")) path = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("_"))+"_bads-preview.multiblend";
+      else path = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_bads-preview.multiblend";
     }
   } else if (multiblend_renders[2]) {
-    if (finalrenders) path = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_continue.multiblend";
+    if (finalrenders) path = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_continue.multiblend";
     else {
-      if (settingsname.substring(0, settingsname.lastIndexOf(".")).contains("_preview")) path = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("_"))+"_continue-preview.multiblend";
-      else path = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_continue-preview.multiblend";
+      if (settingsname.substring(0, settingsname.lastIndexOf(".")).contains("_preview")) path = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("_"))+"_continue-preview.multiblend";
+      else path = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_continue-preview.multiblend";
     }
   }
 
@@ -1098,8 +1105,8 @@ void py_Save_multiblend()
   if (multiblend_renders[1]) {
     for (int i = 0; i <= int(valoption[frame_end_id]) - int(valoption[frame_start_id]); i++) {
       String jsonpath = "";
-      if (finalrenders) jsonpath = proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager";
-      else jsonpath = proyectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.Manager";
+      if (finalrenders) jsonpath = projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager";
+      else jsonpath = projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.Manager";
 
       if (loadJsonManager(i, jsonpath).equals("bad")) {
         write.println();
@@ -1122,12 +1129,12 @@ void py_Save_multiblend()
     String lastframe ="0";
     String logpath ="";
 
-    String lineslog[] = loadStrings(proyectpath+"Manager"+File.separator+"RenderStatus.log");
+    String lineslog[] = loadStrings(projectpath+"Manager"+File.separator+"RenderStatus.log");
 
     for (int e = 0; e < lineslog.length; e++) {
       int i = lineslog.length - 1 - e;
       if (lineslog[i].startsWith("Log:")) {
-        logpath = proyectpath+"Logs"+File.separator+trim(lineslog[i].substring(lineslog[i].indexOf(":") + 1));
+        logpath = projectpath+"Logs"+File.separator+trim(lineslog[i].substring(lineslog[i].indexOf(":") + 1));
         break;
       }
     }
@@ -1249,7 +1256,7 @@ void multiblend_pre()
   write.println("bpy.ops.render.opengl(view_context = False)");
   write.println();
 
-  String path = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png";
+  String path = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png";
   if (os == "WINDOWS") path = path.replace("\\", "/");
 
   write.println("bpy.data.images['Render Result'].save_render("+'"'+path+'"'+")");
@@ -1316,7 +1323,7 @@ void multiblend_pre()
       e.printStackTrace();
     }
   }
-  blendpre = loadImage(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
+  blendpre = loadImage(projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
 
   File f = new File (dataPath("tmp")+File.separator+"blend_prev.bat");
   f.delete();
@@ -1331,23 +1338,23 @@ void multiblend_pre()
 
 void precheck()
 {
-  File img = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
+  File img = new File(projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
   if (!img.exists()) blendpre = loadImage("Img"+File.separator+"None.png");
-  else  blendpre = loadImage(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
+  else  blendpre = loadImage(projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
 }
 
 
-void addrecentproyect()
+void addrecentproject()
 {
   if (os == "WINDOWS") {
     write = createWriter(dataPath("Preferences"+File.separator+"recent_Windows.txt"));
     write.println("[Recent]");
-    write.println(proyectpath+proyectname+".brenders");
-    write.println(recentproyect[0]);
-    write.println(recentproyect[1]);
-    write.println(recentproyect[2]);
-    write.println(recentproyect[3]);
-    write.println(recentproyect[4]);
+    write.println(projectpath+projectname+".brenders");
+    write.println(recentproject[0]);
+    write.println(recentproject[1]);
+    write.println(recentproject[2]);
+    write.println(recentproject[3]);
+    write.println(recentproject[4]);
 
     write.flush();
     write.close();
@@ -1355,12 +1362,12 @@ void addrecentproyect()
     String lines[] = loadStrings(dataPath("Preferences"+File.separator+"recent_Windows.txt"));
     for (int i = 0; i < lines.length; i++) {
       if (lines[i].contains("[Recent]")) {
-        recentproyect[0] = lines[i+1];
-        recentproyect[1] = lines[i+2];
-        recentproyect[2] = lines[i+3];
-        recentproyect[3] = lines[i+4];
-        recentproyect[4] = lines[i+5];
-        recentproyect[5] = lines[i+6];  
+        recentproject[0] = lines[i+1];
+        recentproject[1] = lines[i+2];
+        recentproject[2] = lines[i+3];
+        recentproject[3] = lines[i+4];
+        recentproject[4] = lines[i+5];
+        recentproject[5] = lines[i+6];  
         break;
       }
     }
@@ -1368,12 +1375,12 @@ void addrecentproyect()
     write = createWriter(dataPath("Preferences"+File.separator+"recent_Linux.txt"));
 
     write.println("[Recent]");
-    write.println(proyectpath+proyectname+".brenders");
-    write.println(recentproyect[0]);
-    write.println(recentproyect[1]);
-    write.println(recentproyect[2]);
-    write.println(recentproyect[3]);
-    write.println(recentproyect[4]);
+    write.println(projectpath+projectname+".brenders");
+    write.println(recentproject[0]);
+    write.println(recentproject[1]);
+    write.println(recentproject[2]);
+    write.println(recentproject[3]);
+    write.println(recentproject[4]);
 
     write.flush();
     write.close();
@@ -1381,12 +1388,12 @@ void addrecentproyect()
     String lines[] = loadStrings(dataPath("Preferences"+File.separator+"recent_Linux.txt"));
     for (int i = 0; i < lines.length; i++) {
       if (lines[i].contains("[Recent]")) {
-        recentproyect[0] = lines[i+1];
-        recentproyect[1] = lines[i+2];
-        recentproyect[2] = lines[i+3];
-        recentproyect[3] = lines[i+4];
-        recentproyect[4] = lines[i+5];
-        recentproyect[5] = lines[i+6];  
+        recentproject[0] = lines[i+1];
+        recentproject[1] = lines[i+2];
+        recentproject[2] = lines[i+3];
+        recentproject[3] = lines[i+4];
+        recentproject[4] = lines[i+5];
+        recentproject[5] = lines[i+6];  
         break;
       }
     }
