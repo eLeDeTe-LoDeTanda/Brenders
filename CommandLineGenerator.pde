@@ -281,7 +281,7 @@ void mouseEventsCommandLine ()
         write.close();
 
         exec(dataPath("")+File.separator+"tmp"+File.separator+"cmd.bat");
-       
+
         delay(100);
         File f = new File (dataPath("")+File.separator+"tmp"+File.separator+"cmd.bat");
         f.delete();
@@ -2245,16 +2245,50 @@ void settingsRename(File selection)
     File originalname = new File(settingspath);
     File newname = new File(newFile);
 
-    File prename = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
+    String nameold = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."));
 
     settingsfolder = newname;
     settingspath = newFile;
     settingsname = selection.getName();
     originalname.renameTo(newname);
 
+    String namenew = proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."));   
+
     if (gui == 3) {
-      File prenewname = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
+      File prename = new File(nameold+".png");
+      File prenewname = new File(namenew+".png");
       prename.renameTo(prenewname);
+      prename = new File(nameold+"_preview.multiblend");
+      prenewname = new File(namenew+"_preview.multiblend");
+      prename.renameTo(prenewname);
+      prename = new File(nameold+"_bads.multiblend");
+      prenewname = new File(namenew+"_bads.multiblend");
+      prename.renameTo(prenewname);
+      prename = new File(nameold+"_continue.multiblend");
+      prenewname = new File(namenew+"_continue.multiblend");
+      prename.renameTo(prenewname);   
+
+      nameold = nameold.replace("Options", "Manager");
+      namenew = namenew.replace("Options", "Manager");
+
+      prename = new File(nameold+".Manager");
+      prenewname = new File(namenew+".Manager");
+      prename.renameTo(prenewname);  
+      prename = new File(nameold+"_preview.Manager");
+      prenewname = new File(namenew+"_preview.Manager");
+      prename.renameTo(prenewname);  
+      prenewname = new File(namenew+".txt");
+      prename = new File(nameold+".txt");
+      prename.renameTo(prenewname);  
+      
+      nameold = nameold.replace("Manager", "Manager"+File.separator+"Previews");
+      namenew = namenew.replace("Manager", "Manager"+File.separator+"Previews");
+      println(nameold); 
+      println(namenew);
+      prename = new File(nameold);
+      prenewname = new File(namenew);
+      prename.renameTo(prenewname);  
+     
       multiblend_rename();
     }
 
@@ -2267,11 +2301,6 @@ void settingsRename(File selection)
         }
       }
       saveStrings(newname, lines);
-    }
-    if (gui == 3) {
-      multiblend_rename();
-      File prenewname = new File(proyectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".png");
-      prename.renameTo(prenewname);
     }
   }
   redraw();
