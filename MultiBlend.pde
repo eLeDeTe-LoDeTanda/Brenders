@@ -153,6 +153,7 @@ void mouseEventsMultiblend()
       }
     }
     if (import_Multiblend_()) {
+      final_renders = true;
       selectInput("Select your .py or commandline file", "settingsOpen", settings_folder);
     }
     if (open_folder_Multiblend_()) {
