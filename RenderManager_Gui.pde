@@ -55,30 +55,34 @@ void renderManager_Gui()
 
           if (frame_manager <= int(valoption[frame_end_id])) {
             fill(bcolor);
-            textSize(10);
-            text("Empty", 22 + x * 40, 50 + i * 30);
+            textSize(9);
+            text("Empty", 26 + x * 40, 46 + i * 30);
+            File render = new File(output_path+renders_name+nf(frame_manager, 4)+extensionName(valoption[file_format_id]));
+            if (render.exists()) {
+              prepath = project_path+"Manager"+File.separator+"Previews"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+File.separator+renders_name+nf(frame_manager, 4)+".png";
+              File img = new File(prepath);
+              if (!img.exists()) render_pre = loadImage("Img"+File.separator+"Manager-none.png");
+              else  render_pre = loadImage(prepath);
 
-            prepath = project_path+"Manager"+File.separator+"Previews"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+File.separator+renders_name+nf(frame_manager, 4)+".png";
-            File img = new File(prepath);
-            if (!img.exists()) render_pre = loadImage("Img"+File.separator+"Manager-none.png");
-            else  render_pre = loadImage(prepath);
+              image(render_pre, 20 + x * 40, 32 + i * 30);
 
-            image(render_pre, 20 + x * 40, 32 + i * 30);
+              fill(acolor);
+              textSize(8);
+              String jsonpath = "";
+              if (final_renders) jsonpath = project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+".manager";
+              else jsonpath = project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+"_preview.manager";
 
+              if (loadJsonManager(frame_manager, jsonpath).equals("good")) {
+                fill(ccolor);
+                text("Good", 23 + x * 40, 52 + i * 30);
+              } else if (loadJsonManager(frame_manager, jsonpath).equals("bad")) {
+                fill(ecolor);
+                text("Bad", 23 + x * 40, 52 + i * 30);
+              }
+            }
             fill(acolor);
             textSize(8);
             text(nf(frame_manager, 5), 26 + x * 40, 60 + i * 30);
-            String jsonpath = "";
-            if (final_renders) jsonpath = project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+".manager";
-            else jsonpath = project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+"_preview.manager";
-
-            if (loadJsonManager(frame_manager, jsonpath).equals("good")) {
-              fill(ccolor);
-              text("Good", 23 + x * 40, 52 + i * 30);
-            } else if (loadJsonManager(frame_manager, jsonpath).equals("bad")) {
-              fill(ecolor);
-              text("Bad", 23 + x * 40, 52 + i * 30);
-            }
           }
         }
       }
@@ -98,9 +102,9 @@ void renderManager_Gui()
 
   text("-Selected Range:"+">"+nf(startframe_manager, 5)+"<"+" to "+">"+nf(endframe_manager, 5)+"<"+" | >ALL< |", 177, 345);
   fill(ccolor);
-    textSize(10);
+  textSize(10);
   text("Mouse buttoms: L: start frame, R: end frame, Center: open frame", 330, 333);
-   textSize(12);
+  textSize(12);
   text(">GOOD<", 385, 345);
   text(">OPEN folder<", 525, 345);
   fill(ecolor);
