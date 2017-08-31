@@ -104,7 +104,7 @@ void renderManager_Gui()
   text("-Selected Range:"+">"+nf(startframe_manager, 5)+"<"+" to "+">"+nf(endframe_manager, 5)+"<"+" | >ALL< |", 177, 345);
   fill(ccolor);
   textSize(10);
-  text("Mouse buttoms: L: start frame, R: end frame, Center: open frame", 330, 333);
+  text("Mouse buttons: L: start frame, R: end frame, Center: open frame", 330, 333);
   textSize(12);
   text(">GOOD<", 385, 345);
   text(">OPEN folder<", 525, 345);
