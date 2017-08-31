@@ -335,12 +335,14 @@ void mouseEventsMultiblend()
         multiblend_renders[0] = false;
         multiblend_renders[1] = true;
         multiblend_renders[2] = false;
+        py_Save_multiblend();
         info = "Rendering only bads frames";
       }
       if (continue_Multiblend_()) {
         multiblend_renders[0] = false;
         multiblend_renders[1] = false;
         multiblend_renders[2] = true;
+        py_Save_multiblend();
         info = "Continue rendering from last frame";
       }
       if (openblend_Multiblend_()) {
@@ -392,6 +394,7 @@ void mouseEventsMultiblend()
         String multiblendpath = project_path+"Options"+File.separator+multiblend_names[order]+"_preview.multiblend";
         File f = new File(multiblendpath);
         if (!f.exists()) py_Save_multiblend();
+        
         loadPy(multiblendpath);
         settings_path = multiblendpath;
         settings_folder = new File(multiblendpath);
