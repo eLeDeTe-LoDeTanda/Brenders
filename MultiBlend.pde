@@ -177,7 +177,6 @@ void mouseEventsMultiblend()
               exec(cmd);
             } else {
               editoptions = false;
-              py_Save_multiblend();
               multiblend_autorun(projectpath+"Autorun"+File.separator+projectname);
 
               String cmd[]= {terminalpath, "/c", "start", "/w", projectpath+"Autorun"+File.separator+projectname+"_preview.bat"};
@@ -208,7 +207,6 @@ void mouseEventsMultiblend()
             else  path = projectpath+"Options"+File.separator+multiblend_names[x]+"_preview.multiblend";
             loadPy(path);
             settingsname = path.substring(path.lastIndexOf(File.separator) + 1);
-            py_Save_multiblend();
           }
           multiblend_autorun(projectpath+"Autorun"+File.separator+projectname);
 
@@ -244,7 +242,6 @@ void mouseEventsMultiblend()
             else  path = projectpath+"Options"+File.separator+multiblend_names[x]+"_preview.multiblend";
             loadPy(path);
             settingsname = path.substring(path.lastIndexOf(File.separator) + 1);
-            py_Save_multiblend();
           }
           multiblend_autorun(projectpath+"Autorun"+File.separator+projectname);
 
@@ -326,6 +323,7 @@ void mouseEventsMultiblend()
         editoptions = false;
 
         multiblend_delete();
+        info = "Multiblend deleted!";
       }
       if (all_Multiblend_()) {
         multiblend_renders[0] = true;
@@ -385,10 +383,11 @@ void mouseEventsMultiblend()
           String path = projectpath+"Options"+File.separator+multiblend_names[x]+".multiblend";
           loadPy(path);
           settingsname = path.substring(path.lastIndexOf(File.separator) + 1);
-          py_Save_multiblend();
         }
 
         String multiblendpath = projectpath+"Options"+File.separator+multiblend_names[order]+"_preview.multiblend";
+        File f = new File(multiblendpath);
+        if (!f.exists()) py_Save_multiblend();
         loadPy(multiblendpath);
         settingspath = multiblendpath;
         settingsfolder = new File(multiblendpath);
@@ -1226,7 +1225,6 @@ void py_Save_multiblend()
   write.flush();
   write.close();
 }
-
 
 void multiblend_pre()
 {
