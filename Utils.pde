@@ -113,9 +113,9 @@ void menuBar()
   if (gui == 1) {
     textSize(14);
     fill(bcolor, 200);
-    pathname = settingsname;
-    if (settingsname.length() > 20) pathname = settingsname.substring(0, 10)+"..."+settingsname.substring(settingsname.length() - 10);
-    text(pathname, width / 2, 5);
+    path_name = settings_name;
+    if (settings_name.length() > 20) path_name = settings_name.substring(0, 10)+"..."+settings_name.substring(settings_name.length() - 10);
+    text(path_name, width / 2, 5);
     text("Command line generator", width / 2 + 230, 5);
     fill(ccolor);
   } else fill(bcolor, 100);

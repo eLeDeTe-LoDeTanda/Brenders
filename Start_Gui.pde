@@ -25,12 +25,10 @@
  * ***** END GPL LICENSE BLOCK *****
  */
 
-PImage startimg;
-
 void startGui()
 {
   surface.setTitle(version);
-  background(backgroundcolor);
+  background(background_color);
   image(bg, 0, 0);
   menuBar();
 

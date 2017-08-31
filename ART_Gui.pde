@@ -39,17 +39,17 @@ int s = 0;
 int ah = 0;
 int am = 0;
 int as = 0;
-int aniDuration;
+int ani_duration;
 
-boolean[] selectART = new boolean[6];
-String [] valART = new String[6];
+boolean[] select_ART = new boolean[6];
+String [] val_ART = new String[6];
 
 void ART_Gui()
 {
   pushStyle();
 
   surface.setTitle("ART -Approximate Render Time Calculator-");
-  background(backgroundcolor);
+  background(background_color);
   tint(220, 220, 230);
   image(bg3, 0, 0);
 
@@ -75,29 +75,29 @@ void ART_Gui()
   text("Approximate render time:", width / 2, height - 65);
   text("Time per frame:", width / 2, 70);
   textSize(14);
-  if (selectART[0]) fill(bcolor);
+  if (select_ART[0]) fill(bcolor);
   else  fill(acolor);
   text(">>H: "+H+"<<", width / 2, 90);
-  if (selectART[1]) fill(bcolor);
+  if (select_ART[1]) fill(bcolor);
   else  fill(acolor);
   text(">>M: "+M+"<<", width / 2, 110);
-  if (selectART[2]) fill(bcolor);
+  if (select_ART[2]) fill(bcolor);
   else  fill(acolor);
   text(">>S: "+S+"<<", width / 2, 130);
-  if (selectART[3]) fill(bcolor);
+  if (select_ART[3]) fill(bcolor);
   else  fill(acolor);
   text(">>FRAMES: "+frames+"<<", width/ 2, 150);
-  if (selectART[4]) fill(bcolor);
+  if (select_ART[4]) fill(bcolor);
   else  fill(acolor);
   text(">>FPS: "+fps+"<<", width / 2, 170);
-  if (selectART[5]) fill(bcolor);
+  if (select_ART[5]) fill(bcolor);
   else  fill(acolor);
   text(">>CPU: "+cpu+"<<", width / 2, 190);
 
   fill(acolor);
   text("Animation:", width / 2, height - 115);
 
-  aniDuration = frames / fps;
+  ani_duration = frames / fps;
 
   if (cpu > frames) {
     cpu = frames;
@@ -112,8 +112,8 @@ void ART_Gui()
   d = h / 24;
   h = h % 24;
 
-  as = aniDuration % 60;
-  am = aniDuration/60;
+  as = ani_duration % 60;
+  am = ani_duration/60;
   ah = am / 60;
   am = am % 60;
 

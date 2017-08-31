@@ -51,11 +51,11 @@ void initVarCommandLine (String os)
     }
     String lines[] = loadStrings(dataPath("Preferences"+File.separator+"extern_Windows.txt"));
     for (int i = 0; i < lines.length; i++) {
-      if (lines[i].contains("[Terminal]")) terminalpath = lines[i+1];
-      else if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
-      else if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
-      else if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
-      else if (lines[i].contains("[ImageViewer]")) imageviewerpath = lines[i+1];
+      if (lines[i].contains("[Terminal]")) terminal_path = lines[i+1];
+      else if (lines[i].contains("[TextEditor]")) text_editor_path = lines[i+1];
+      else if (lines[i].contains("[FileManager]")) manager_path = lines[i+1];
+      else if (lines[i].contains("[Blender]")) blender_path = lines[i+1];
+      else if (lines[i].contains("[ImageViewer]")) image_viewer_path = lines[i+1];
     }
   } else {
     File f = new File(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
@@ -81,39 +81,39 @@ void initVarCommandLine (String os)
     }
     String lines[] = loadStrings(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
     for (int i = 0; i < lines.length; i++) {
-      if (lines[i].contains("[Terminal]")) terminalpath = lines[i+1];
-      else if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
-      else if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
-      else if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
-      else if (lines[i].contains("[ImageViewer]")) imageviewerpath = lines[i+1];
+      if (lines[i].contains("[Terminal]")) terminal_path = lines[i+1];
+      else if (lines[i].contains("[TextEditor]")) text_editor_path = lines[i+1];
+      else if (lines[i].contains("[FileManager]")) manager_path = lines[i+1];
+      else if (lines[i].contains("[Blender]")) blender_path = lines[i+1];
+      else if (lines[i].contains("[ImageViewer]")) image_viewer_path = lines[i+1];
     }
   }
-  terminalfolder = new File (terminalpath);
-  texteditorfolder = new File (texteditorpath);
-  imageviewerfolder = new File (imageviewerpath);
-  explorerfolder = new File (managerpath);
-  blenderfolder = new File(blenderpath);
-  projectfolder = new File(dataPath("Projects")+File.separator+"newProject");
+  terminal_folder = new File (terminal_path);
+  text_editor_folder = new File (text_editor_path);
+  image_viewer_folder = new File (image_viewer_path);
+  explorer_folder = new File (manager_path);
+  blender_folder = new File(blender_path);
+  project_folder = new File(dataPath("Projects")+File.separator+"newProject");
 
-  blendpath = dataPath("Test")+File.separator;
-  blendname = "BrendersTest.blend";
+  blend_path = dataPath("Test")+File.separator;
+  blend_name = "BrendersTest.blend";
 
-  settingspath = dataPath("Test"+File.separator+"BrendersTest.py");
-  settingsname = "BrendersTest.py";
+  settings_path = dataPath("Test"+File.separator+"BrendersTest.py");
+  settings_name = "BrendersTest.py";
 
-  outputpath = dataPath("Test"+File.separator+blendname.substring(0, blendname.lastIndexOf("."))+"_Renders")+File.separator;
-  rendersname = blendname.substring(0, blendname.lastIndexOf("."))+"_####";
-  playrendersfolder = new File(outputpath+rendersname);
+  output_path = dataPath("Test"+File.separator+blend_name.substring(0, blend_name.lastIndexOf("."))+"_Renders")+File.separator;
+  renders_name = blend_name.substring(0, blend_name.lastIndexOf("."))+"_####";
+  play_renders_folder = new File(output_path+renders_name);
 
-  settingsfolder = new File(dataPath("Test"+File.separator+"BrendersTest.py"));
-  blendfolder = new File(blendpath+blendname);
-  outputfolder = new File(outputpath+rendersname);
+  settings_folder = new File(dataPath("Test"+File.separator+"BrendersTest.py"));
+  blend_folder = new File(blend_path+blend_name);
+  output_folder = new File(output_path+renders_name);
 
-  scenename = "Scene";
+  scene_name = "Scene";
 
-  generatepy = true;
+  generate_py = true;
 
-  newoutput = false;
+  new_output = false;
 
   valoption[pxX_id] = "1920";
   valoption[pxY_id] = "1080";
@@ -269,14 +269,14 @@ void initVarCommandLine (String os)
 
 void mouseEventsCommandLine ()
 {
-  if (!selectcolor) {
-    if (terminal_path_()) selectInput("Select Terminal executable:", "terminalSelect", terminalfolder);
+  if (!select_color) {
+    if (terminal_path_()) selectInput("Select Terminal executable:", "terminalSelect", terminal_folder);
     if (terminal_open_()) {
       info = "*Opening...";
       if (os == "WINDOWS") {
         write = createWriter(dataPath("")+File.separator+"tmp"+File.separator+"cmd.bat");
         write.println("start ");
-        write.print(terminalpath);
+        write.print(terminal_path);
         write.flush();
         write.close();
 
@@ -285,112 +285,112 @@ void mouseEventsCommandLine ()
         delay(100);
         File f = new File (dataPath("")+File.separator+"tmp"+File.separator+"cmd.bat");
         f.delete();
-      } else exec(terminalpath);
+      } else exec(terminal_path);
     }
-    if (text_editor_path_()) selectInput("Select Text editor executable:", "texteditorSelect", texteditorfolder);
+    if (text_editor_path_()) selectInput("Select Text editor executable:", "texteditorSelect", text_editor_folder);
     if (text_editor_open_()) {
       info = "*Opening...";
-      if (os == "WINDOWS") exec(texteditorpath);
+      if (os == "WINDOWS") exec(text_editor_path);
       else {
-        String cmd[] = {terminalpath, "-e", texteditorpath};
+        String cmd[] = {terminal_path, "-e", text_editor_path};
         exec(cmd);
       }
     }
-    if (file_manager_path_()) selectInput("Select File Manager executable:", "managerSelect", explorerfolder);
+    if (file_manager_path_()) selectInput("Select File Manager executable:", "managerSelect", explorer_folder);
     if (file_manager_open_()) {
       info = "*Opening...";
-      exec(managerpath);
+      exec(manager_path);
     }
     if (settings_path_open_()) {
       info = "*Opening...";
-      String cmd[] = {managerpath, settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)};
+      String cmd[] = {manager_path, settings_path.substring(0, settings_path.lastIndexOf(File.separator)+1)};
       exec(cmd);
     }
-    if (blender_path_()) selectInput("Select Blender executable:", "blenderSelect", blenderfolder);
+    if (blender_path_()) selectInput("Select Blender executable:", "blenderSelect", blender_folder);
     if (blender_open_()) {
       info = "*Opening Blender...";
-      exec(blenderpath);
+      exec(blender_path);
     }
-    if (blend_path_()) selectInput("Select your blend file:", "blendSelect", blendfolder);
+    if (blend_path_()) selectInput("Select your blend file:", "blendSelect", blend_folder);
     if (blend_open_()) {
-      info = "*Opening "+blendname+" ...";
-      String cmd[] = {blenderpath, blendpath+blendname};
+      info = "*Opening "+blend_name+" ...";
+      String cmd[] = {blender_path, blend_path+blend_name};
       exec(cmd);
     } 
     if (blend_open_folder_()) {
       info = "*Opening...";
-      String cmd[] = {managerpath, blendpath};
+      String cmd[] = {manager_path, blend_path};
       exec(cmd);
     }
     if (new_output_path_()) {
-      if (newoutput)  selectOutput("Select render path and image name:", "newOutputSelect", outputfolder);
+      if (new_output)  selectOutput("Select render path and image name:", "newOutputSelect", output_folder);
       else info = "*No 'New Output' selected.";
     }
     if (new_output_open_()) {
       if (fromblend[output_path_id]) {
-        info = "*path from: '"+blendname;
+        info = "*path from: '"+blend_name;
       } else {
         info = "*Opening Renders Output...";
-        String cmd[] = {managerpath, outputpath};
+        String cmd[] = {manager_path, output_path};
         exec(cmd);
       }
     }
     if (output_play_()) {
-      selectInput("Select START Render:", "startRendersToPlaySelect", playrendersfolder);
+      selectInput("Select START Render:", "startRendersToPlaySelect", play_renders_folder);
       info = "*Playing renders...";
     }
     if (add_to_multi_()) {
       if (multiblend_active) {
-        add_tomulti = true;
-        selectOutput("Select a name for .multiblend:", "settingsSave", new File(projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend"));
+        add_to_multi = true;
+        selectOutput("Select a name for .multiblend:", "settingsSave", new File(project_path+"Options"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+".multiblend"));
       } else {
         error = true;
         info = "NO Multiblend project available";
       }
     }
     if (save_settings_()) {
-      if  (!fromblend[frame_id] && generatepy && (valoption[frame_id].contains(".") || valoption[frame_id].contains(",") || valoption[frame_id].contains("+") || valoption[frame_id].contains("-") || valoption[frame_id] == "")) {
+      if  (!fromblend[frame_id] && generate_py && (valoption[frame_id].contains(".") || valoption[frame_id].contains(",") || valoption[frame_id].contains("+") || valoption[frame_id].contains("-") || valoption[frame_id] == "")) {
         error = true;
         info = "*Error in "+nameoption[frame_id];
       } else {
-        settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
-        selectOutput("Settings to write to:", "settingsSave", settingsfolder);
+        settings_folder = new File(settings_path.substring(0, settings_path.lastIndexOf(File.separator)+1)+settings_name);
+        selectOutput("Settings to write to:", "settingsSave", settings_folder);
       }
     } 
     if (rename_settings_()) {
-      settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
-      selectOutput("Move and/or Rename: "+settingsname+" -Save changes-", "settingsRename", settingsfolder);
+      settings_folder = new File(settings_path.substring(0, settings_path.lastIndexOf(File.separator)+1)+settings_name);
+      selectOutput("Move and/or Rename: "+settings_name+" -Save changes-", "settingsRename", settings_folder);
     }
 
     if (in_ogl_()) {
-      if (generatepy) {
+      if (generate_py) {
         valoption[renders_name_id] = "OGL"+valoption[renders_name_id];
-        if (valoption[engine_id] == "BLENDER_RENDER" || valoption[engine_id] == "CYCLES") oglrenders = !oglrenders;
+        if (valoption[engine_id] == "BLENDER_RENDER" || valoption[engine_id] == "CYCLES") ogl_renders = !ogl_renders;
       }
     }
     if (go_()) {
-      startrenders = true;
+      start_renders = true;
       settingsName();
-      settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
-      selectOutput("Settings to write to:", "settingsSave", settingsfolder);
+      settings_folder = new File(settings_path.substring(0, settings_path.lastIndexOf(File.separator)+1)+settings_name);
+      selectOutput("Settings to write to:", "settingsSave", settings_folder);
     }
-    if (settingsOpen_()) selectInput("Select your .py or commandline file", "settingsOpen", settingsfolder);
+    if (settingsOpen_()) selectInput("Select your .py or commandline file", "settingsOpen", settings_folder);
     if (settingsReload_()) {
-      if (settingsname.endsWith(".py")) loadPy(settingspath);
-      else loadCommandline(settingspath);
-      info = "'"+settingsname+ "' Reloaded...";
+      if (settings_name.endsWith(".py")) loadPy(settings_path);
+      else loadCommandline(settings_path);
+      info = "'"+settings_name+ "' Reloaded...";
     }
     if (settingsEdit_()) {
-      if (os == "WINDOWS") exec(texteditorpath, settingspath);
+      if (os == "WINDOWS") exec(text_editor_path, settings_path);
       else {
-        String cmd[] = {terminalpath, "-e", texteditorpath, settingspath};
+        String cmd[] = {terminal_path, "-e", text_editor_path, settings_path};
         exec(cmd);
       }
     }
 
-    if (savelogs_()) savelogs = !savelogs;
+    if (save_logs_()) save_logs = !save_logs;
 
-    if (generatepy) {
+    if (generate_py) {
       if (pxX_()) {
         fromblend[pxX_id] = !fromblend[pxX_id];
         if (!fromblend[pxX_id]) {
@@ -508,15 +508,15 @@ void mouseEventsCommandLine ()
     }
 
     if (generate_py_()) {
-      generatepy = !generatepy;
+      generate_py = !generate_py;
       settingsName();
-      settingsfolder = new File(settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)+settingsname);
+      settings_folder = new File(settings_path.substring(0, settings_path.lastIndexOf(File.separator)+1)+settings_name);
     }
 
     if (new_output_()) {
-      rendersname = blendname.substring(0, blendname.lastIndexOf("."))+"_####";
-      newoutput = !newoutput;
-      if (newoutput) fromblend[output_path_id] = false;
+      renders_name = blend_name.substring(0, blend_name.lastIndexOf("."))+"_####";
+      new_output = !new_output;
+      if (new_output) fromblend[output_path_id] = false;
       else  fromblend[output_path_id] = true;
     }
 
@@ -610,7 +610,7 @@ void mouseEventsCommandLine ()
         valoption[engine_id] = engines[val];
       }
       if (valoption[engine_id] == "BLENDER_EEVEE" || valoption[engine_id] == "BLENDER_CLAY") {
-        oglrenders = true;
+        ogl_renders = true;
         error = true;
         info = "*Only Blender 2.80";
       }
@@ -991,7 +991,7 @@ void mouseEventsCommandLine ()
       }
     }
     if (renders_name_()) {  
-      if (newoutput)  selectOutput("Select a new name or path for renders:", "newOutputSelect", outputfolder);
+      if (new_output)  selectOutput("Select a new name or path for renders:", "newOutputSelect", output_folder);
       else info = "*No 'New Output' selected.";
     }
     if (dither_val()) {
@@ -1001,7 +1001,7 @@ void mouseEventsCommandLine ()
     }
   }
 
-  if (selectcolor) {
+  if (select_color) {
     if (select_color_val()) {
       String r;
       String g;
@@ -1026,33 +1026,33 @@ void mouseEventsCommandLine ()
       }
     }
     if (!select_color_()) {
-      selectcolor = false;
+      select_color = false;
       fgcolor = false;
       bgcolor = false;
     }
   }
   if (stamp_fg_()) {      
     if (!fromblend[stamp_id]) {
-      selectcolor = true;
+      select_color = true;
       fgcolor = true;
       selectoption[stamp_foreground_id] = true;
     }
   }
   if (stamp_bg_()) {      
     if (!fromblend[stamp_id]) {
-      selectcolor = true;
+      select_color = true;
       bgcolor = true;
       selectoption[stamp_background_id] = true;
     }
   }
   if (ssh_()) ssh = !ssh;
   if (ssh_user_()) {
-    selectoption[sshuser_id] = true;
-    sshuser = "";
+    selectoption[ssh_user_id] = true;
+    ssh_user = "";
   }
   if (ssh_ip_()) {
-    selectoption[sship_id] = true;
-    sship = "";
+    selectoption[ssh_ip_id] = true;
+    ssh_ip = "";
   }
 }
 
@@ -1110,7 +1110,7 @@ void keyEventsCommandLine (String keypress)
 
     if (selectoption[dither_id]) if (valoption[dither_id].length() > 0) valoption[dither_id] = valoption[dither_id].substring(0, valoption[dither_id].length() - 1);
 
-    if (selectoption[scene_name_id]) if (scenename.length() > 0) scenename = scenename.substring(0, scenename.length() - 1);
+    if (selectoption[scene_name_id]) if (scene_name.length() > 0) scene_name = scene_name.substring(0, scene_name.length() - 1);
 
     if (selectoption[stamp_note_text_id]) if (valoption[stamp_note_text_id].length() > 0) valoption[stamp_note_text_id] = valoption[stamp_note_text_id].substring(0, valoption[stamp_note_text_id].length() - 1);
 
@@ -1122,19 +1122,19 @@ void keyEventsCommandLine (String keypress)
       if (valoption[frame_id].length() > 0) valoption[frame_id] = valoption[frame_id].substring(0, valoption[frame_id].length() - 1);
       if (valoption[frame_id].length() == 0) valoption[frame_id] = "0";
     }
-    if (selectoption[sshuser_id]) if (sshuser.length() > 0) sshuser = sshuser.substring(0, sshuser.length() - 1);
-    if (selectoption[sship_id]) if (sship.length() > 0) sship = sship.substring(0, sship.length() - 1);
+    if (selectoption[ssh_user_id]) if (ssh_user.length() > 0) ssh_user = ssh_user.substring(0, ssh_user.length() - 1);
+    if (selectoption[ssh_ip_id]) if (ssh_ip.length() > 0) ssh_ip = ssh_ip.substring(0, ssh_ip.length() - 1);
   } else if (keypress == "ENTER") {
     for (int i = 0; i < selectoption.length; i++) selectoption[i] = false;
   } else if (keypress == "27") {
-    if (selectoption[renders_name_id]) rendersname = esc;
+    if (selectoption[renders_name_id]) renders_name = esc;
     for (int i = 0; i < selectoption.length; i++) {
       if (selectoption[i]) valoption[i] = esc;
     }
     for (int i = 0; i < selectoption.length; i++) selectoption[i] = false;
   } else if (keypress == "CODED") {
 
-    if (selectoption[scene_name_id]) scenename += key;
+    if (selectoption[scene_name_id]) scene_name += key;
 
     if (selectoption[stamp_note_text_id]) valoption[stamp_note_text_id] += key;
 
@@ -1142,7 +1142,7 @@ void keyEventsCommandLine (String keypress)
       if (key==46) valoption[dither_id] += ".";
     }
 
-    if (selectoption[frame_id] && !generatepy) {
+    if (selectoption[frame_id] && !generate_py) {
       if (key==32) valoption[frame_id] += ",";
 
       if (key==44) valoption[frame_id] += ",";
@@ -1154,8 +1154,8 @@ void keyEventsCommandLine (String keypress)
       if (keyCode==109) valoption[frame_id] += "-";
     }
 
-    if (selectoption[sshuser_id]) if (sshuser.length() < 10) sshuser += key;
-    if (selectoption[sship_id]) if (sship.length() < 10) sship += key;
+    if (selectoption[ssh_user_id]) if (ssh_user.length() < 10) ssh_user += key;
+    if (selectoption[ssh_ip_id]) if (ssh_ip.length() < 10) ssh_ip += key;
   }
 }
 
@@ -1170,13 +1170,13 @@ void settingsOpen(File selection)
       } else if (path.endsWith(".txt")) {  
         loadCommandline(path);
       }
-      settingspath = path;
-      settingsfolder = new File(path);
-      settingsname = selection.getName();
+      settings_path = path;
+      settings_folder = new File(path);
+      settings_name = selection.getName();
 
-      if (gui == 3) selectOutput("Select a name for .multiblend:", "settingsSave", new File(projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend"));
+      if (gui == 3) selectOutput("Select a name for .multiblend:", "settingsSave", new File(project_path+"Options"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+".multiblend"));
 
-      info = "'"+settingsname+ "' Loaded...";
+      info = "'"+settings_name+ "' Loaded...";
     } else {
       error = true;
       info = "*Warning No '.py' or '.txt' selected";
@@ -1193,61 +1193,61 @@ void loadCommandline(String txtpath)
 
   for (int i = 0; i <  fromblend.length; i++) fromblend[i] = true;
 
-  generatepy = false;
+  generate_py = false;
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].contains(" -b ") || lines[i].contains(" --background ")) {
       if (lines[i].contains("ssh ")) {
         ssh = true;
-        sshuser = trim(lines[i].substring(lines[i].indexOf("ssh ") + 4, lines[i].indexOf("@")));
-        // println(sshuser);
-        sship = trim(lines[i].substring(lines[i].indexOf("@") + 1, lines[i].indexOf(" ", lines[i].indexOf("@") + 1)));
-        // println(sship);
-        blenderpath = trim(lines[i].substring(lines[i].indexOf(sship) + sship.length(), lines[i].indexOf(" -")));
-        if  (blenderpath.contains(quotes)) blenderpath = blenderpath.substring(blenderpath.indexOf(quotes) + 1, blenderpath.lastIndexOf(quotes));
-        blenderfolder = new File(blenderpath);
-        //println(blenderpath);
+        ssh_user = trim(lines[i].substring(lines[i].indexOf("ssh ") + 4, lines[i].indexOf("@")));
+        // println(ssh_user);
+        ssh_ip = trim(lines[i].substring(lines[i].indexOf("@") + 1, lines[i].indexOf(" ", lines[i].indexOf("@") + 1)));
+        // println(ssh_ip);
+        blender_path = trim(lines[i].substring(lines[i].indexOf(ssh_ip) + ssh_ip.length(), lines[i].indexOf(" -")));
+        if  (blender_path.contains(quotes)) blender_path = blender_path.substring(blender_path.indexOf(quotes) + 1, blender_path.lastIndexOf(quotes));
+        blender_folder = new File(blender_path);
+        //println(blender_path);
       } else {
         ssh = false;
-        blenderpath = trim(lines[i].substring(0, lines[i].indexOf(" -")));
-        if  (blenderpath.contains(quotes)) blenderpath = blenderpath.substring(blenderpath.indexOf(quotes) + 1, blenderpath.lastIndexOf(quotes));
-        blenderfolder = new File(blenderpath);
-        //println(blenderpath);
+        blender_path = trim(lines[i].substring(0, lines[i].indexOf(" -")));
+        if  (blender_path.contains(quotes)) blender_path = blender_path.substring(blender_path.indexOf(quotes) + 1, blender_path.lastIndexOf(quotes));
+        blender_folder = new File(blender_path);
+        //println(blender_path);
       }
-      if (lines[i].contains(" -b ")) blendpath = trim(lines[i].substring(lines[i].indexOf(" -b "), lines[i].indexOf(" -", lines[i].indexOf(" -") + 1)));
-      if (lines[i].contains(" --background ")) blendpath = trim(lines[i].substring(lines[i].indexOf(" --background "), lines[i].indexOf(" -", lines[i].indexOf(" -") + 1)));
-      if  (blendpath.contains(quotes)) blendpath = blendpath.substring(blendpath.indexOf(quotes) + 1, blendpath.lastIndexOf(quotes));
-      blendfolder = new File(blendpath);
-      blendname = blendpath.substring(blendpath.lastIndexOf(File.separator) + 1);
-      blendpath = blendpath.substring(0, blendpath.lastIndexOf(File.separator) + 1);
+      if (lines[i].contains(" -b ")) blend_path = trim(lines[i].substring(lines[i].indexOf(" -b "), lines[i].indexOf(" -", lines[i].indexOf(" -") + 1)));
+      if (lines[i].contains(" --background ")) blend_path = trim(lines[i].substring(lines[i].indexOf(" --background "), lines[i].indexOf(" -", lines[i].indexOf(" -") + 1)));
+      if  (blend_path.contains(quotes)) blend_path = blend_path.substring(blend_path.indexOf(quotes) + 1, blend_path.lastIndexOf(quotes));
+      blend_folder = new File(blend_path);
+      blend_name = blend_path.substring(blend_path.lastIndexOf(File.separator) + 1);
+      blend_path = blend_path.substring(0, blend_path.lastIndexOf(File.separator) + 1);
       // println(blendpath);
-      // println(blendname);
+      // println(blend_name);
       if (lines[i].contains(" -o") || lines[i].contains(" --render-output")) {
-        newoutput = true;
+        new_output = true;
         fromblend[output_path_id] = false;
-        if (lines[i].contains(" -o")) outputpath = trim(lines[i].substring(lines[i].indexOf(" -o"), lines[i].indexOf(" -", lines[i].indexOf(" -o") + 1)));
-        if (lines[i].contains(" --render-output")) outputpath = trim(lines[i].substring(lines[i].indexOf(" --render-output"), lines[i].indexOf(" -", lines[i].indexOf(" --render-output") + 1)));
-        if  (outputpath.contains(quotes)) outputpath = outputpath.substring(outputpath.indexOf(quotes) + 1, outputpath.lastIndexOf(quotes));
-        outputfolder = new File(outputpath);
-        rendersname = outputpath.substring(outputpath.lastIndexOf(File.separator) + 1);
-        outputpath = outputpath.substring(0, outputpath.lastIndexOf(File.separator) + 1);
-        // println(outputpath);
-        // println(rendersname);
+        if (lines[i].contains(" -o")) output_path = trim(lines[i].substring(lines[i].indexOf(" -o"), lines[i].indexOf(" -", lines[i].indexOf(" -o") + 1)));
+        if (lines[i].contains(" --render-output")) output_path = trim(lines[i].substring(lines[i].indexOf(" --render-output"), lines[i].indexOf(" -", lines[i].indexOf(" --render-output") + 1)));
+        if  (output_path.contains(quotes)) output_path = output_path.substring(output_path.indexOf(quotes) + 1, output_path.lastIndexOf(quotes));
+        output_folder = new File(output_path);
+        renders_name = output_path.substring(output_path.lastIndexOf(File.separator) + 1);
+        output_path = output_path.substring(0, output_path.lastIndexOf(File.separator) + 1);
+        // println(output_path);
+        // println(renders_name);
       } else {
-        newoutput = false;
+        new_output = false;
         fromblend[output_path_id] = true;
       }
       if (lines[i].contains(" -S") || lines[i].contains(" --scene")) {
         fromblend[scene_name_id] = false;
-        if (lines[i].contains(" -S")) scenename = trim(lines[i].substring(lines[i].indexOf(" -S") + 3, lines[i].indexOf(" -", lines[i].indexOf(" -S") + 1)));
-        if (lines[i].contains(" --scene")) scenename = trim(lines[i].substring(lines[i].indexOf(" --scene") + 8, lines[i].indexOf(" -", lines[i].indexOf(" --scene") + 1)));
-        if  (scenename.contains(quotes)) scenename = scenename.substring(scenename.indexOf(quotes) + 1, scenename.lastIndexOf(quotes));
-        // println(scenename);
+        if (lines[i].contains(" -S")) scene_name = trim(lines[i].substring(lines[i].indexOf(" -S") + 3, lines[i].indexOf(" -", lines[i].indexOf(" -S") + 1)));
+        if (lines[i].contains(" --scene")) scene_name = trim(lines[i].substring(lines[i].indexOf(" --scene") + 8, lines[i].indexOf(" -", lines[i].indexOf(" --scene") + 1)));
+        if  (scene_name.contains(quotes)) scene_name = scene_name.substring(scene_name.indexOf(quotes) + 1, scene_name.lastIndexOf(quotes));
+        // println(scene_name);
       } else fromblend[scene_name_id] = true;
       if (lines[i].contains(" -E") || lines[i].contains(" --engine")) {
         fromblend[engine_id] = false;
         if (lines[i].contains(" -E")) valoption[engine_id] = trim(lines[i].substring(lines[i].indexOf(" -E") + 3, lines[i].indexOf(" -", lines[i].indexOf(" -E") + 1)));
         if (lines[i].contains(" --engine")) valoption[engine_id] = trim(lines[i].substring(lines[i].indexOf(" --engine") + 9, lines[i].indexOf(" -", lines[i].indexOf(" --engine") + 1)));
-        if  (valoption[engine_id].contains(quotes)) valoption[engine_id] = valoption[engine_id].substring(valoption[engine_id].indexOf(quotes) + 1, scenename.lastIndexOf(quotes));
+        if  (valoption[engine_id].contains(quotes)) valoption[engine_id] = valoption[engine_id].substring(valoption[engine_id].indexOf(quotes) + 1, scene_name.lastIndexOf(quotes));
         //  println(valoption[engine_id]);
       } else fromblend[engine_id] = true;
       if (lines[i].contains(" -F") || lines[i].contains(" --render-format")) {
@@ -1324,8 +1324,8 @@ void loadCommandline(String txtpath)
         fromblend[frame_step_id] = true;
       }
 
-      if (lines[i].contains(" tee"))  savelogs = true;
-      else  savelogs = false;
+      if (lines[i].contains(" tee"))  save_logs = true;
+      else  save_logs = false;
 
       if (lines[i].contains(" -f") || lines[i].contains(" --render-frame")) {
         fromblend[frame_id] = false;
@@ -1333,7 +1333,7 @@ void loadCommandline(String txtpath)
         fromblend[frame_start_id] = true;
         fromblend[frame_end_id] = true;
         fromblend[frame_step_id] = true;
-        if (savelogs) {
+        if (save_logs) {
           if (lines[i].contains(" -f")) valoption[frame_id] = trim(lines[i].substring(lines[i].indexOf(" -f") + 3, lines[i].indexOf(" |", lines[i].indexOf(" -f") + 1)));
           if (lines[i].contains(" --render-frame")) valoption[frame_id] = trim(lines[i].substring(lines[i].indexOf(" --render-frame") + 15, lines[i].indexOf(" |", lines[i].indexOf(" --render-frame") + 1)));
         } else {
@@ -1352,36 +1352,36 @@ void loadPy(String pypath)
   String lines[] = loadStrings(pypath);
   String quotes = str('"');
 
-  generatepy = true;
+  generate_py = true;
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].contains(" -P ") || lines[i].contains(" --python ")) {
-      if (lines[i].contains(" -b ") || lines[i].contains(" --background ")) oglrenders = false;
-      else oglrenders = true;
+      if (lines[i].contains(" -b ") || lines[i].contains(" --background ")) ogl_renders = false;
+      else ogl_renders = true;
       if (lines[i].contains("ssh ")) {
         ssh = true;
-        sshuser = trim(lines[i].substring(lines[i].indexOf("ssh ") + 4, lines[i].indexOf("@")));
-        // println(sshuser);
-        sship = trim(lines[i].substring(lines[i].indexOf("@") + 1, lines[i].indexOf(" ", lines[i].indexOf("@") + 1)));
-        // println(sship);
-        blenderpath = trim(lines[i].substring(lines[i].indexOf(sship) + sship.length(), lines[i].indexOf(" -")));
-        if  (blenderpath.contains(quotes)) blenderpath = blenderpath.substring(blenderpath.indexOf(quotes) + 1, blenderpath.lastIndexOf(quotes));
-        blenderfolder = new File(blenderpath);
-        //   println(blenderpath);
+        ssh_user = trim(lines[i].substring(lines[i].indexOf("ssh ") + 4, lines[i].indexOf("@")));
+        // println(ssh_user);
+        ssh_ip = trim(lines[i].substring(lines[i].indexOf("@") + 1, lines[i].indexOf(" ", lines[i].indexOf("@") + 1)));
+        // println(ssh_ip);
+        blender_path = trim(lines[i].substring(lines[i].indexOf(ssh_ip) + ssh_ip.length(), lines[i].indexOf(" -")));
+        if  (blender_path.contains(quotes)) blender_path = blender_path.substring(blender_path.indexOf(quotes) + 1, blender_path.lastIndexOf(quotes));
+        blender_folder = new File(blender_path);
+        //   println(blender_path);
       } else {
         ssh = false;
-        blenderpath = trim(lines[i].substring(0, lines[i].indexOf(" -")));
-        if  (blenderpath.contains(quotes)) blenderpath = blenderpath.substring(blenderpath.indexOf(quotes) + 1, blenderpath.lastIndexOf(quotes));
-        blenderfolder = new File(blenderpath);
-        //  println(blenderpath);
+        blender_path = trim(lines[i].substring(0, lines[i].indexOf(" -")));
+        if  (blender_path.contains(quotes)) blender_path = blender_path.substring(blender_path.indexOf(quotes) + 1, blender_path.lastIndexOf(quotes));
+        blender_folder = new File(blender_path);
+        //  println(blender_path);
       }
 
-      blendpath = trim(lines[i].substring(lines[i].indexOf(" -"), lines[i].indexOf(" -", lines[i].indexOf(" -") + 1)));
-      if  (blendpath.contains(quotes)) blendpath = blendpath.substring(blendpath.indexOf(quotes) + 1, blendpath.lastIndexOf(quotes));
-      blendfolder = new File(blendpath);
-      blendname = blendpath.substring(blendpath.lastIndexOf(File.separator) + 1);
-      blendpath = blendpath.substring(0, blendpath.lastIndexOf(File.separator) + 1);
+      blend_path = trim(lines[i].substring(lines[i].indexOf(" -"), lines[i].indexOf(" -", lines[i].indexOf(" -") + 1)));
+      if  (blend_path.contains(quotes)) blend_path = blend_path.substring(blend_path.indexOf(quotes) + 1, blend_path.lastIndexOf(quotes));
+      blend_folder = new File(blend_path);
+      blend_name = blend_path.substring(blend_path.lastIndexOf(File.separator) + 1);
+      blend_path = blend_path.substring(0, blend_path.lastIndexOf(File.separator) + 1);
       //println(blendpath);
-      //println(blendname);
+      //println(blend_name);
     }
 
     if  (!trim(lines[i]).startsWith("#")) {
@@ -1436,10 +1436,10 @@ void loadPy(String pypath)
       } 
       //
       else if (lines[i].contains("render.filepath")) {
-        newoutput = true;
-        outputpath = lines[i].substring(lines[i].indexOf('"') + 1, lines[i].lastIndexOf(File.separator) + 1);
-        outputfolder = new File(outputpath);
-        rendersname = lines[i].substring(lines[i].lastIndexOf(File.separator)+1, lines[i].lastIndexOf('"'));
+        new_output = true;
+        output_path = lines[i].substring(lines[i].indexOf('"') + 1, lines[i].lastIndexOf(File.separator) + 1);
+        output_folder = new File(output_path);
+        renders_name = lines[i].substring(lines[i].lastIndexOf(File.separator)+1, lines[i].lastIndexOf('"'));
       } else if (lines[i].contains("render.use_placeholder")) {
         fromblend[placeholder_id] = false;
         valoption[placeholder_id] = trim(lines[i].substring(lines[i].lastIndexOf("=") + 1));
@@ -1593,7 +1593,7 @@ void loadPy(String pypath)
       }
       //
       else if (lines[i].contains("render.filepath")) {
-        newoutput = false;
+        new_output = false;
       } else if (lines[i].contains("render.use_placeholder")) {
         fromblend[placeholder_id] = true;
       } else if (lines[i].contains("render.use_overwrite")) {
@@ -1664,72 +1664,72 @@ void loadPy(String pypath)
 
 void commandLineOptions()
 {
-  if (generatepy) {
-    if (ssh) Command_Line = "ssh "+sshuser+"@"+sship+" ";
-    else Command_Line = "";
-    if (oglrenders) Command_Line += '"'+blenderpath+'"'+" - "+'"'+blendpath+blendname+'"'+" -P "+'"'+settingspath+'"';
-    else Command_Line += '"'+blenderpath+'"'+" -b "+'"'+blendpath+blendname+'"'+" -P "+'"'+settingspath+'"';
+  if (generate_py) {
+    if (ssh) command_line = "ssh "+ssh_user+"@"+ssh_ip+" ";
+    else command_line = "";
+    if (ogl_renders) command_line += '"'+blender_path+'"'+" - "+'"'+blend_path+blend_name+'"'+" -P "+'"'+settings_path+'"';
+    else command_line += '"'+blender_path+'"'+" -b "+'"'+blend_path+blend_name+'"'+" -P "+'"'+settings_path+'"';
   } else { 
-    if (ssh) Command_Line = "ssh "+sshuser+"@"+sship+" ";
-    else Command_Line = "";
+    if (ssh) command_line = "ssh "+ssh_user+"@"+ssh_ip+" ";
+    else command_line = "";
 
-    Command_Line += '"'+blenderpath+'"'+" -b "+'"'+blendpath+blendname+'"';
+    command_line += '"'+blender_path+'"'+" -b "+'"'+blend_path+blend_name+'"';
 
     if (!fromblend[output_path_id]) {
-      Command_Line += " -o "+'"'+outputpath+rendersname+'"';
+      command_line += " -o "+'"'+output_path+renders_name+'"';
     }
     if (!fromblend[scene_name_id]) {
-      Command_Line += " -S "+scenename;
+      command_line += " -S "+scene_name;
     }
     if (!fromblend[engine_id]) {
-      Command_Line += " -E "+valoption[engine_id];
+      command_line += " -E "+valoption[engine_id];
     }
     if (!fromblend[file_format_id]) {
-      Command_Line += " -F "+valoption[file_format_id];
+      command_line += " -F "+valoption[file_format_id];
     }
     if (!fromblend[add_extension_id]) {
       int extension;
       if (valoption[add_extension_id] == "True") extension = 1;
       else extension = 0;
-      Command_Line += " -x "+extension;
+      command_line += " -x "+extension;
     }
     if (!fromblend[threads_mode_id]) {
-      Command_Line += " -t "+valoption[threads_id];
+      command_line += " -t "+valoption[threads_id];
     }
     if (!fromblend[frame_id]) {
-      Command_Line += " -f "+valoption[frame_id];
+      command_line += " -f "+valoption[frame_id];
     }
     if (!fromblend[frame_start_id]) {
-      Command_Line += " -s "+valoption[frame_start_id];
+      command_line += " -s "+valoption[frame_start_id];
     }
     if (!fromblend[frame_end_id]) {
-      Command_Line += " -e "+valoption[frame_end_id];
+      command_line += " -e "+valoption[frame_end_id];
     }
     if (!fromblend[frame_step_id]) {
-      Command_Line += " -j "+valoption[frame_step_id];
+      command_line += " -j "+valoption[frame_step_id];
     }
     if (fromblend[frame_id]) {
-      Command_Line += " -a";
+      command_line += " -a";
     }
   }
 
-  if (savelogs) {
+  if (save_logs) {
     if (os == "WINDOWS") {
-      Command_Line += " > "+'"'+settingspath.substring(0, settingspath.lastIndexOf("."))+"_"+fullDate()+".log"+'"';
+      command_line += " > "+'"'+settings_path.substring(0, settings_path.lastIndexOf("."))+"_"+fullDate()+".log"+'"';
     } else {
-      Command_Line += " | tee "+'"'+settingspath.substring(0, settingspath.lastIndexOf("."))+"_"+fullDate()+".log"+'"';
+      command_line += " | tee "+'"'+settings_path.substring(0, settings_path.lastIndexOf("."))+"_"+fullDate()+".log"+'"';
     }
   }
 
-  if (!fromblend[output_path_id]) command_play_anim = '"'+blenderpath+'"'+" -a "+'"'+outputpath+"*"+'"';
-  else command_play_anim = '"'+blenderpath+'"'+" -a "+"<Renders path from "+blendname+">";
+  if (!fromblend[output_path_id]) command_play_anim = '"'+blender_path+'"'+" -a "+'"'+output_path+"*"+'"';
+  else command_play_anim = '"'+blender_path+'"'+" -a "+"<Renders path from "+blend_name+">";
 }
 
 void command_Line()
 {
   write.println("Command Line:");
   write.println();
-  write.println(Command_Line);
+  write.println(command_line);
   write.println();
   write.println("Blender player:");
   write.println();
@@ -1748,7 +1748,7 @@ void sh_command_Line_Save(String path)
   write.println("# Command Line:");
   write.println();
   write.print("xterm -e ");
-  write.println(Command_Line);
+  write.println(command_line);
 
   write.flush();
   write.close();
@@ -1763,7 +1763,7 @@ void bat_command_Line_Save(String path)
   write = createWriter(path);
   write.println("@ECHO OFF");
   write.println("COLOR 8F");
-  write.print("type "+settingspath);
+  write.print("type "+settings_path);
   write.println();
   write.println("@ECHO -");
   write.println("@ECHO START renders...");
@@ -1773,7 +1773,7 @@ void bat_command_Line_Save(String path)
   write.println("@ECHO RENDERING...");
   write.println("@ECHO -");
   write.print("call ");
-  write.println(Command_Line);
+  write.println(command_line);
   write.println("@ECHO -");
   write.println("@ECHO FINISH!");
   write.println("@ECHO -");
@@ -1785,7 +1785,7 @@ void bat_command_Line_Save(String path)
 }
 
 
-void Command_Line_Save(String path)
+void command_line_Save(String path)
 {
   write = createWriter(path);
 
@@ -1823,7 +1823,7 @@ void py_Save(String pypath)
   write.println("# Scene Name");
   write.print("Scenename = ");
   if (fromblend[scene_name_id]) write.println("bpy.context.scene.name");
-  else write.println('"'+scenename+'"');
+  else write.println('"'+scene_name+'"');
   write.println();
   write.println("# Render Quality");
   if (fromblend[pxX_id]) write.print("#");
@@ -1879,7 +1879,7 @@ void py_Save(String pypath)
   write.println("# Output");
   if (fromblend[output_path_id]) write.print("#");
   write.print("bpy.data.scenes[Scenename].render.filepath = ");
-  write.println('"'+outputpath+rendersname+'"');
+  write.println('"'+output_path+renders_name+'"');
   if (fromblend[placeholder_id]) write.print("#");
   write.print("bpy.data.scenes[Scenename].render.use_placeholder = ");
   write.println(valoption[placeholder_id]);
@@ -2059,13 +2059,13 @@ void py_Save(String pypath)
     write.println(valoption[frame_step_id]);
   }
 
-  if (oglrenders) write.print("#");
+  if (ogl_renders) write.print("#");
   write.println("bpy.ops.render.render(animation=True,scene=Scenename)");
   write.println();
   write.println("# Render OpenGL");
-  if (!oglrenders) write.print("#");
+  if (!ogl_renders) write.print("#");
   write.println("bpy.ops.render.opengl(animation=True,view_context = False)");
-  if (!oglrenders) write.print("#");
+  if (!ogl_renders) write.print("#");
   write.println("bpy.ops.wm.quit_blender()");
 
   write.println();
@@ -2078,25 +2078,25 @@ void py_Save(String pypath)
 
 void settingsName()
 {
-  if (!generatepy) {
+  if (!generate_py) {
     if (!fromblend[animation_id]) {
-      settingsname = blendname.substring(0, blendname.lastIndexOf("."))+"_"+valoption[frame_start_id]+"-"+valoption[frame_end_id]+".txt";
+      settings_name = blend_name.substring(0, blend_name.lastIndexOf("."))+"_"+valoption[frame_start_id]+"-"+valoption[frame_end_id]+".txt";
     } else if (!fromblend[frame_id]) {
-      settingsname = blendname.substring(0, blendname.lastIndexOf("."))+"_f"+valoption[frame_id]+".txt";
+      settings_name = blend_name.substring(0, blend_name.lastIndexOf("."))+"_f"+valoption[frame_id]+".txt";
     } else {
-      settingsname = blendname.substring(0, blendname.lastIndexOf("."))+".txt";
+      settings_name = blend_name.substring(0, blend_name.lastIndexOf("."))+".txt";
     }
   } else {
     String ogl = "";
-    if (oglrenders && valoption[engine_id] == "BLENDER_RENDER") ogl = "-ogl";
-    else if (oglrenders && valoption[engine_id] == "BLENDER_CLAY") ogl = "-Clay";
-    else if (oglrenders && valoption[engine_id] == "BLENDER_EEVEE") ogl = "-Eevee";
+    if (ogl_renders && valoption[engine_id] == "BLENDER_RENDER") ogl = "-ogl";
+    else if (ogl_renders && valoption[engine_id] == "BLENDER_CLAY") ogl = "-Clay";
+    else if (ogl_renders && valoption[engine_id] == "BLENDER_EEVEE") ogl = "-Eevee";
     if (!fromblend[animation_id]) {
-      settingsname = blendname.substring(0, blendname.lastIndexOf("."))+"_"+valoption[frame_start_id]+"-"+valoption[frame_end_id]+ogl+".py";
+      settings_name = blend_name.substring(0, blend_name.lastIndexOf("."))+"_"+valoption[frame_start_id]+"-"+valoption[frame_end_id]+ogl+".py";
     } else if (!fromblend[frame_id]) {
-      settingsname = blendname.substring(0, blendname.lastIndexOf("."))+"_f"+valoption[frame_id]+ogl+".py";
+      settings_name = blend_name.substring(0, blend_name.lastIndexOf("."))+"_f"+valoption[frame_id]+ogl+".py";
     } else {
-      settingsname = blendname.substring(0, blendname.lastIndexOf("."))+ogl+".py";
+      settings_name = blend_name.substring(0, blend_name.lastIndexOf("."))+ogl+".py";
     }
   }
 }
@@ -2105,13 +2105,13 @@ void settingsName()
 void terminalSelect(File selection) 
 {
   if (selection != null) {
-    terminalpath = selection.getAbsolutePath();
-    terminalfolder = new File(terminalpath);
+    terminal_path = selection.getAbsolutePath();
+    terminal_folder = new File(terminal_path);
 
     if (os == "WINDOWS") {
       write = createWriter(dataPath("")+File.separator+"/tmp/cmd.bat");
       write.println("start ");
-      write.print(terminalpath);
+      write.print(terminal_path);
       write.flush();
       write.close();
     }
@@ -2126,8 +2126,8 @@ void terminalSelect(File selection)
 void texteditorSelect(File selection) 
 {
   if (selection != null) {
-    texteditorpath = selection.getAbsolutePath();
-    texteditorfolder = new File(texteditorpath);
+    text_editor_path = selection.getAbsolutePath();
+    text_editor_folder = new File(text_editor_path);
 
     info = "*Test it with '-Open<' bottom.";
 
@@ -2140,8 +2140,8 @@ void texteditorSelect(File selection)
 void managerSelect(File selection) 
 {
   if (selection != null) {
-    managerpath = selection.getAbsolutePath();
-    explorerfolder = new File(managerpath);
+    manager_path = selection.getAbsolutePath();
+    explorer_folder = new File(manager_path);
 
     info = "*Test it with '-Open<' bottom.";
 
@@ -2154,8 +2154,8 @@ void managerSelect(File selection)
 void imageviewerSelect(File selection) 
 {
   if (selection != null) {
-    imageviewerpath = selection.getAbsolutePath();
-    imageviewerfolder = new File(imageviewerpath);
+    image_viewer_path = selection.getAbsolutePath();
+    image_viewer_folder = new File(image_viewer_path);
 
     info = "*Test it with '-Open<' bottom.";
 
@@ -2168,71 +2168,71 @@ void imageviewerSelect(File selection)
 void settingsSave(File selection) 
 {
   if (selection != null) {
-    String path = settingspath;
-    settingspath = selection.getAbsolutePath();
-    settingsname = selection.getName();
+    String path = settings_path;
+    settings_path = selection.getAbsolutePath();
+    settings_name = selection.getName();
     if (gui == 3) { 
       multiblend_import(path);
     } else {
-      if (add_tomulti) {
-        if (settingspath.endsWith(".multiblend")) { 
+      if (add_to_multi) {
+        if (settings_path.endsWith(".multiblend")) { 
           settings_addtomulti();
         } else {
           error = true;
           info = "*Warning No '.multiblend' selected";
         }
       } else {
-        //settingspath = selection.getAbsolutePath();
+        //settings_path = selection.getAbsolutePath();
 
-        if ((generatepy && settingspath.endsWith(".py")) || (!generatepy && settingspath.endsWith(".txt")) || (generatepy && settingspath.endsWith(".multiblend"))) {
-          settingsfolder = new File(settingspath);
+        if ((generate_py && settings_path.endsWith(".py")) || (!generate_py && settings_path.endsWith(".txt")) || (generate_py && settings_path.endsWith(".multiblend"))) {
+          settings_folder = new File(settings_path);
 
           commandLineOptions();
 
-          if (generatepy) {
-            py_Save(settingspath);
-            if (!settingspath.endsWith(".multiblend")) {
+          if (generate_py) {
+            py_Save(settings_path);
+            if (!settings_path.endsWith(".multiblend")) {
               if (os == "WINDOWS") {
-                bat_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".py.bat");
-                if (startrenders) {
-                  String cmd[]= {terminalpath, "/c", "start", "/w", settingspath.substring(0, settingspath.lastIndexOf("."))+".py.bat"};
+                bat_command_Line_Save(settings_path.substring(0, settings_path.lastIndexOf("."))+".py.bat");
+                if (start_renders) {
+                  String cmd[]= {terminal_path, "/c", "start", "/w", settings_path.substring(0, settings_path.lastIndexOf("."))+".py.bat"};
                   exec(cmd);
                 }
               } else {
-                sh_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".py.sh");
-                if (startrenders) {
-                  String cmd[] = {terminalpath, "-e", settingspath.substring(0, settingspath.lastIndexOf("."))+".py.sh"};
+                sh_command_Line_Save(settings_path.substring(0, settings_path.lastIndexOf("."))+".py.sh");
+                if (start_renders) {
+                  String cmd[] = {terminal_path, "-e", settings_path.substring(0, settings_path.lastIndexOf("."))+".py.sh"};
                   exec(cmd);
                 }
               }
             }
           } else {
-            Command_Line_Save(settingspath);
+            command_line_Save(settings_path);
             if (os == "WINDOWS") {
-              bat_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.bat");
-              if (startrenders) {
-                String cmd[]= {terminalpath, "/c", "start", "/w", settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.bat"};
+              bat_command_Line_Save(settings_path.substring(0, settings_path.lastIndexOf("."))+".txt.bat");
+              if (start_renders) {
+                String cmd[]= {terminal_path, "/c", "start", "/w", settings_path.substring(0, settings_path.lastIndexOf("."))+".txt.bat"};
                 exec(cmd);
               }
             } else {
-              sh_command_Line_Save(settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.sh");
-              if (startrenders) {
-                String cmd[] = {terminalpath, "-e", settingspath.substring(0, settingspath.lastIndexOf("."))+".txt.sh"};
+              sh_command_Line_Save(settings_path.substring(0, settings_path.lastIndexOf("."))+".txt.sh");
+              if (start_renders) {
+                String cmd[] = {terminal_path, "-e", settings_path.substring(0, settings_path.lastIndexOf("."))+".txt.sh"};
                 exec(cmd);
               }
             }
           }
 
-          startrenders = false;
+          start_renders = false;
         } else {
           error = true;
-          if (generatepy) info = "*Warning No '.py' selected";
+          if (generate_py) info = "*Warning No '.py' selected";
           else info = "*Warning No '.txt' selected";
         }
       }
     }
   }
-  if (editoptions) gui = 3;
+  if (edit_options) gui = 3;
   redraw();
 }
 
@@ -2242,17 +2242,17 @@ void settingsRename(File selection)
   if (selection != null) {
     String newFile = selection.getAbsolutePath();
 
-    File originalname = new File(settingspath);
+    File originalname = new File(settings_path);
     File newname = new File(newFile);
 
-    String nameold = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."));
+    String nameold = project_path+"Options"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."));
 
-    settingsfolder = newname;
-    settingspath = newFile;
-    settingsname = selection.getName();
+    settings_folder = newname;
+    settings_path = newFile;
+    settings_name = selection.getName();
     originalname.renameTo(newname);
 
-    String namenew = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."));   
+    String namenew = project_path+"Options"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."));   
 
     if (gui == 3) {
       File prename = new File(nameold+".png");
@@ -2271,11 +2271,11 @@ void settingsRename(File selection)
       nameold = nameold.replace("Options", "Manager");
       namenew = namenew.replace("Options", "Manager");
 
-      prename = new File(nameold+".Manager");
-      prenewname = new File(namenew+".Manager");
+      prename = new File(nameold+".manager");
+      prenewname = new File(namenew+".manager");
       prename.renameTo(prenewname);  
-      prename = new File(nameold+"_preview.Manager");
-      prenewname = new File(namenew+"_preview.Manager");
+      prename = new File(nameold+"_preview.manager");
+      prenewname = new File(namenew+"_preview.manager");
       prename.renameTo(prenewname);  
       prenewname = new File(namenew+".txt");
       prename = new File(nameold+".txt");
@@ -2292,12 +2292,12 @@ void settingsRename(File selection)
       multiblend_rename();
     }
 
-    if (generatepy) {
-      String lines[] = loadStrings(settingspath);
+    if (generate_py) {
+      String lines[] = loadStrings(settings_path);
       for (int i = 0; i < lines.length; i++) {
         if (lines[i].contains(" -b ")) {
           commandLineOptions();
-          lines[i] =  Command_Line;
+          lines[i] =  command_line;
         }
       }
       saveStrings(newname, lines);
@@ -2309,29 +2309,29 @@ void settingsRename(File selection)
 
 void settings_addtomulti()
 {
-  String multiblendpath = projectpath+"Options"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".multiblend";
+  String multiblendpath = project_path+"Options"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+".multiblend";
   commandLineOptions();
   py_Save(multiblendpath);
-  add_tomulti = false;
+  add_to_multi = false;
 
   order = multiblend_files;
 
   loadNames_Multiblend(true);
 
-  newjsonManager(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+  newjsonManager(project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+".manager");
 
-  multiblend_autorun(projectpath+"Autorun"+File.separator+projectname);
-  info = "Saved: "+settingsname.substring(0, settingsname.lastIndexOf("."));
+  multiblend_autorun(project_path+"Autorun"+File.separator+project_name);
+  info = "Saved: "+settings_name.substring(0, settings_name.lastIndexOf("."));
 }
 
 
 void blenderSelect(File selection) 
 {
   if (selection != null) {
-    blenderpath = selection.getAbsolutePath();
-    blenderfolder = new File(blenderpath);
+    blender_path = selection.getAbsolutePath();
+    blender_folder = new File(blender_path);
 
-    if (blenderpath.endsWith("blender") || blenderpath.endsWith("Blender") || blenderpath.endsWith("blender.exe") || blenderpath.endsWith("Blender.exe")) {
+    if (blender_path.endsWith("blender") || blender_path.endsWith("Blender") || blender_path.endsWith("blender.exe") || blender_path.endsWith("Blender.exe")) {
       info = "*You can test it with '-Open<' bottom.";
     } else {
       error = true;
@@ -2346,18 +2346,18 @@ void blenderSelect(File selection)
 void blendSelect(File selection) 
 {
   if (selection != null) {
-    blendpath = selection.getAbsolutePath();
-    blendfolder = new File(blendpath);
-    blendpath = blendpath.substring(0, blendpath.lastIndexOf(File.separator)+1);  
-    settingspath = blendpath;
-    settingsfolder = new File(blendpath);
+    blend_path = selection.getAbsolutePath();
+    blend_folder = new File(blend_path);
+    blend_path = blend_path.substring(0, blend_path.lastIndexOf(File.separator)+1);  
+    settings_path = blend_path;
+    settings_folder = new File(blend_path);
 
-    blendname = selection.getName();
+    blend_name = selection.getName();
 
-    rendersname = blendname.substring(0, blendname.lastIndexOf("."))+"_####";
-    outputpath = blendpath+blendname.substring(0, blendname.lastIndexOf("."))+"_Renders"+File.separator;
+    renders_name = blend_name.substring(0, blend_name.lastIndexOf("."))+"_####";
+    output_path = blend_path+blend_name.substring(0, blend_name.lastIndexOf("."))+"_Renders"+File.separator;
 
-    if (blendname.endsWith(".blend")) {
+    if (blend_name.endsWith(".blend")) {
       info = "*You can test it with '-Open<' bottom.";
     } else {
       error = true;
@@ -2371,10 +2371,10 @@ void blendSelect(File selection)
 void newOutputSelect(File selection) 
 {
   if (selection != null) {
-    outputpath = selection.getAbsolutePath();
-    rendersname = selection.getName();
-    outputfolder = new File(outputpath);
-    outputpath = outputpath.substring(0, outputpath.lastIndexOf(File.separator)+1);
+    output_path = selection.getAbsolutePath();
+    renders_name = selection.getName();
+    output_folder = new File(output_path);
+    output_path = output_path.substring(0, output_path.lastIndexOf(File.separator)+1);
 
     info = "*You can test it with '-Open<' bottom.";
   }
@@ -2384,9 +2384,9 @@ void newOutputSelect(File selection)
 void startRendersToPlaySelect(File selection) 
 {
   if (selection != null) {
-    startrender = selection.getAbsolutePath();
-    playrendersfolder = new File(startrender);
-    selectInput("Select END Render - Cancel to ALL", "endRendersToPlaySelect", playrendersfolder);
+    start_render = selection.getAbsolutePath();
+    play_renders_folder = new File(start_render);
+    selectInput("Select END Render - Cancel to ALL", "endRendersToPlaySelect", play_renders_folder);
   }
   redraw();
 }
@@ -2395,11 +2395,11 @@ void startRendersToPlaySelect(File selection)
 void endRendersToPlaySelect(File selection) 
 {
   if (selection != null) {
-    endrender = selection.getAbsolutePath();
+    end_render = selection.getAbsolutePath();
     if (os == "WINDOWS") {
       write = createWriter(dataPath("")+File.separator+"tmp"+File.separator+"playrenders.bat");
       write.print("call ");
-      write.print('"'+blenderpath+'"'+" -a  -f 24 -s "+'"'+startrender+'"'+" -e "+'"'+endrender+'"');
+      write.print('"'+blender_path+'"'+" -a  -f 24 -s "+'"'+start_render+'"'+" -e "+'"'+end_render+'"');
       write.flush();
       write.close();
       try {
@@ -2411,14 +2411,14 @@ void endRendersToPlaySelect(File selection)
         e.printStackTrace();
       }
     } else {
-      String cmd[] = {terminalpath, "-e", blenderpath+" -a -f 24 -s "+startrender+" -e "+endrender};
+      String cmd[] = {terminal_path, "-e", blender_path+" -a -f 24 -s "+start_render+" -e "+end_render};
       exec(cmd);
     }
   } else {
     if (os == "WINDOWS") {
       write = createWriter(dataPath("")+File.separator+"tmp"+File.separator+"playrenders.bat");
       write.print("call ");
-      write.print('"'+blenderpath+'"'+" -a "+'"'+startrender+'"');
+      write.print('"'+blender_path+'"'+" -a "+'"'+start_render+'"');
       write.flush();
       write.close();
       try {
@@ -2430,7 +2430,7 @@ void endRendersToPlaySelect(File selection)
         e.printStackTrace();
       }
     } else {
-      String cmd[] = {terminalpath, "-e", blenderpath+" -a "+startrender};
+      String cmd[] = {terminal_path, "-e", blender_path+" -a "+start_render};
       exec(cmd);
     }
   }
@@ -2483,7 +2483,7 @@ void changeforblend()
   write.println();
   for (int i = 0; i < fromblend.length; i++) {
     if (!fromblend[i]) {
-      if (generatepy) {
+      if (generate_py) {
         if (i == pxX_id
           || i == pxY_id 
           || i == percentage_id 
@@ -2531,6 +2531,6 @@ void changeforblend()
       }
     }
   }
-  if (allfromblend) write.println("- All render options from "+blendname);
-  else  write.println("- Others from "+blendname);
+  if (allfromblend) write.println("- All render options from "+blend_name);
+  else  write.println("- Others from "+blend_name);
 }

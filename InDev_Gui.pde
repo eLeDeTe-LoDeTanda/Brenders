@@ -28,7 +28,7 @@
 void inDev_Gui()
 {
   pushStyle();
-  background(backgroundcolor);
+  background(background_color);
   tint(100);
   image(bg, 0, 0);
 

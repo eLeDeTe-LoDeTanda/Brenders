@@ -30,7 +30,7 @@ void  mousePressed()
   if (menu_1()) gui = 1;
   if (menu_2()) gui = 3;
   if (menu_3()) {
-    if (rendersname.contains("#")) rendersname = rendersname.substring(0, rendersname.indexOf("#")); 
+    if (renders_name.contains("#")) renders_name = renders_name.substring(0, renders_name.indexOf("#")); 
     gui = 2;
   }
   if (menu_4()) gui = 4;
@@ -57,11 +57,11 @@ void  mousePressed()
   } else if (gui == 1) {
     if (mouseButton == LEFT) mouseEventsCommandLine();
     if (mouseButton == RIGHT) {
-      if (selectoption[renders_name_id]) rendersname = esc;
+      if (selectoption[renders_name_id]) renders_name = esc;
       for (int i = 0; i < selectoption.length; i++) {
         if (selectoption[i]) valoption[i] = esc;
       }
-      selectcolor = false;
+      select_color = false;
     }
   } else if (gui == 2) {
     mouseEventsManager();
@@ -111,7 +111,7 @@ void keyPressed()
   }
   if (keyCode == 27) key = 0;
 
-  selectcolor = false;
+  select_color = false;
 
   redraw();
 }

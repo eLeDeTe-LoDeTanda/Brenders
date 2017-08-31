@@ -28,7 +28,7 @@
 void about()
 {
   pushStyle();
-  background(backgroundcolor);
+  background(background_color);
   tint(100, 100, 100);
   image(bg, 0, 0);
 

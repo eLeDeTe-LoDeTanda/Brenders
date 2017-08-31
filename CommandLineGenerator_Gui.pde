@@ -25,48 +25,48 @@
  * ***** END GPL LICENSE BLOCK *****
  */
 
-String Command_Line;
+String command_line;
 String command_play_anim;
 
-boolean startrenders;
-boolean oglrenders;
+boolean start_renders;
+boolean ogl_renders;
 
-boolean savelogs;
+boolean save_logs;
 
 boolean ssh;
-String sshuser = "Name Machine";
-String sship = "Address";
+String ssh_user = "Name Machine";
+String ssh_ip = "Address";
 
-boolean generatepy;
-boolean newoutput;
+boolean generate_py;
+boolean new_output;
 
-String blenderpath;
-String blendpath;
-String blendname;
+String blender_path;
+String blend_path;
+String blend_name;
 
-String terminalpath;
-String texteditorpath;
-String imageviewerpath;
-String managerpath;
-String settingspath;
-String settingsname;
+String terminal_path;
+String text_editor_path;
+String image_viewer_path;
+String manager_path;
+String settings_path;
+String settings_name;
 
-File terminalfolder;
-File texteditorfolder;
-File imageviewerfolder;
-File explorerfolder;
-File settingsfolder;
-File blenderfolder;
-File blendfolder;
-File outputfolder;
-File playrendersfolder;
+File terminal_folder;
+File text_editor_folder;
+File image_viewer_folder;
+File explorer_folder;
+File settings_folder;
+File blender_folder;
+File blend_folder;
+File output_folder;
+File play_renders_folder;
 
-String commandlinepath;
+String command_line_path;
 
-String outputpath ;
-String rendersname;
+String output_path ;
+String renders_name;
 
-String scenename;
+String scene_name;
 
 boolean[] fromblend = new boolean[54];
 boolean[] selectoption = new boolean[54];
@@ -119,7 +119,7 @@ final int use_stamp_strip_meta_id = 39;
 final int use_stamp_dlabels_id = 40; 
 final int use_stamp_textsize_id = 41; 
 
-boolean selectcolor;
+boolean select_color;
 boolean fgcolor;
 boolean bgcolor;
 int[] fgrgba = new int[4];
@@ -142,8 +142,8 @@ final int sequencer_id = 50;
 
 final int compresion_id = 51; 
 
-final int sshuser_id = 52; 
-final int sship_id = 53; 
+final int ssh_user_id = 52; 
+final int ssh_ip_id = 53; 
 
 final int png_id = 0; 
 final int jpg_id = 1;
@@ -190,19 +190,19 @@ String[] layers_id = new String[20];
 
 boolean exist = false; 
 
-String startrender;
-String endrender;
+String start_render;
+String end_render;
 
-String pathname;
+String path_name;
 
 void commandLineGenerator_Gui()
 {
   pushStyle();
 
-  pathname = blendname;
-  if (blendname.length() > 20) pathname = blendname.substring(0, 10)+"..."+blendname.substring(blendname.length() - 10);
-  surface.setTitle("ComandLineGenerator -"+pathname+"- "+version);
-  background(backgroundcolor);
+  path_name = blend_name;
+  if (blend_name.length() > 20) path_name = blend_name.substring(0, 10)+"..."+blend_name.substring(blend_name.length() - 10);
+  surface.setTitle("ComandLineGenerator -"+path_name+"- "+version);
+  background(background_color);
   tint(230, 230, 250);
   image(bg2, 0, 0);
 
@@ -303,16 +303,16 @@ void commandLineGenerator_Gui()
   fill(acolor);
   textSize(10);
 
-  if (generatepy) {
+  if (generate_py) {
     text("o in OpenGL", 510, 115);
-    if (oglrenders) {
+    if (ogl_renders) {
       fill(ccolor);
       ellipse(513, 112, 8, 8);
       fill(acolor);
     }
   }
   text("o Save Logs", 510, 132);
-  if (savelogs) {
+  if (save_logs) {
     fill(ccolor);
     ellipse(513, 129, 8, 8);
     fill(acolor);
@@ -323,14 +323,14 @@ void commandLineGenerator_Gui()
     ellipse(513, 146, 8, 8);
     fill(acolor);
   } else fill(icolor);
-  text("USER: "+sshuser+" <<", 490, 162);
-  if (selectoption[sshuser_id]) line(textWidth(sshuser) + 523, 152, textWidth(sshuser) + 523, 162);
-  text("IP:  "+sship+" <<", 490, 172);
-  if (selectoption[sship_id]) line(textWidth(sship) + 510, 162, textWidth(sship) + 510, 172);
+  text("USER: "+ssh_user+" <<", 490, 162);
+  if (selectoption[ssh_user_id]) line(textWidth(ssh_user) + 523, 152, textWidth(ssh_user) + 523, 162);
+  text("IP:  "+ssh_ip+" <<", 490, 172);
+  if (selectoption[ssh_ip_id]) line(textWidth(ssh_ip) + 510, 162, textWidth(ssh_ip) + 510, 172);
 
   fill(acolor);
   textSize(11);
-  if (generatepy) fill(acolor);
+  if (generate_py) fill(acolor);
   else fill(icolor);
 
   if (selectoption[pxX_id]) {
@@ -342,7 +342,7 @@ void commandLineGenerator_Gui()
   else {
     fill(ccolor);
     ellipse(17, 206, 8, 8);
-    if (generatepy) fill(acolor);
+    if (generate_py) fill(acolor);
     else fill(icolor);
     text(valoption[pxX_id], 55, 210);
     if (selectoption[pxX_id]) line(textWidth(valoption[pxX_id]) + 58, 200, textWidth(valoption[pxX_id]) + 58, 210);
@@ -357,7 +357,7 @@ void commandLineGenerator_Gui()
   else {
     fill(ccolor);
     ellipse(17, 226, 8, 8);
-    if (generatepy) fill(acolor);
+    if (generate_py) fill(acolor);
     else fill(icolor);
     text(valoption[pxY_id], 55, 230);
     if (selectoption[pxY_id]) line(textWidth(valoption[pxY_id]) + 58, 220, textWidth(valoption[pxY_id]) + 58, 230);
@@ -372,7 +372,7 @@ void commandLineGenerator_Gui()
   else { 
     fill(ccolor);
     ellipse(17, 246, 8, 8);
-    if (generatepy) fill(acolor);
+    if (generate_py) fill(acolor);
     else fill(icolor);
     text(valoption[percentage_id], 40, 250); 
     if (selectoption[percentage_id]) line(textWidth(valoption[percentage_id]) + 43, 240, textWidth(valoption[percentage_id]) + 43, 250);
@@ -387,7 +387,7 @@ void commandLineGenerator_Gui()
   else {
     fill(ccolor);
     ellipse(17, 266, 8, 8);
-    if (generatepy) fill(acolor);
+    if (generate_py) fill(acolor);
     else fill(icolor);
     text(valoption[anti_aliasing_id], 100, 270);
     if (valoption[anti_aliasing_id] == "True") {
@@ -398,7 +398,7 @@ void commandLineGenerator_Gui()
       if (valoption[anti_aliasing_fullsamples_id] == "True") {
         fill(ccolor);
         ellipse(156, 267, 6, 6);
-        if (generatepy) fill(acolor);
+        if (generate_py) fill(acolor);
         else fill(icolor);
       }
       textSize(11);
@@ -413,7 +413,7 @@ void commandLineGenerator_Gui()
   else {
     fill(ccolor);
     ellipse(17, 286, 8, 8);
-    if (generatepy) fill(acolor);
+    if (generate_py) fill(acolor);
     else fill(icolor);
     text(valoption[tile_x_id], 70, 290);
     if (selectoption[tile_x_id]) line(textWidth(valoption[tile_x_id]) + 73, 280, textWidth(valoption[tile_x_id]) + 73, 290);
@@ -427,7 +427,7 @@ void commandLineGenerator_Gui()
   else {
     fill(ccolor);
     ellipse(17, 306, 8, 8);
-    if (generatepy) fill(acolor);
+    if (generate_py) fill(acolor);
     else fill(icolor);
     text(valoption[tile_y_id], 70, 310);
     if (selectoption[tile_y_id]) line(textWidth(valoption[tile_y_id]) + 73, 300, textWidth(valoption[tile_y_id]) + 73, 310);
@@ -442,7 +442,7 @@ void commandLineGenerator_Gui()
   else {
     fill(ccolor);
     ellipse(202, 227, 8, 8);
-    if (generatepy) fill(acolor);
+    if (generate_py) fill(acolor);
     else fill(icolor);
     text(valoption[placeholder_id], 280, 230);
   }
@@ -455,7 +455,7 @@ void commandLineGenerator_Gui()
   else {
     fill(ccolor);
     ellipse(202, 247, 8, 8);
-    if (generatepy) fill(acolor);
+    if (generate_py) fill(acolor);
     else fill(icolor);
     text(valoption[overwrite_renders_id], 320, 250);
   }
@@ -468,7 +468,7 @@ void commandLineGenerator_Gui()
   else {
     fill(ccolor);
     ellipse(202, 267, 8, 8);
-    if (generatepy) fill(acolor);
+    if (generate_py) fill(acolor);
     else fill(icolor);
     text(valoption[render_cache_id], 290, 270);
   }
@@ -484,7 +484,7 @@ void commandLineGenerator_Gui()
   } else {
     fill(ccolor);
     ellipse(412, 206, 8, 8);
-    if (generatepy) fill(acolor);
+    if (generate_py) fill(acolor);
     else fill(icolor);
     text(valoption[stamp_id], 465, 210);
     textSize(10);
@@ -492,7 +492,7 @@ void commandLineGenerator_Gui()
     if (valoption[use_stamp_strip_meta_id] == "True") {
       fill(ccolor);
       ellipse(503, 209, 5, 5);
-      if (generatepy) fill(acolor);
+      if (generate_py) fill(acolor);
       else fill(icolor);
     }
   }
@@ -521,88 +521,88 @@ void commandLineGenerator_Gui()
     if (valoption[use_stamp_time_id] == "True") {
       fill(ccolor);
       ellipse(413, 219, 5, 5);
-      if (generatepy) fill(acolor);
+      if (generate_py) fill(acolor);
       else fill(icolor);
     }
     if (valoption[use_stamp_dlabels_id] == "True") {
       fill(ccolor);
       ellipse(583, 209, 5, 5);
-      if (generatepy) fill(acolor);
+      if (generate_py) fill(acolor);
       else fill(icolor);
     }
     if (valoption[use_stamp_date_id] == "True") {
       fill(ccolor);
       ellipse(413, 229, 5, 5);
-      if (generatepy) fill(acolor);
+      if (generate_py) fill(acolor);
       else fill(icolor);
     }
     if (valoption[use_stamp_render_time_id] == "True") {
       fill(ccolor);
       ellipse(413, 239, 5, 5);
-      if (generatepy) fill(acolor);
+      if (generate_py) fill(acolor);
       else fill(icolor);
     }
     if (valoption[use_stamp_frame_id] == "True") {
       fill(ccolor);
       ellipse(413, 249, 5, 5);
-      if (generatepy) fill(acolor);
+      if (generate_py) fill(acolor);
       else fill(icolor);
     }
     if (valoption[use_stamp_scene_id] == "True") {
       fill(ccolor);
       ellipse(413, 259, 5, 5);
-      if (generatepy) fill(acolor);
+      if (generate_py) fill(acolor);
       else fill(icolor);
     }
     if (valoption[use_stamp_camera_id] == "True") {
       fill(ccolor);
       ellipse(503, 219, 5, 5);
-      if (generatepy) fill(acolor);
+      if (generate_py) fill(acolor);
       else fill(icolor);
     }
     if (valoption[use_stamp_memory_id] == "True") {
       fill(ccolor);
       ellipse(583, 219, 5, 5);
-      if (generatepy) fill(acolor);
+      if (generate_py) fill(acolor);
       else fill(icolor);
     }
     if (valoption[use_stamp_lens_id] == "True") { 
       fill(ccolor);
       ellipse(503, 229, 5, 5);
-      if (generatepy) fill(acolor);
+      if (generate_py) fill(acolor);
       else fill(icolor);
     }
     if (valoption[use_stamp_filename_id] == "True") {
       fill(ccolor);
       ellipse(503, 239, 5, 5);
-      if (generatepy) fill(acolor);
+      if (generate_py) fill(acolor);
       else fill(icolor);
     }
     if (valoption[use_stamp_marker_id] == "True") {
       fill(ccolor);
       ellipse(503, 249, 5, 5);
-      if (generatepy) fill(acolor);
+      if (generate_py) fill(acolor);
       else fill(icolor);
     }
     if (valoption[use_stamp_sequencer_strip_id] == "True") {
       fill(ccolor);
       ellipse(503, 259, 5, 5);
-      if (generatepy) fill(acolor);
+      if (generate_py) fill(acolor);
       else fill(icolor);
     }
     if (valoption[stamp_note_id] == "True") {
       fill(ccolor);
       ellipse(403, 272, 5, 5);
-      if (generatepy) fill(acolor);
+      if (generate_py) fill(acolor);
       else fill(icolor);
     }
 
     rect(475, 266, 155, 12);
 
     fill(icolor);
-    pathname = valoption[stamp_note_text_id];
-    if (valoption[stamp_note_text_id].length() > 20) pathname = "..."+valoption[stamp_note_text_id].substring(valoption[stamp_note_text_id].length() - 20);
-    text(pathname, 480, 276);
+    path_name = valoption[stamp_note_text_id];
+    if (valoption[stamp_note_text_id].length() > 20) path_name = "..."+valoption[stamp_note_text_id].substring(valoption[stamp_note_text_id].length() - 20);
+    text(path_name, 480, 276);
     if (selectoption[stamp_note_text_id]) line(textWidth(valoption[stamp_note_text_id]) + 483, 266, textWidth(valoption[stamp_note_text_id]) + 483, 276);
     fill(fgrgba[0], fgrgba[1], fgrgba[2], fgrgba[3]);
     rect(565, 228, 15, 15);
@@ -611,7 +611,7 @@ void commandLineGenerator_Gui()
     rect(565, 246, 15, 15);
   }
 
-  if (generatepy) fill(acolor);
+  if (generate_py) fill(acolor);
   else fill(icolor);
 
   text("o "+nameoption[dither_id], 557, 287);
@@ -620,7 +620,7 @@ void commandLineGenerator_Gui()
     if (selectoption[dither_id]) line(textWidth(valoption[dither_id]) + 573, 287, textWidth(valoption[dither_id]) + 573, 297);
     fill(ccolor);
     ellipse(559, 285, 8, 8);
-    if (generatepy) fill(acolor);
+    if (generate_py) fill(acolor);
     else fill(icolor);
   } else  text("From blend", 555, 295);
 
@@ -629,7 +629,7 @@ void commandLineGenerator_Gui()
     text(valoption[compositing_id], 570, 317);
     fill(ccolor);
     ellipse(559, 304, 8, 8);
-    if (generatepy) fill(acolor);
+    if (generate_py) fill(acolor);
     else fill(icolor);
   } else  text("From blend", 555, 315);
 
@@ -673,7 +673,7 @@ void commandLineGenerator_Gui()
     text("-"+valoption[engine_id], 65, 350);
 
     if (valoption[engine_id] == "CYCLES") {
-      if (generatepy) {
+      if (generate_py) {
         textSize(7);
         text(nameoption[engine_cyclessamples_id], 105, 350);
         textSize(9);
@@ -696,9 +696,9 @@ void commandLineGenerator_Gui()
     fill(ccolor);
     ellipse(202, 207, 8, 8);
     fill(acolor);
-    pathname = scenename;
-    if (scenename.length() > 14) pathname = "..."+scenename.substring(scenename.length() - 14);
-    text(pathname, 280, 210);
+    path_name = scene_name;
+    if (scene_name.length() > 14) path_name = "..."+scene_name.substring(scene_name.length() - 14);
+    text(path_name, 280, 210);
   }
 
   if (selectoption[add_extension_id]) {
@@ -729,7 +729,7 @@ void commandLineGenerator_Gui()
   if (!fromblend[file_format_id]) fill(acolor);
   else fill(icolor);
   textSize(9);
-  if (generatepy) {
+  if (generate_py) {
     if (valoption[file_format_id].equals("PNG")) {
       text("Compresion:", 185, 322); 
       text(compresion+"<", 250, 322); 
@@ -865,70 +865,70 @@ void commandLineGenerator_Gui()
     fill(acolor);
     rect(288, 340, 340, 12);
     fill(icolor);
-    pathname = valoption[frame_id];
-    if (valoption[frame_id].length() > 50) pathname = "..."+valoption[frame_id].substring(valoption[frame_id].length() - 50);
-    text(pathname, 290, 350);
+    path_name = valoption[frame_id];
+    if (valoption[frame_id].length() > 50) path_name = "..."+valoption[frame_id].substring(valoption[frame_id].length() - 50);
+    text(path_name, 290, 350);
     if (selectoption[frame_id]) line(textWidth(valoption[frame_id]) + 293, 340, textWidth(valoption[frame_id]) + 293, 350);
   } else {
     fill(icolor);
     rect(288, 340, 340, 12);
     fill(acolor);
-    if (!generatepy) text(" frame      frame,frame,frame      start..end      +frame   -frame", 290, 350);
+    if (!generate_py) text(" frame      frame,frame,frame      start..end      +frame   -frame", 290, 350);
     else text(" frame", 290, 350);
   }
 
   textSize(12);
   fill(acolor);
   text("o Generate Python Script", 15, 190); 
-  if (generatepy) {
+  if (generate_py) {
     fill(ccolor);
     ellipse(17, 185, 10, 10);
     fill(acolor);
   }
 
   text("o New Output", 200, 190);
-  if (newoutput) {
+  if (new_output) {
     fill(ccolor);
     ellipse(202, 185, 10, 10);
     fill(acolor);
   }
 
-  if (!newoutput) fill(icolor);
+  if (!new_output) fill(icolor);
   text("Renders NAME:", 320, 190);
   rect(410, 178, 220, 15);
   fill(icolor);
-  pathname = rendersname;
-  if (rendersname.length() > 28) pathname = rendersname.substring(0, 14)+"..."+rendersname.substring(rendersname.length() - 14);
-  text(pathname, 414, 190);
-  if (selectoption[renders_name_id]) line(textWidth(rendersname) + 418, 180, textWidth(rendersname) + 418, 190);
+  path_name = renders_name;
+  if (renders_name.length() > 28) path_name = renders_name.substring(0, 14)+"..."+renders_name.substring(renders_name.length() - 14);
+  text(path_name, 414, 190);
+  if (selectoption[renders_name_id]) line(textWidth(renders_name) + 418, 180, textWidth(renders_name) + 418, 190);
   textSize(10);
   fill(acolor);
-  if (!newoutput)text("From blend", 420, 190);
-  pathname = blenderpath;
-  if (blenderpath.length() > 22) pathname = blenderpath.substring(0, 11)+"..."+blenderpath.substring(blenderpath.length() - 11);
-  text(pathname, 35, 65);
-  pathname = terminalpath;
-  if (terminalpath.length() > 16) pathname = terminalpath.substring(0, 8)+"..."+terminalpath.substring(terminalpath.length() - 8);
-  text(pathname, 365, 60);
-  pathname = texteditorpath;
-  if (texteditorpath.length() > 16) pathname = texteditorpath.substring(0, 8)+"..."+texteditorpath.substring(texteditorpath.length() - 8);
-  text(pathname, 230, 60);
-  pathname = managerpath;
-  if (managerpath.length() > 16) pathname = managerpath.substring(0, 8)+"..."+managerpath.substring(managerpath.length() - 8);  
-  text(pathname, 365, 100);
-  pathname = blendname;
-  if (blendname.length() > 20) pathname = blendname.substring(0, 10)+"..."+blendname.substring(blendname.length() - 10);  
-  text(File.separator+pathname, 35, 105);
+  if (!new_output)text("From blend", 420, 190);
+  path_name = blender_path;
+  if (blender_path.length() > 22) path_name = blender_path.substring(0, 11)+"..."+blender_path.substring(blender_path.length() - 11);
+  text(path_name, 35, 65);
+  path_name = terminal_path;
+  if (terminal_path.length() > 16) path_name = terminal_path.substring(0, 8)+"..."+terminal_path.substring(terminal_path.length() - 8);
+  text(path_name, 365, 60);
+  path_name = text_editor_path;
+  if (text_editor_path.length() > 16) path_name = text_editor_path.substring(0, 8)+"..."+text_editor_path.substring(text_editor_path.length() - 8);
+  text(path_name, 230, 60);
+  path_name = manager_path;
+  if (manager_path.length() > 16) path_name = manager_path.substring(0, 8)+"..."+manager_path.substring(manager_path.length() - 8);  
+  text(path_name, 365, 100);
+  path_name = blend_name;
+  if (blend_name.length() > 20) path_name = blend_name.substring(0, 10)+"..."+blend_name.substring(blend_name.length() - 10);  
+  text(File.separator+path_name, 35, 105);
 
-  valoption[renders_name_id] = outputpath;
-  pathname = valoption[renders_name_id];
-  if (valoption[renders_name_id].length() > 20) pathname = valoption[renders_name_id].substring(0, 10)+"..."+valoption[renders_name_id].substring(valoption[renders_name_id].length() - 10);  
-  if (!newoutput) pathname = "From blend";
-  text(pathname, 35, 145);
+  valoption[renders_name_id] = output_path;
+  path_name = valoption[renders_name_id];
+  if (valoption[renders_name_id].length() > 20) path_name = valoption[renders_name_id].substring(0, 10)+"..."+valoption[renders_name_id].substring(valoption[renders_name_id].length() - 10);  
+  if (!new_output) path_name = "From blend";
+  text(path_name, 35, 145);
 
   popStyle();
 
-  if (selectcolor) selectColor();
+  if (select_color) selectColor();
 }
 
 boolean generate_py_() 
@@ -1050,7 +1050,7 @@ boolean in_ogl_()
 {
   return  (mouseX > 490 && mouseX < 560 && mouseY > 105 && mouseY < 120);
 }
-boolean savelogs_() 
+boolean save_logs_() 
 {
   return  (mouseX > 490 && mouseX < 560 && mouseY > 121 && mouseY < 139);
 }

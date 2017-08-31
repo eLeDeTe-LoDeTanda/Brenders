@@ -30,22 +30,22 @@ void mouseEventsManager()
   if (multiblend_active) {
     if (multiblend_files > 0) {
       if (manager_L()) {
-        offsetmanager = constrain(offsetmanager - 150, 0, int(valoption[frame_end_id]));
+        offset_manager = constrain(offset_manager - 150, 0, int(valoption[frame_end_id]));
       }
       if (manager_R()) {
-        if (int(valoption[frame_end_id]) > 150) offsetmanager = constrain(offsetmanager + 150, 0, int(valoption[frame_end_id]));
+        if (int(valoption[frame_end_id]) > 150) offset_manager = constrain(offset_manager + 150, 0, int(valoption[frame_end_id]));
       }
       if (manager_all()) {
-        startframemanager = int(valoption[frame_start_id]);
-        endframemanager = int(valoption[frame_end_id]);
+        startframe_manager = int(valoption[frame_start_id]);
+        endframe_manager = int(valoption[frame_end_id]);
       }
       if (manager_good()) {
-        for (int i = startframemanager; i <= endframemanager; i++) {
+        for (int i = startframe_manager; i <= endframe_manager; i++) {
           addinJsonManager("good", i);
         }
       }
       if (manager_bad()) {
-        for (int i = startframemanager; i <= endframemanager; i++) {
+        for (int i = startframe_manager; i <= endframe_manager; i++) {
           addinJsonManager("bad", i);
         }
       }
@@ -53,29 +53,29 @@ void mouseEventsManager()
         int X = floor(map(mouseX, 20, 620, 0, 15));
         int Y = floor(map(mouseY, 30, 325, 0, 10));
 
-        selectframe = ((Y * 15 + X) + offsetmanager) + int(valoption[frame_start_id]);
+        select_frame = ((Y * 15 + X) + offset_manager) + int(valoption[frame_start_id]);
 
-        selectframe = constrain(selectframe, int(valoption[frame_start_id]), int(valoption[frame_end_id]));
+        select_frame = constrain(select_frame, int(valoption[frame_start_id]), int(valoption[frame_end_id]));
 
         if (mouseButton == LEFT) {
-          startframemanager = selectframe;
-          endframemanager = selectframe;
+          startframe_manager = select_frame;
+          endframe_manager = select_frame;
         }
         if (mouseButton == RIGHT) {
-          endframemanager = selectframe;
+          endframe_manager = select_frame;
         }
         if (mouseButton == CENTER) {
-          if (selectframe <= int(valoption[frame_end_id])) {
-            String prepath = outputpath+rendersname+nf(selectframe, 4)+extensionName(valoption[file_format_id]);
+          if (select_frame <= int(valoption[frame_end_id])) {
+            String prepath = output_path+renders_name+nf(select_frame, 4)+extensionName(valoption[file_format_id]);
             if (os == "WINDOWS") {
               String cmd[] = {"rundll32.exe", "C:"+File.separator+"WINDOWS"+File.separator+"System32"+File.separator+"shimgvw.dll,ImageView_Fullscreen", prepath};
               exec(cmd);
             } else {
-              String cmd[] = {imageviewerpath, prepath};
+              String cmd[] = {image_viewer_path, prepath};
               exec(cmd);
             }
           }
-          framepreview(outputpath+rendersname+nf(selectframe, 4)+extensionName(valoption[file_format_id]));
+          frame_preview(output_path+renders_name+nf(select_frame, 4)+extensionName(valoption[file_format_id]));
         }
       }
       if (manager_reloadallpre()) {
@@ -85,7 +85,7 @@ void mouseEventsManager()
         thread("newspreviews");
       }
       if (manager_playrender()) {
-        selectInput("Select START Render:", "startRendersToPlaySelect", playrendersfolder);
+        selectInput("Select START Render:", "startRendersToPlaySelect", play_renders_folder);
       }
     }
   }
@@ -96,7 +96,7 @@ void addinJsonManager(String option, int frame)
 {
   JSONArray values;
 
-  values = loadJSONArray(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+  values = loadJSONArray(project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+".manager");
 
   for (int i = 0; i <= int(valoption[frame_end_id]) - int(valoption[frame_start_id]); i++) {
     JSONObject rendermanager = values.getJSONObject(i); 
@@ -104,7 +104,7 @@ void addinJsonManager(String option, int frame)
     rendermanager.getString("Multi");
     rendermanager.getString("Status");
     rendermanager.getString("Render");
-    if (newoutput) {
+    if (new_output) {
       rendermanager.getString("Render path");
       rendermanager.getString("Render name");
     } else {
@@ -114,7 +114,7 @@ void addinJsonManager(String option, int frame)
     if (i + int(valoption[frame_start_id]) == int(frame)) rendermanager.setString("Status", option);
   }
 
-  saveJSONArray(values, projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+  saveJSONArray(values, project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+".manager");
 }
 
 
@@ -122,7 +122,7 @@ String loadJsonManager(int frame, String path)
 {
   JSONArray values;
 
-  values = loadJSONArray(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager");
+  values = loadJSONArray(project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+".manager");
   String status = "";
   if (frame < values.size()) {
     JSONObject rendermanager = values.getJSONObject(frame); 
@@ -131,12 +131,12 @@ String loadJsonManager(int frame, String path)
     JSONObject news = new JSONObject();
 
     news.setInt("Frame", frame);
-    news.setString("Multi", settingsname);
+    news.setString("Multi", settings_name);
     news.setString("Status", "Waiting");
     news.setString("Render", "None");
-    if (newoutput) {
-      news.setString("Render path", outputpath);
-      news.setString("Render name", rendersname);
+    if (new_output) {
+      news.setString("Render path", output_path);
+      news.setString("Render name", renders_name);
     } else {
       news.setString("Render path", "From .blend");
       news.setString("Render name", "From .blend");
@@ -159,12 +159,12 @@ void newjsonManager(String path)
     JSONObject rendermanager = new JSONObject();
 
     rendermanager.setInt("Frame", i + int(valoption[frame_start_id]));
-    rendermanager.setString("Multi", settingsname);
+    rendermanager.setString("Multi", settings_name);
     rendermanager.setString("Status", "Waiting");
     rendermanager.setString("Render", "None");
-    if (newoutput) {
-      rendermanager.setString("Render path", outputpath);
-      rendermanager.setString("Render name", rendersname);
+    if (new_output) {
+      rendermanager.setString("Render path", output_path);
+      rendermanager.setString("Render name", renders_name);
     } else {
       rendermanager.setString("Render path", "From .blend");
       rendermanager.setString("Render name", "From .blend");
@@ -181,11 +181,11 @@ void allpreviews()
 {
   PImage img;
   for (int i = int(valoption[frame_start_id]); i <= int(valoption[frame_end_id]); i++) {
-    File f = new File(outputpath+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
+    File f = new File(output_path+renders_name+nf(i, 4)+extensionName(valoption[file_format_id]));
     if (f.exists()) {
-      img = loadImage(outputpath+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
+      img = loadImage(output_path+renders_name+nf(i, 4)+extensionName(valoption[file_format_id]));
       img.resize(40, 23);
-      img.save(projectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
+      img.save(project_path+"Manager"+File.separator+"Previews"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+File.separator+renders_name+nf(i, 4)+".png");
       System.gc(); 
       redraw();
     }
@@ -197,13 +197,13 @@ void newspreviews()
 {
   PImage img;
   for (int i = int(valoption[frame_start_id]); i <= int(valoption[frame_end_id]); i++) {
-    File fp = new File(projectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
+    File fp = new File(project_path+"Manager"+File.separator+"Previews"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+File.separator+renders_name+nf(i, 4)+".png");
     if (!fp.exists()) {
-      File f = new File(outputpath+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
+      File f = new File(output_path+renders_name+nf(i, 4)+extensionName(valoption[file_format_id]));
       if (f.exists()) {
-        img = loadImage(outputpath+rendersname+nf(i, 4)+extensionName(valoption[file_format_id]));
+        img = loadImage(output_path+renders_name+nf(i, 4)+extensionName(valoption[file_format_id]));
         img.resize(40, 23);
-        img.save(projectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(i, 4)+".png");
+        img.save(project_path+"Manager"+File.separator+"Previews"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+File.separator+renders_name+nf(i, 4)+".png");
         System.gc();
         redraw();
       }
@@ -211,7 +211,7 @@ void newspreviews()
   }
 }
 
-void framepreview(String frame)
+void frame_preview(String frame)
 {
   //  fromblend();
   PImage img;
@@ -219,7 +219,7 @@ void framepreview(String frame)
   if (f.exists()) {
     img = loadImage(frame);
     img.resize(40, 23);
-    img.save(projectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(selectframe, 4)+".png");
+    img.save(project_path+"Manager"+File.separator+"Previews"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+File.separator+renders_name+nf(select_frame, 4)+".png");
     System.gc();
   }
   updating = false;
@@ -228,18 +228,18 @@ void framepreview(String frame)
 
 void loadfromblend()
 {
-  String lines[] = loadStrings(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")) + ".txt");
+  String lines[] = loadStrings(project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf(".")) + ".txt");
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].contains("[RendersOutput]")) {
       if (fromblend[output_path_id]) {
-        if (lines[i+1].startsWith("//")) outputpath = blendpath+lines[i+1].substring(2);
-        else outputpath = lines[i+1];
+        if (lines[i+1].startsWith("//")) output_path = blend_path+lines[i+1].substring(2);
+        else output_path = lines[i+1];
       }
     } else if (lines[i].contains("[RenderName]")) {
       if (fromblend[output_path_id]) {
-        if (!lines[i+1].contains("#")) rendersname = lines[i+1];
-        else rendersname = lines[i+1].substring(0, lines[i+1].indexOf("#"));
-      } else if (rendersname.contains("#")) rendersname = rendersname.substring(0, rendersname.indexOf("#"));
+        if (!lines[i+1].contains("#")) renders_name = lines[i+1];
+        else renders_name = lines[i+1].substring(0, lines[i+1].indexOf("#"));
+      } else if (renders_name.contains("#")) renders_name = renders_name.substring(0, renders_name.indexOf("#"));
     } else if (lines[i].contains("[FileFormat]")) {
       if (fromblend[file_format_id]) valoption[file_format_id] = lines[i+1];
     } else if (lines[i].contains("[StartFrame]")) {
@@ -255,7 +255,7 @@ void savefromblend(boolean forcetowrite)
 {
   if (fromblend[output_path_id] || fromblend[file_format_id] || fromblend[frame_start_id] || fromblend[frame_end_id]) {
 
-    File f = new File(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")) + ".txt");
+    File f = new File(project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf(".")) + ".txt");
     if (forcetowrite) f = new File("");
 
     if (!f.exists()) {
@@ -266,9 +266,9 @@ void savefromblend(boolean forcetowrite)
       write.println();
       write.print("Scenename = ");
       if (fromblend[scene_name_id]) write.println("bpy.context.scene.name");
-      else write.println('"'+scenename+'"');
+      else write.println('"'+scene_name+'"');
 
-      String path = projectpath+"Manager"+File.separator+"fromblend.txt";
+      String path = project_path+"Manager"+File.separator+"fromblend.txt";
       if (os == "WINDOWS") path = path.replace("\\", "/");
 
       write.println("file = open("+'"'+path+'"'+", 'w', encoding='utf-8')");
@@ -285,9 +285,9 @@ void savefromblend(boolean forcetowrite)
         write.println("COLOR 8F");
         write.println();
         write.print("call ");
-        write.print('"'+blenderpath+'"');
+        write.print('"'+blender_path+'"');
         write.print(" -b ");
-        write.print('"'+blendpath+blendname+'"');
+        write.print('"'+blend_path+blend_name+'"');
         write.print(" -P ");
         write.print('"'+dataPath("tmp")+File.separator+"fromblend.py"+'"');
         write.println();
@@ -296,7 +296,7 @@ void savefromblend(boolean forcetowrite)
         write.flush();
         write.close();
         try {
-          String cmd[]= {terminalpath, "/c", "start", "/w", dataPath("tmp")+File.separator+"fromblend.bat"};
+          String cmd[]= {terminal_path, "/c", "start", "/w", dataPath("tmp")+File.separator+"fromblend.bat"};
           Process proc = Runtime.getRuntime().exec(cmd);
           proc.waitFor();
         } 
@@ -311,9 +311,9 @@ void savefromblend(boolean forcetowrite)
         write.println();
         write.println("# Command Line:");
         write.println();
-        write.print('"'+blenderpath+'"');
+        write.print('"'+blender_path+'"');
         write.print(" -b ");
-        write.print('"'+blendpath+blendname+'"');
+        write.print('"'+blend_path+blend_name+'"');
         write.print(" -P ");
         write.print('"'+dataPath("tmp")+File.separator+"fromblend.py"+'"');
 
@@ -324,7 +324,7 @@ void savefromblend(boolean forcetowrite)
         f_sh.setExecutable(true, false);
 
         try {
-          String cmd[] = {terminalpath, "-e", dataPath("tmp")+File.separator+"fromblend.sh"};
+          String cmd[] = {terminal_path, "-e", dataPath("tmp")+File.separator+"fromblend.sh"};
           Process proc = Runtime.getRuntime().exec(cmd);
           proc.waitFor();
         } 
@@ -333,9 +333,9 @@ void savefromblend(boolean forcetowrite)
         }
       }
 
-      String line[] = loadStrings(projectpath+"Manager"+File.separator+"fromblend.txt");
+      String line[] = loadStrings(project_path+"Manager"+File.separator+"fromblend.txt");
 
-      write = createWriter(projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf(".")) + ".txt");
+      write = createWriter(project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf(".")) + ".txt");
       write.println("[RendersOutput]");
       write.println(line[0].substring(0, line[0].lastIndexOf(File.separator) + 1));
       write.println();
@@ -362,7 +362,7 @@ void savefromblend(boolean forcetowrite)
       }
       File f_py = new File (dataPath("tmp")+File.separator+"fromblend.py");
       f_py.delete();
-      File f_txt = new File (projectpath+"Manager"+File.separator+"fromblend.txt");
+      File f_txt = new File (project_path+"Manager"+File.separator+"fromblend.txt");
       f_txt.delete();
     }
   }

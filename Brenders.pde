@@ -29,8 +29,8 @@ PrintWriter write;
 PImage bg;
 PImage bg2;
 PImage bg3;
-PImage blendpre;
-PImage renderpre;
+PImage blend_pre;
+PImage render_pre;
 
 int gui = 0;
 
@@ -45,7 +45,7 @@ final color bcolor = color(200, 100, 50);
 final color ccolor = color(50, 100, 120);
 final color ecolor = color(150, 10, 10);
 
-final color backgroundcolor = color(20, 25, 25);
+final color background_color = color(20, 25, 25);
 
 boolean error;
 
@@ -61,7 +61,7 @@ void setup () {
   bg = requestImage("Img"+File.separator+"bg.png");
   bg2 = requestImage("Img"+File.separator+"bg2.png");
   bg3 = requestImage("Img"+File.separator+"bg3.png");
-  blendpre = requestImage("Img"+File.separator+"None.png");
+  blend_pre = requestImage("Img"+File.separator+"None.png");
 
   noLoop();
 
@@ -81,7 +81,7 @@ void setup () {
 void draw() {
 
   surface.setTitle(version);
-  background(backgroundcolor);
+  background(background_color);
   tint(180, 180, 200);
   image(bg, 0, 0);
 

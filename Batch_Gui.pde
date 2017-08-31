@@ -31,8 +31,8 @@ String ext_rename = "png";
 String new_name = "NewName-";
 boolean select_delete = false;
 boolean select_rename = false;
-boolean select_sframe = false;
-String sframe = "0000";
+boolean select_s_frame = false;
+String s_frame = "0000";
 
 int rename_files = 0;
 int delete_files = 0;
@@ -42,7 +42,7 @@ void batch_Gui()
   pushStyle();
 
   surface.setTitle("Batch Processing");
-  background(backgroundcolor);
+  background(background_color);
   tint(230, 230, 250);
   image(bg2, 0, 0);
 
@@ -62,18 +62,18 @@ void batch_Gui()
   text("...", 157, 105);
 
   fill(acolor);
-  pathname = path_batch;
-  if (path_batch.length() > 50) pathname = path_batch.substring(0, 25)+"..."+path_batch.substring(path_batch.length() - 25);
-  text(pathname,  width / 2, 85);
+  path_name = path_batch;
+  if (path_batch.length() > 50) path_name = path_batch.substring(0, 25)+"..."+path_batch.substring(path_batch.length() - 25);
+  text(path_name,  width / 2, 85);
 
   textSize(14);
   fill(bcolor);
-  text("RENAME o DELETE all files in: "+pathname,  width / 2, 150);
+  text("RENAME o DELETE all files in: "+path_name,  width / 2, 150);
   
   fill(acolor);
-  text("                 -New Name: "+" >>"+new_name+sframe+"."+ext_rename+"<<",  width / 2, 200);
+  text("                 -New Name: "+" >>"+new_name+s_frame+"."+ext_rename+"<<",  width / 2, 200);
   text("                 -Ends With: "+" >>"+"."+ext_delete+"<<",  width / 2, 250);
-  text("-New name start:  >>"+sframe+"<<",  width / 2, 220);
+  text("-New name start:  >>"+s_frame+"<<",  width / 2, 220);
   fill(ecolor);
   text(">RENAME<", 110, 200);
   text(">DELETE<", 150, 250);
@@ -95,7 +95,7 @@ boolean newname_batch_()
   return  (mouseX > 340 && mouseX < 500 && mouseY > 190 && mouseY < 215);
 }
 
-boolean sframe_batch_() 
+boolean s_frame_batch_() 
 {
   return  (mouseX > 340 && mouseX < 500 && mouseY > 216 && mouseY < 230);
 }

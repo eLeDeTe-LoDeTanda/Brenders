@@ -25,11 +25,11 @@
  * ***** END GPL LICENSE BLOCK *****
  */
 
-int offsetmanager;
-int framemanager;
-int selectframe;
-int startframemanager;
-int endframemanager;
+int offset_manager;
+int frame_manager;
+int select_frame;
+int startframe_manager;
+int endframe_manager;
 
 boolean updating;
 
@@ -37,8 +37,8 @@ void renderManager_Gui()
 {
   pushStyle();
 
-  surface.setTitle("Render Manager -"+projectname+"- "+version);
-  background(backgroundcolor);
+  surface.setTitle("Render Manager -"+project_name+"- "+version);
+  background(background_color);
   tint(250, 240, 240);
   image(bg2, 0, 0);
   menuBar();
@@ -51,31 +51,31 @@ void renderManager_Gui()
       rect(20 + x * 40, 32 + i * 30, 40, 22);
       if (multiblend_active) {
         if (multiblend_files > 0) {
-          framemanager = ((i * 15 + x) + offsetmanager) + int(valoption[frame_start_id]);
+          frame_manager = ((i * 15 + x) + offset_manager) + int(valoption[frame_start_id]);
 
-          if (framemanager <= int(valoption[frame_end_id])) {
+          if (frame_manager <= int(valoption[frame_end_id])) {
             fill(bcolor);
             textSize(10);
             text("Empty", 22 + x * 40, 50 + i * 30);
 
-            prepath = projectpath+"Manager"+File.separator+"Previews"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+File.separator+rendersname+nf(framemanager, 4)+".png";
+            prepath = project_path+"Manager"+File.separator+"Previews"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+File.separator+renders_name+nf(frame_manager, 4)+".png";
             File img = new File(prepath);
-            if (!img.exists()) renderpre = loadImage("Img"+File.separator+"Manager-none.png");
-            else  renderpre = loadImage(prepath);
+            if (!img.exists()) render_pre = loadImage("Img"+File.separator+"Manager-none.png");
+            else  render_pre = loadImage(prepath);
 
-            image(renderpre, 20 + x * 40, 32 + i * 30);
+            image(render_pre, 20 + x * 40, 32 + i * 30);
 
             fill(acolor);
             textSize(8);
-            text(nf(framemanager, 5), 26 + x * 40, 60 + i * 30);
+            text(nf(frame_manager, 5), 26 + x * 40, 60 + i * 30);
             String jsonpath = "";
-            if (finalrenders) jsonpath = projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+".Manager";
-            else jsonpath = projectpath+"Manager"+File.separator+settingsname.substring(0, settingsname.lastIndexOf("."))+"_preview.Manager";
+            if (final_renders) jsonpath = project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+".manager";
+            else jsonpath = project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+"_preview.manager";
 
-            if (loadJsonManager(framemanager, jsonpath).equals("good")) {
+            if (loadJsonManager(frame_manager, jsonpath).equals("good")) {
               fill(ccolor);
               text("Good", 23 + x * 40, 52 + i * 30);
-            } else if (loadJsonManager(framemanager, jsonpath).equals("bad")) {
+            } else if (loadJsonManager(frame_manager, jsonpath).equals("bad")) {
               fill(ecolor);
               text("Bad", 23 + x * 40, 52 + i * 30);
             }
@@ -88,7 +88,7 @@ void renderManager_Gui()
   textSize(14);
   fill(acolor);
   String name = multiblend_names[order]+".multiblend";
-  if (multiblend_names[order].length() > 20) pathname = multiblend_names[order].substring(0, 10)+"..."+multiblend_names[order].substring(multiblend_names[order].length() - 10);
+  if (multiblend_names[order].length() > 20) path_name = multiblend_names[order].substring(0, 10)+"..."+multiblend_names[order].substring(multiblend_names[order].length() - 10);
   text(name, width / 2 + 15, 5);
 
   fill(bcolor);
@@ -96,7 +96,7 @@ void renderManager_Gui()
   text("<<", 8, height / 2);
   text(">>", width - 10, height / 2);
 
-  text("Selected Range:"+">"+nf(startframemanager, 5)+"<"+" to "+">"+nf(endframemanager, 5)+"<"+" | >ALL< |", 180, 345);
+  text("Selected Range:"+">"+nf(startframe_manager, 5)+"<"+" to "+">"+nf(endframe_manager, 5)+"<"+" | >ALL< |", 180, 345);
   fill(ccolor);
   text(">GOOD<", 385, 345);
   fill(ecolor);

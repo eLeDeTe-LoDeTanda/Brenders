@@ -26,36 +26,36 @@
  */
 
 boolean multiblend_active = false;
-boolean add_tomulti= false;
+boolean add_to_multi= false;
 
-boolean finalrenders = true;
-boolean editoptions = false;
+boolean final_renders = true;
+boolean edit_options = false;
 
 int multiblend_files = 0;
 int order = 0;
 
-int renderorder = 0;
+int render_order = 0;
 
-String frameprev = "1";
+String frame_prev = "1";
 
 boolean[] multiblend_renders= new boolean [] {true, false, false};
 
-String projectname = "NO PROJECT OPEN";
+String project_name = "NO PROJECT OPEN";
 String[] multiblend_names = new String[24];
-String[] recentproject = new String[6];
+String[] recent_project = new String[6];
 
-String projectpath;
+String project_path;
 
-File projectfolder;
+File project_folder;
 
 void multiBlend_Gui()
 {
   pushStyle();
 
-  pathname = projectname;
-  if (projectname.length() > 20) pathname = projectname.substring(0, 10)+"..."+projectname.substring(projectname.length() - 10);
-  surface.setTitle("MultiBlend -"+pathname+"- "+version);
-  background(backgroundcolor);
+  path_name = project_name;
+  if (project_name.length() > 20) path_name = project_name.substring(0, 10)+"..."+project_name.substring(project_name.length() - 10);
+  surface.setTitle("MultiBlend -"+path_name+"- "+version);
+  background(background_color);
   tint(230, 250, 230);
   image(bg2, 0, 0);
 
@@ -86,9 +86,9 @@ void multiBlend_Gui()
 
   if (multiblend_active) {
     fill(bcolor);
-    pathname = projectname;
-    if (projectname.length() > 20) pathname = projectname.substring(0, 10)+"..."+projectname.substring(projectname.length() - 10);
-    text(pathname, width / 2, 13);
+    path_name = project_name;
+    if (project_name.length() > 20) path_name = project_name.substring(0, 10)+"..."+project_name.substring(project_name.length() - 10);
+    text(path_name, width / 2, 13);
     text(">>OPEN Project Folder<<", width / 2, 95);
     text(">>OPEN Recent projects<<", width / 2, 115);
     text(">>RENDER MANAGER<<", width / 2, 135);
@@ -104,13 +104,13 @@ void multiBlend_Gui()
       textSize(12);
       fill(bcolor);
       text("o Final renders", 42, 220);
-      if (finalrenders) {
+      if (final_renders) {
         fill(ccolor);
         ellipse(45, 216, 8, 8);
       }
       fill(bcolor);
       text("o Preview renders", 42, 245);
-      if (!finalrenders) {
+      if (!final_renders) {
         fill(ccolor);
         ellipse(45, 241, 8, 8);
       }
@@ -120,9 +120,9 @@ void multiBlend_Gui()
       String name = multiblend_names[order]+".multiblend";
       if (multiblend_names[order].length() > 18) name = multiblend_names[order].substring(0, 9)+"..."+multiblend_names[order].substring(multiblend_names[order].length() - 9);
       text("-"+name+"-", width / 2, 185);
-      name = blendname;
+      name = blend_name;
       textSize(12);
-      if (blendname.length() > 20) name = blendname.substring(0, 10)+"..."+blendname.substring(blendname.length() - 10);
+      if (blend_name.length() > 20) name = blend_name.substring(0, 10)+"..."+blend_name.substring(blend_name.length() - 10);
       text("-"+name+"-", width / 2, 200);
       text("*"+multiblend_files+"*  .blend to render", 135, 310);
       fill(bcolor);
@@ -134,7 +134,7 @@ void multiBlend_Gui()
       rect(width / 2 - 25, 235, 50, 12);
       rect(width / 2 - 25, 250, 50, 12);
       rect(width / 2 - 25, 265, 50, 12);
-      if (!finalrenders) rect(50, 255, 80, 12);
+      if (!final_renders) rect(50, 255, 80, 12);
       fill(icolor);
       textSize(10);
       text("IMPORT", width / 2, 215);
@@ -142,19 +142,19 @@ void multiBlend_Gui()
       text("EDIT", width / 2, 245);
       text("RENAME", width / 2, 260);
       text("DELETE", width / 2, 275);
-      if (!finalrenders) text("EDIT OPTIONS", 92, 265);
+      if (!final_renders) text("EDIT OPTIONS", 92, 265);
 
       fill(ccolor);
 
       textAlign(LEFT);
       textSize(12);
       text("> Open Blend <", 505, 185);
-      image(blendpre, 490, 190);
+      image(blend_pre, 490, 190);
       fill(bcolor);
       text(">> New Preview <<", 495, 330);
       textSize(10);
       fill(ccolor);
-      text("Frame: <<"+nf(int(frameprev), 4)+">>", 510, 345);
+      text("Frame: <<"+nf(int(frame_prev), 4)+">>", 510, 345);
     }
     textAlign(CENTER);
     textSize(14);
@@ -186,12 +186,12 @@ void multiBlend_Gui()
     fill(acolor);
     text("Recent:", width / 2, 200);
     fill(bcolor);
-    text(recentproject[0].substring(recentproject[0].lastIndexOf(File.separator) + 1), width / 2, 230);
-    text(recentproject[1].substring(recentproject[1].lastIndexOf(File.separator) + 1), width / 2, 250);
-    text(recentproject[2].substring(recentproject[2].lastIndexOf(File.separator) + 1), width / 2, 270);
-    text(recentproject[3].substring(recentproject[3].lastIndexOf(File.separator) + 1), width / 2, 290);
-    text(recentproject[4].substring(recentproject[4].lastIndexOf(File.separator) + 1), width / 2, 310);
-    text(recentproject[5].substring(recentproject[5].lastIndexOf(File.separator) + 1), width / 2, 330);
+    text(recent_project[0].substring(recent_project[0].lastIndexOf(File.separator) + 1), width / 2, 230);
+    text(recent_project[1].substring(recent_project[1].lastIndexOf(File.separator) + 1), width / 2, 250);
+    text(recent_project[2].substring(recent_project[2].lastIndexOf(File.separator) + 1), width / 2, 270);
+    text(recent_project[3].substring(recent_project[3].lastIndexOf(File.separator) + 1), width / 2, 290);
+    text(recent_project[4].substring(recent_project[4].lastIndexOf(File.separator) + 1), width / 2, 310);
+    text(recent_project[5].substring(recent_project[5].lastIndexOf(File.separator) + 1), width / 2, 330);
   } 
 
   popStyle();
@@ -255,7 +255,7 @@ boolean openblend_Multiblend_()
 {
   return  (mouseX > 495 && mouseX < 615 && mouseY > 175 && mouseY < 190);
 }
-boolean blendpre_Multiblend_() 
+boolean blend_pre_Multiblend_() 
 {
   return  (mouseX > 495 && mouseX < 615 && mouseY > 315 && mouseY < 335);
 }

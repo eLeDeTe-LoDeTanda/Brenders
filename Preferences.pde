@@ -27,47 +27,47 @@
 
 void mouseEventsPreferences()
 {
-  if (terminal_default_()) selectInput("Select Terminal executable:", "terminalSelect", terminalfolder);
+  if (terminal_default_()) selectInput("Select Terminal executable:", "terminalSelect", terminal_folder);
   if (terminal_default_open_()) {
     info = "*Opening...";
     if (os == "WINDOWS") {
       write = createWriter(dataPath("")+File.separator+"tmp"+File.separator+"cmd.bat");
       write.println("start ");
-      write.print(terminalpath);
+      write.print(terminal_path);
       write.flush();
       write.close();
 
       exec(dataPath("")+File.separator+"tmp"+File.separator+"cmd.bat");
-    } else exec(terminalpath);
+    } else exec(terminal_path);
   }
-  if (texteditor_default_()) selectInput("Select Text editor executable:", "texteditorSelect", texteditorfolder);
+  if (texteditor_default_()) selectInput("Select Text editor executable:", "texteditorSelect", text_editor_folder);
   if (texteditor_default_open_()) {
     info = "*Opening...";
-    if (os == "WINDOWS") exec(texteditorpath);
+    if (os == "WINDOWS") exec(text_editor_path);
     else {
-      String cmd[] = {terminalpath, "-e", texteditorpath};
+      String cmd[] = {terminal_path, "-e", text_editor_path};
       exec(cmd);
     }
   }
-  if (filemanager_default_()) selectInput("Select File Manager executable:", "managerSelect", explorerfolder);
+  if (filemanager_default_()) selectInput("Select File Manager executable:", "managerSelect", explorer_folder);
   if (filemanager_default_open_()) {
     info = "*Opening...";
-    exec(managerpath);
+    exec(manager_path);
   }
-  if (imageviewer_default_()) selectInput("Select Text editor executable:", "imageviewerSelect", imageviewerfolder);
+  if (imageviewer_default_()) selectInput("Select Text editor executable:", "imageviewerSelect", image_viewer_folder);
   if (imageviewer_default_open_()) {
     info = "*Opening...";
-    exec(imageviewerpath);
+    exec(image_viewer_path);
   }
   if (settings_path_open_()) {
     info = "*Opening...";
-    String cmd[] = {managerpath, settingspath.substring(0, settingspath.lastIndexOf(File.separator)+1)};
+    String cmd[] = {manager_path, settings_path.substring(0, settings_path.lastIndexOf(File.separator)+1)};
     exec(cmd);
   }
-  if (blender_default_()) selectInput("Select Blender executable:", "blenderSelect", blenderfolder);
+  if (blender_default_()) selectInput("Select Blender executable:", "blenderSelect", blender_folder);
   if (blender_default_open_()) {
     info = "*Opening Blender...";
-    exec(blenderpath);
+    exec(blender_path);
   }
 
   if (load_factory_()) {
@@ -96,11 +96,11 @@ void mouseEventsPreferences()
 
       String lines[] = loadStrings(dataPath("Preferences"+File.separator+"extern_Windows.txt"));
       for (int i = 0; i < lines.length; i++) {
-        if (lines[i].contains("[Terminal]")) terminalpath = lines[i+1];
-        else if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
-        else if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
-        else if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
-        else if (lines[i].contains("[ImageViewer]")) imageviewerpath = lines[i+1];
+        if (lines[i].contains("[Terminal]")) terminal_path = lines[i+1];
+        else if (lines[i].contains("[TextEditor]")) text_editor_path = lines[i+1];
+        else if (lines[i].contains("[FileManager]")) manager_path = lines[i+1];
+        else if (lines[i].contains("[Blender]")) blender_path = lines[i+1];
+        else if (lines[i].contains("[ImageViewer]")) image_viewer_path = lines[i+1];
       }
     } else {
       File f = new File(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
@@ -127,11 +127,11 @@ void mouseEventsPreferences()
 
       String lines[] = loadStrings(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
       for (int i = 0; i < lines.length; i++) {
-        if (lines[i].contains("[Terminal]")) terminalpath = lines[i+1];
-        else if (lines[i].contains("[TextEditor]")) texteditorpath = lines[i+1];
-        else if (lines[i].contains("[FileManager]")) managerpath = lines[i+1];
-        else if (lines[i].contains("[Blender]")) blenderpath = lines[i+1];
-        else if (lines[i].contains("[ImageViewer]")) imageviewerpath = lines[i+1];
+        if (lines[i].contains("[Terminal]")) terminal_path = lines[i+1];
+        else if (lines[i].contains("[TextEditor]")) text_editor_path = lines[i+1];
+        else if (lines[i].contains("[FileManager]")) manager_path = lines[i+1];
+        else if (lines[i].contains("[Blender]")) blender_path = lines[i+1];
+        else if (lines[i].contains("[ImageViewer]")) image_viewer_path = lines[i+1];
       }
     }
   }
@@ -143,19 +143,19 @@ void savePreferences()
   else write = createWriter(dataPath("Preferences"+File.separator+"extern_Linux.txt"));
 
   write.println("[Blender]");
-  write.println(blenderpath);
+  write.println(blender_path);
   write.println();
   write.println("[Terminal]");
-  write.println(terminalpath);
+  write.println(terminal_path);
   write.println();
   write.println("[TextEditor]");
-  write.println(texteditorpath);
+  write.println(text_editor_path);
   write.println();
   write.println("[FileManager]");
-  write.println(managerpath);
+  write.println(manager_path);
   write.println();
   write.println("[ImageViewer]");
-  write.println(imageviewerpath);
+  write.println(image_viewer_path);
 
   write.flush();
   write.close();

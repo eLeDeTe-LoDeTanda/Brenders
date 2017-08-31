@@ -28,8 +28,8 @@
 void keyEventsBatch (String keypress)
 {
   if (keypress == "number") {
-    if (select_sframe) {
-      sframe += key;
+    if (select_s_frame) {
+      s_frame += key;
     }
   }
   if (keypress == "BACKSPACE") {
@@ -39,8 +39,8 @@ void keyEventsBatch (String keypress)
     if (select_rename) {
       if (new_name.length() > 0) new_name = new_name.substring(0, new_name.length() - 1);
     }
-    if (select_sframe) {
-      if (sframe.length() > 0) sframe = sframe.substring(0, sframe.length() - 1);
+    if (select_s_frame) {
+      if (s_frame.length() > 0) s_frame = s_frame.substring(0, s_frame.length() - 1);
     }
   } else if (keypress == "CODED") {
     if (select_delete) {
@@ -55,14 +55,14 @@ void keyEventsBatch (String keypress)
   if (keypress == "ENTER") {
     select_delete = false;
     select_rename = false;
-    select_sframe = false;
+    select_s_frame = false;
   }
   if (keypress == "27") {
     if (select_rename) {
       new_name = esc;
     }
-    if (select_sframe) {
-      sframe = esc;
+    if (select_s_frame) {
+      s_frame = esc;
     }
     if (select_delete) {
       ext_delete = esc;
@@ -74,19 +74,19 @@ void keyEventsBatch (String keypress)
 void  mouseEventsBatch()
 {
   if (path_batch_()) {
-    selectInput("Select path:", "pathBatch", outputfolder);
+    selectInput("Select path:", "pathBatch", output_folder);
   }
   if (rename_batch_()) { 
     select_delete = false;
     select_rename = false;
-    select_sframe = false;
+    select_s_frame = false;
 
     batchRename();
   }
   if (delete_batch_()) { 
     select_delete = false;
     select_rename = false;
-    select_sframe = false;
+    select_s_frame = false;
     batchDelete();
   }
   if (newname_batch_()) { 
@@ -94,19 +94,19 @@ void  mouseEventsBatch()
     new_name = "";
     select_rename = true;
     select_delete = false;
-    select_sframe = false;
+    select_s_frame = false;
   }
   if (extension_batch_()) {
     esc = ext_delete;
     ext_delete = "";
     select_delete = true;
     select_rename = false;
-    select_sframe = false;
+    select_s_frame = false;
   }
-  if (sframe_batch_()) {
-    esc = sframe;
-    sframe = "";
-    select_sframe = true;
+  if (s_frame_batch_()) {
+    esc = s_frame;
+    s_frame = "";
+    select_s_frame = true;
     select_delete = false;
     select_rename = false;
   }
@@ -139,7 +139,7 @@ void batchCountRenameFiles()
   String[] fList = sort(dir.list());
   for (int x = 0; x < fList.length; x++) {
     File f = new File(path_batch+fList[x]);
-    File newf = new File(path_batch+new_name+nf(x + int(sframe), sframe.length())+"."+ext_rename);
+    File newf = new File(path_batch+new_name+nf(x + int(s_frame), s_frame.length())+"."+ext_rename);
     if (f.isFile()) {
       if (!newf.exists() && f.getName().endsWith(ext_rename)) {
         rename_files = rename_files + 1;
@@ -190,7 +190,7 @@ void batchRename()
       File f = new File(path_batch+fList[x]);
       if (f.isFile() && f.getName().endsWith(ext_rename)) {
         y = y + 1;
-        File newf = new File(path_batch+new_name+nf(y + int(sframe), sframe.length())+"."+ext_rename);
+        File newf = new File(path_batch+new_name+nf(y + int(s_frame), s_frame.length())+"."+ext_rename);
         if (!newf.exists()) {
           f.renameTo(newf);
         }

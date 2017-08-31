@@ -29,7 +29,7 @@ void preferences_Gui()
 {
   pushStyle();
 
-  background(backgroundcolor);
+  background(background_color);
   tint(230, 230, 250);
   image(bg2, 0, 0);
 
@@ -85,22 +85,22 @@ void preferences_Gui()
   text("...", 248, 251);
 
   fill(acolor);
-  pathname = blenderpath;
-  if (blenderpath.length() > 22) pathname = blenderpath.substring(0, 11)+"..."+blenderpath.substring(blenderpath.length() - 11);
-  text(pathname, 265, 95);
-  pathname = texteditorpath;
-  if (texteditorpath.length() > 16) pathname = texteditorpath.substring(0, 8)+"..."+texteditorpath.substring(texteditorpath.length() - 8);
-  text(pathname, 265, 175);
-  pathname = managerpath;
-  if (managerpath.length() > 16) pathname = managerpath.substring(0, 8)+"..."+managerpath.substring(managerpath.length() - 8);  
-  text(pathname, 265, 215);
-  pathname = terminalpath;
-  if (terminalpath.length() > 20) pathname = terminalpath.substring(0, 10)+"..."+terminalpath.substring(terminalpath.length() - 10);  
-  text(pathname, 265, 135);
+  path_name = blender_path;
+  if (blender_path.length() > 22) path_name = blender_path.substring(0, 11)+"..."+blender_path.substring(blender_path.length() - 11);
+  text(path_name, 265, 95);
+  path_name = text_editor_path;
+  if (text_editor_path.length() > 16) path_name = text_editor_path.substring(0, 8)+"..."+text_editor_path.substring(text_editor_path.length() - 8);
+  text(path_name, 265, 175);
+  path_name = manager_path;
+  if (manager_path.length() > 16) path_name = manager_path.substring(0, 8)+"..."+manager_path.substring(manager_path.length() - 8);  
+  text(path_name, 265, 215);
+  path_name = terminal_path;
+  if (terminal_path.length() > 20) path_name = terminal_path.substring(0, 10)+"..."+terminal_path.substring(terminal_path.length() - 10);  
+  text(path_name, 265, 135);
   //if (os != "WINDOWS") {
-  pathname = imageviewerpath;
-  if (imageviewerpath.length() > 20) pathname = imageviewerpath.substring(0, 10)+"..."+imageviewerpath.substring(imageviewerpath.length() - 10);  
-  text(pathname, 265, 255);
+  path_name = image_viewer_path;
+  if (image_viewer_path.length() > 20) path_name = image_viewer_path.substring(0, 10)+"..."+image_viewer_path.substring(image_viewer_path.length() - 10);  
+  text(path_name, 265, 255);
   // }
   fill(bcolor);
   textSize(14);
