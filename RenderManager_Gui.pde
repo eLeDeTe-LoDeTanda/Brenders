@@ -88,12 +88,13 @@ void renderManager_Gui()
       }
     }
   }
+  
   textAlign(CENTER, CENTER);
   textSize(14);
   fill(acolor);
   String name = multiblend_names[order]+".multiblend";
   if (multiblend_names[order].length() > 20) path_name = multiblend_names[order].substring(0, 10)+"..."+multiblend_names[order].substring(multiblend_names[order].length() - 10);
-  text(name, width / 2 + 15, 5);
+  text("<< "+name+" >>", width / 2 + 15, 5);
 
   fill(bcolor);
   textSize(12);
@@ -174,4 +175,13 @@ boolean manager_reloadnewpre()
 boolean manager_playrender() 
 {
   return  (mouseX > 580 && mouseX < 630 && mouseY > 335 && mouseY < 360);
+}
+
+boolean manager_orderL() 
+{
+  return  (mouseX > 200 && mouseX < 320 && mouseY > 0 && mouseY < 15);
+}
+boolean manager_orderR() 
+{
+  return  (mouseX > 350 && mouseX < 500 && mouseY > 0 && mouseY < 15);
 }
