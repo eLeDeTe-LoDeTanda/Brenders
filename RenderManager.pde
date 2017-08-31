@@ -110,8 +110,8 @@ void addinJsonManager(String option, int frame)
     rendermanager.getString("Status");
     rendermanager.getString("Render");
     if (new_output) {
-      rendermanager.getString("Render path");
-      rendermanager.getString("Render name");
+      rendermanager.setString("Render path", output_path);
+      rendermanager.setString("Render name", renders_name);
     } else {
       rendermanager.getString("Render path");
       rendermanager.getString("Render name");
