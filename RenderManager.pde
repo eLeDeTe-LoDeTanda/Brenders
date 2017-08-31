@@ -239,7 +239,7 @@ void loadfromblend()
       if (fromblend[output_path_id]) {
         if (!lines[i+1].contains("#")) rendersname = lines[i+1];
         else rendersname = lines[i+1].substring(0, lines[i+1].indexOf("#"));
-      }
+      } else if (rendersname.contains("#")) rendersname = rendersname.substring(0, rendersname.indexOf("#"));
     } else if (lines[i].contains("[FileFormat]")) {
       if (fromblend[file_format_id]) valoption[file_format_id] = lines[i+1];
     } else if (lines[i].contains("[StartFrame]")) {

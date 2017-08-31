@@ -29,7 +29,10 @@ void  mousePressed()
   if (menu_0()) gui = 0;
   if (menu_1()) gui = 1;
   if (menu_2()) gui = 3;
-  if (menu_3()) gui = 2;
+  if (menu_3()) {
+    if (rendersname.contains("#")) rendersname = rendersname.substring(0, rendersname.indexOf("#")); 
+    gui = 2;
+  }
   if (menu_4()) gui = 4;
   if (menu_5()) gui = 5;
 

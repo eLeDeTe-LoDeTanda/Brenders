@@ -374,6 +374,8 @@ void mouseEventsMultiblend()
         finalrenders = true;
         editoptions = false;
         info = "Final renders";
+        savefromblend(false);
+        loadfromblend();
       }
       if (preview_Multiblend_()) {
         finalrenders = false;
@@ -395,6 +397,7 @@ void mouseEventsMultiblend()
         editoptions = true;
         multiblend_autorun(projectpath+"Autorun"+File.separator+projectname);
         info = "Preview mode";
+        if (rendersname.contains("#")) rendersname = rendersname.substring(0, rendersname.indexOf("#"));
       }
       if (editpreview_Multiblend_()) {
         if (!finalrenders) {
