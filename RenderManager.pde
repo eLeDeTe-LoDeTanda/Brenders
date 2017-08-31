@@ -49,6 +49,11 @@ void mouseEventsManager()
           addinJsonManager("bad", i);
         }
       }
+      if (manager_openfolder()) {
+        String cmd[] = {manager_path, output_path};
+        exec(cmd);
+      }
+
       if (mouseX >= 20 && mouseX <= 625 && mouseY >= 30 && mouseY <=  325) {
         int X = floor(map(mouseX, 20, 620, 0, 15));
         int Y = floor(map(mouseY, 30, 325, 0, 10));
