@@ -92,6 +92,49 @@ void mouseEventsManager()
       if (manager_playrender()) {
         selectInput("Select START Render:", "startRendersToPlaySelect", play_renders_folder);
       }
+      if (manager_orderL()) {
+        order = constrain(order - 1, 0, multiblend_files - 1);
+        String path;
+        if (final_renders) path = project_path+"Options"+File.separator+multiblend_names[order]+".multiblend";
+        else path = project_path+"Options"+File.separator+multiblend_names[order]+"_preview.multiblend";
+
+        loadPy(path);
+
+        settings_path = path;
+        settings_folder = new File(path);
+        settings_name = settings_path.substring(settings_path.lastIndexOf(File.separator));
+
+        precheck();
+        if (final_renders) {
+          savefromblend(false);
+          loadfromblend();
+        }
+        String name = settings_name;
+        if (project_name.length() > 20) name = project_name.substring(0, 10)+"..."+project_name.substring(project_name.length() - 10);
+        info = name;
+      }
+      if (manager_orderR()) {
+        order = constrain(order + 1, 0, multiblend_files - 1);
+        String path = "";
+        if (final_renders) path = project_path+"Options"+File.separator+multiblend_names[order]+".multiblend";
+        else path = project_path+"Options"+File.separator+multiblend_names[order]+"_preview.multiblend";
+
+        loadPy(path);
+
+        settings_path = path;
+        settings_folder = new File(path);
+        settings_name = settings_path.substring(settings_path.lastIndexOf(File.separator));
+
+        precheck();
+
+        if (final_renders) {
+          savefromblend(false);
+          loadfromblend();
+        }
+        String name = settings_name;
+        if (project_name.length() > 20) name = project_name.substring(0, 10)+"..."+project_name.substring(project_name.length() - 10);
+        info = name;
+      }
     }
   }
 }
