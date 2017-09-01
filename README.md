@@ -32,11 +32,11 @@ Interfaz gráfica para modificar opciones de render por linea de comandos en BLE
 
 **ONLY for testing**
 
-# [Development version](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build) 
+# [Development version -dev3](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build) 
 
 **SÓLO para probar**
 
-# [versión de desarrollo](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build)
+# [versión de desarrollo -dev3](https://github.com/eLeDeTe-LoDeTanda/Brenders/tree/master/Build)
 
 [Require jAVA 8](https://www.java.com/en/download/)
 
