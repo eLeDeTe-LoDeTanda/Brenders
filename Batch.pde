@@ -76,6 +76,10 @@ void  mouseEventsBatch()
   if (path_batch_()) {
     selectInput("Select path:", "pathBatch", output_folder);
   }
+  if (openpath_batch_()) {
+    String cmd[] = {manager_path, path_batch.substring(0, path_batch.lastIndexOf(File.separator)+1)};
+    exec(cmd);
+  }
   if (rename_batch_()) { 
     select_delete = false;
     select_rename = false;
@@ -128,7 +132,7 @@ void pathBatch(File selection)
     batchCountDeleteFiles();
     batchCountRenameFiles();
   }
-    redraw();
+  redraw();
 }
 
 
