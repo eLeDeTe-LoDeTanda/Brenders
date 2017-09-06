@@ -69,11 +69,12 @@ void batch_Gui()
   fill(bcolor);
   text(path_name, width / 2, 130);
   text(">Open folder<", width / 2, 160);
-  
+
   fill(acolor);
   text("-New Name: "+" >>"+new_name+s_frame+"."+ext_rename+"<<", width / 2, 190);
-  text("-Ends With: "+" >>"+"."+ext_delete+"<<", width / 2, 240);
   text("-New name start:  >>"+s_frame+"<<", width / 2, 210);
+  text("-Ends With: "+" >>"+"."+ext_delete+"<<", width / 2, 250);
+
   fill(bcolor);
   rect(70, 191, 80, 20);
   rect(70, 241, 80, 20);
@@ -88,7 +89,7 @@ void batch_Gui()
   rect(10, 176, 620, 50);
   rect(10, 226, 620, 50);
   rect(150, 276, 330, 55);
-  
+
   popStyle();
 }
 
@@ -113,7 +114,7 @@ boolean delete_batch_()
 }
 boolean extension_batch_() 
 {
-  return  (mouseX > 230 && mouseX < 500 && mouseY > 235 && mouseY < 255);
+  return  (mouseX > 230 && mouseX < 500 && mouseY > 245 && mouseY < 265);
 }
 
 boolean path_batch_() 
