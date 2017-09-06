@@ -47,70 +47,80 @@ void batch_Gui()
   image(bg2, 0, 0);
 
   menuBar();
-  
+
   textAlign(CENTER, CENTER);
-  
+
   fill(acolor);
   textSize(16);
-  text("Select folder:", width / 2, 55);
+  text("Select folder:", width / 2 + 10, 50);
 
   fill(bcolor);
-  rect(150, 102, 15, 15, 4);
+  rect(width / 2, 72, 20, 20, 4);
 
   fill(icolor);
-  textSize(11);
-  text("...", 157, 105);
+  textSize(12);
+  text("...", width / 2 + 11, 77);
 
   fill(acolor);
   path_name = path_batch;
   if (path_batch.length() > 50) path_name = path_batch.substring(0, 25)+"..."+path_batch.substring(path_batch.length() - 25);
-  text(path_name,  width / 2, 85);
-
   textSize(14);
+  text("RENAME or DELETE files in: ", width / 2, 110);
   fill(bcolor);
-  text("RENAME o DELETE all files in: "+path_name,  width / 2, 150);
+  text(path_name, width / 2, 130);
+  text(">Open folder<", width / 2, 160);
   
   fill(acolor);
-  text("                 -New Name: "+" >>"+new_name+s_frame+"."+ext_rename+"<<",  width / 2, 200);
-  text("                 -Ends With: "+" >>"+"."+ext_delete+"<<",  width / 2, 250);
-  text("-New name start:  >>"+s_frame+"<<",  width / 2, 220);
+  text("-New Name: "+" >>"+new_name+s_frame+"."+ext_rename+"<<", width / 2, 190);
+  text("-Ends With: "+" >>"+"."+ext_delete+"<<", width / 2, 240);
+  text("-New name start:  >>"+s_frame+"<<", width / 2, 210);
+  fill(bcolor);
+  rect(70, 191, 80, 20);
+  rect(70, 241, 80, 20);
   fill(ecolor);
   text(">RENAME<", 110, 200);
-  text(">DELETE<", 150, 250);
-  
-  noFill();
-  rect(150, 275, 330, 55);
-  text(rename_files+"             files to Rename!", width / 2, 290);
-  text(delete_files+"             files to deleted!",  width / 2, 310);
+  text(">DELETE<", 110, 250);
 
+  noFill();
+  text(rename_files+"     files to Rename!", width / 2, 290);
+  text(delete_files+"     files to deleted!", width / 2, 310);
+  rect(30, 96, 580, 50);
+  rect(10, 176, 620, 50);
+  rect(10, 226, 620, 50);
+  rect(150, 276, 330, 55);
+  
   popStyle();
 }
 
 boolean rename_batch_() 
 {
-  return  (mouseX > 70 && mouseX < 150 && mouseY > 190 && mouseY < 215);
+  return  (mouseX > 60 && mouseX < 150 && mouseY > 190 && mouseY < 215);
 }
 boolean newname_batch_() 
 {
-  return  (mouseX > 340 && mouseX < 500 && mouseY > 190 && mouseY < 215);
+  return  (mouseX > 230 && mouseX < 500 && mouseY > 180 && mouseY < 205);
 }
 
 boolean s_frame_batch_() 
 {
-  return  (mouseX > 340 && mouseX < 500 && mouseY > 216 && mouseY < 230);
+  return  (mouseX > 230 && mouseX < 500 && mouseY > 206 && mouseY < 220);
 }
 
 
 boolean delete_batch_() 
 {
-  return  (mouseX > 105 && mouseX < 190 && mouseY > 240 && mouseY < 260);
+  return  (mouseX > 60 && mouseX < 150 && mouseY > 240 && mouseY < 260);
 }
 boolean extension_batch_() 
 {
-  return  (mouseX > 340 && mouseX < 500 && mouseY > 235 && mouseY < 255);
+  return  (mouseX > 230 && mouseX < 500 && mouseY > 235 && mouseY < 255);
 }
 
 boolean path_batch_() 
 {
-  return  (mouseX > 145 && mouseX < 170 && mouseY > 100 && mouseY < 120);
+  return  (mouseX > 315 && mouseX < 350 && mouseY > 70 && mouseY < 95);
+}
+boolean openpath_batch_() 
+{
+  return  (mouseX > 260 && mouseX < 380 && mouseY > 150 && mouseY < 170);
 }
