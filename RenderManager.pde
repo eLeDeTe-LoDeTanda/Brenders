@@ -295,9 +295,9 @@ void newspreviews()
   }
 }
 
+
 void frame_preview(String frame)
 {
-  //  fromblend();
   PImage img;
   File f = new File(frame);
   if (f.exists()) {
