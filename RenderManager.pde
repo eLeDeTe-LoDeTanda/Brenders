@@ -25,6 +25,27 @@
  * ***** END GPL LICENSE BLOCK *****
  */
 
+void keyEventsRenderManager(String keypress)
+{
+  if (keypress == "number") {
+    if (manager_fstart()) {
+      if (startframe_manager.length() < 5) startframe_manager += key;
+      startframe_manager = str(constrain(int(startframe_manager), int(valoption[frame_start_id]), int(valoption[frame_end_id])));
+    } else if (manager_fend()) {
+      if (endframe_manager.length() < 5) endframe_manager += key;
+      endframe_manager = str(constrain(int(endframe_manager), int(valoption[frame_start_id]), int(valoption[frame_end_id])));
+    }
+  } else if (keypress == "BACKSPACE") {
+    if (manager_fstart()) {
+      if (startframe_manager.length() > 0) startframe_manager = startframe_manager.substring(0, startframe_manager.length() - 1);
+    }
+    if (manager_fend()) {
+      if (endframe_manager.length() > 0) endframe_manager = endframe_manager.substring(0, endframe_manager.length() - 1);
+    }
+  }
+}
+
+
 void mouseEventsManager() 
 {
   if (multiblend_active) {
@@ -35,17 +56,23 @@ void mouseEventsManager()
       if (manager_R()) {
         if (int(valoption[frame_end_id]) > 150) offset_manager = constrain(offset_manager + 150, 0, int(valoption[frame_end_id]));
       }
+      if (manager_fstart()) {
+        startframe_manager = "";
+      }
+      if (manager_fend()) {
+        endframe_manager = "";
+      }
       if (manager_all()) {
-        startframe_manager = int(valoption[frame_start_id]);
-        endframe_manager = int(valoption[frame_end_id]);
+        startframe_manager = valoption[frame_start_id];
+        endframe_manager = valoption[frame_end_id];
       }
       if (manager_good()) {
-        for (int i = startframe_manager; i <= endframe_manager; i++) {
+        for (int i = int(startframe_manager); i <= int(endframe_manager); i++) {
           addinJsonManager("good", i);
         }
       }
       if (manager_bad()) {
-        for (int i = startframe_manager; i <= endframe_manager; i++) {
+        for (int i = int(startframe_manager); i <= int(endframe_manager); i++) {
           addinJsonManager("bad", i);
         }
       }
@@ -63,11 +90,11 @@ void mouseEventsManager()
         select_frame = constrain(select_frame, int(valoption[frame_start_id]), int(valoption[frame_end_id]));
 
         if (mouseButton == LEFT) {
-          startframe_manager = select_frame;
-          endframe_manager = select_frame;
+          startframe_manager = str(select_frame);
+          endframe_manager = str(select_frame);
         }
         if (mouseButton == RIGHT) {
-          endframe_manager = select_frame;
+          endframe_manager = str(select_frame);
         }
         if (mouseButton == CENTER) {
           if (select_frame <= int(valoption[frame_end_id])) {
