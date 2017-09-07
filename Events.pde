@@ -84,13 +84,15 @@ void keyPressed()
 {
   if ('0' <= key && key <= '9') {
     if (gui == 1) keyEventsCommandLine("number");
+    if (gui == 2) keyEventsRenderManager("number");
     if (gui == 3) keyEventsMultiblend("number");
     if (gui == 4) keyEventsART("number");
     if (gui == 5) keyEventsBatch("number");
   }
   if (key==BACKSPACE) {
     if (gui == 1) keyEventsCommandLine("BACKSPACE");
-    keyEventsART("BACKSPACE");
+    if (gui == 2) keyEventsRenderManager("BACKSPACE");
+    if (gui == 4) keyEventsART("BACKSPACE");
     if (gui == 5) keyEventsBatch("BACKSPACE");
   } else if (key==RETURN || key==ENTER) {
     rangeFix();
