@@ -173,7 +173,7 @@ void addinJsonManager(String option, int frame)
 
   values = loadJSONArray(project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+".manager");
 
-  for (int i = 0; i <= int(valoption[frame_end_id]) - int(valoption[frame_start_id]); i++) {
+  for (int i = 0; i <= int(valoption[frame_end_id]); i++) {
     JSONObject rendermanager = values.getJSONObject(i); 
     rendermanager.getInt("Frame");
     rendermanager.getString("Multi");
@@ -186,7 +186,7 @@ void addinJsonManager(String option, int frame)
       rendermanager.getString("Render path");
       rendermanager.getString("Render name");
     }
-    if (i + int(valoption[frame_start_id]) == int(frame)) rendermanager.setString("Status", option);
+    if (i == int(frame)) rendermanager.setString("Status", option);
   }
 
   saveJSONArray(values, project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+".manager");
@@ -233,18 +233,27 @@ void newjsonManager(String path)
 
     JSONObject rendermanager = new JSONObject();
 
-    rendermanager.setInt("Frame", i + int(valoption[frame_start_id]));
-    rendermanager.setString("Multi", settings_name);
-    rendermanager.setString("Status", "Waiting");
-    rendermanager.setString("Render", "None");
-    if (new_output) {
-      rendermanager.setString("Render path", output_path);
-      rendermanager.setString("Render name", renders_name);
+    rendermanager.setInt("Frame", i);
+    if (i >= int(valoption[frame_start_id])) {
+      rendermanager.setString("Multi", settings_name);
+      rendermanager.setString("Status", "Waiting");
+      rendermanager.setString("Render", "None");
+      if (new_output) {
+        rendermanager.setString("Render path", output_path);
+        rendermanager.setString("Render name", renders_name);
+      } else {
+        rendermanager.setString("Render path", "From .blend");
+        rendermanager.setString("Render name", "From .blend");
+      }
     } else {
-      rendermanager.setString("Render path", "From .blend");
-      rendermanager.setString("Render name", "From .blend");
-    }
+      rendermanager.setString("Multi", "");
+      rendermanager.setString("Status", "");
+      rendermanager.setString("Render", "");
 
+      rendermanager.setString("Render path", "");
+      rendermanager.setString("Render name", "");
+    }
+    
     rendercontrol.setJSONObject(i, rendermanager);
   }
 
