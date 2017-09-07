@@ -28,8 +28,8 @@
 int offset_manager;
 int frame_manager;
 int select_frame;
-int startframe_manager;
-int endframe_manager;
+String startframe_manager = "00000";
+String endframe_manager = "00000";
 
 boolean updating;
 
@@ -101,15 +101,15 @@ void renderManager_Gui()
   text("<<", 8, height / 2);
   text(">>", width - 10, height / 2);
 
-  text("-Selected Range:"+">"+nf(startframe_manager, 5)+"<"+" to "+">"+nf(endframe_manager, 5)+"<"+" | >ALL< |", 177, 345);
+  text("-Selected Range:"+">"+nf(int(startframe_manager), 5)+"<"+" to "+">"+nf(int(endframe_manager), 5)+"<"+" | >ALL< |", 177, 349);
   fill(ccolor);
   textSize(10);
-  text("Mouse buttons: L: start frame, R: end frame, Center: open frame", 330, 333);
+  text("Mouse buttons: L: start frame, R: end frame, Center: open frame", 330, 334);
   textSize(12);
-  text(">GOOD<", 385, 345);
-  text(">OPEN folder<", 525, 345);
+  text(">GOOD<", 385, 349);
+  text(">OPEN folder<", 525, 349);
   fill(ecolor);
-  text(">BAD<", 445, 345);
+  text(">BAD<", 445, 349);
   fill(bcolor);
   if (multiblend_active) {
     if (multiblend_files <= 0) {
@@ -146,17 +146,26 @@ boolean manager_R()
   return  (mouseX > 620 && mouseX < 640 && mouseY > 170 && mouseY < 190);
 }
 
+boolean manager_fstart() 
+{
+  return  (mouseX > 130 && mouseX < 185 && mouseY > 340 && mouseY < 360);
+}
+boolean manager_fend() 
+{
+  return  (mouseX > 210 && mouseX < 260 && mouseY > 340 && mouseY < 360);
+}
+
 boolean manager_all() 
 {
-  return  (mouseX > 275 && mouseX < 315 && mouseY > 340 && mouseY < 355);
+  return  (mouseX > 275 && mouseX < 315 && mouseY > 340 && mouseY < 360);
 }
 boolean manager_good() 
 {
-  return  (mouseX > 355 && mouseX < 410 && mouseY > 340 && mouseY < 355);
+  return  (mouseX > 355 && mouseX < 410 && mouseY > 340 && mouseY < 360);
 }
 boolean manager_bad() 
 {
-  return  (mouseX > 425 && mouseX < 470 && mouseY > 340 && mouseY < 355);
+  return  (mouseX > 425 && mouseX < 470 && mouseY > 340 && mouseY < 360);
 }
 boolean manager_openfolder() 
 {
