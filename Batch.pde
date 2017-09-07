@@ -74,7 +74,7 @@ void keyEventsBatch (String keypress)
 void  mouseEventsBatch()
 {
   if (path_batch_()) {
-    selectInput("Select path:", "pathBatch", output_folder);
+    selectInput("Select a file in path:", "pathBatch", output_folder);
   }
   if (openpath_batch_()) {
     String cmd[] = {manager_path, path_batch.substring(0, path_batch.lastIndexOf(File.separator)+1)};
