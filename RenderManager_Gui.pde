@@ -65,20 +65,19 @@ void renderManager_Gui()
               else  render_pre = loadImage(prepath);
 
               image(render_pre, 20 + x * 40, 32 + i * 30);
+            }
+            fill(acolor);
+            textSize(8);
+            String jsonpath = "";
+            if (final_renders) jsonpath = project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+".manager";
+            else jsonpath = project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+"_preview.manager";
 
-              fill(acolor);
-              textSize(8);
-              String jsonpath = "";
-              if (final_renders) jsonpath = project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+".manager";
-              else jsonpath = project_path+"Manager"+File.separator+settings_name.substring(0, settings_name.lastIndexOf("."))+"_preview.manager";
-
-              if (loadJsonManager(frame_manager, jsonpath).equals("good")) {
-                fill(ccolor);
-                text("Good", 23 + x * 40, 52 + i * 30);
-              } else if (loadJsonManager(frame_manager, jsonpath).equals("bad")) {
-                fill(ecolor);
-                text("Bad", 23 + x * 40, 52 + i * 30);
-              }
+            if (loadJsonManager(frame_manager, jsonpath).equals("good")) {
+              fill(ccolor);
+              text("Good", 23 + x * 40, 52 + i * 30);
+            } else if (loadJsonManager(frame_manager, jsonpath).equals("bad")) {
+              fill(ecolor);
+              text("Bad", 23 + x * 40, 52 + i * 30);
             }
             fill(acolor);
             textSize(8);
@@ -88,7 +87,7 @@ void renderManager_Gui()
       }
     }
   }
-  
+
   textAlign(CENTER, CENTER);
   textSize(14);
   fill(acolor);
